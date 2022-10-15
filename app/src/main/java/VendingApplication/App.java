@@ -3,12 +3,23 @@
  */
 package VendingApplication;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class App extends Application {
+    public static void main(String[] args) {
+        launch();
     }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Login.fxml"));
+        primaryStage.setTitle("Vending Machine");
+        primaryStage.setScene(new Scene(root, 550, 400));
+        primaryStage.show();
     }
 }
