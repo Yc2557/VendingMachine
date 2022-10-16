@@ -31,19 +31,21 @@ public class LoginController implements Controller {
     @FXML
     private Text invalidPathText;
 
-    public static final double TEXT_XLAYOUT = 130.0;
+    public UserManager userManager = new UserManager();
 
     public void loginButtonAction(ActionEvent event) throws IOException {
         String username = loginText.getText();
         String password = passwordText.getText();
 
         // Check if username and password are correct
-        if (loginText.getText().equals("")) { // TO DO: Need to include getting inforation from database
+        if (username.equals(userManager.getUsername(username)) && password.equals(userManager.getPassword(username))) {
+            // Send signal to main controller
+
             // Change to successful login page
             changeScene(event, "back");
         } else {
             System.out.println("invalid");
-            setInvalidMessage();
+            invalidMessage.setText("Username or password is invalid.");
         }
     }
 
@@ -58,15 +60,19 @@ public class LoginController implements Controller {
 
     public void createAccountButtonAction(ActionEvent event) throws IOException {
         // Add account to login.json
-        changeScene(event, "login");
+        String username = loginText.getText();
+        String password = passwordText.getText();
+
+        if (userManager.addUser(username, password)) {
+            changeScene(event, "back");
+            System.out.println("Successful login");
+        } else {
+            invalidMessage.setText("Username already exists.");
+        }
     }
 
     public void backLoginButtonAction(ActionEvent event) throws IOException {
         changeScene(event, "login");
-    }
-
-    public void setInvalidMessage() {
-        invalidMessage.setText("Username or password is invalid.");
     }
 
     /**
@@ -98,5 +104,9 @@ public class LoginController implements Controller {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(panelView);
         window.show();
+    }
+
+    private void checkLogin(String login, String pass) {
+
     }
 }

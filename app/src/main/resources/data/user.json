@@ -1,10 +1,16 @@
 {
     "users": [
         {
-            "username": "kevin",
             "password": "hou",
+            "purchaseHistory": "",
             "creditCard": "1234567890",
-            "purchaseHistory": ""
+            "username": "kevin"
+        },
+        {
+            "password": "test",
+            "purchaseHistory": "",
+            "creditCard": "",
+            "username": "test"
         }
     ]
 }
