@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VendingApplication.SelectionController">
+   <children>
+      <Button fx:id="loginButton" layoutX="414.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="70.0" text="Login" />
+      <Button fx:id="cartButton" layoutX="493.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="94.0" text="Cart" />
+      <Text layoutX="40.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drinks" textAlignment="CENTER" wrappingWidth="70.40000000000009">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="169.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chocolates" textAlignment="CENTER" wrappingWidth="112.80002441406259">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="340.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chips" textAlignment="CENTER" wrappingWidth="70.40000000000009">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="489.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Candies" textAlignment="CENTER" wrappingWidth="70.40000000000009">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <ListView fx:id="drinksList" layoutY="83.0" prefHeight="250.0" prefWidth="150.0" />
+      <ListView fx:id="chocolatesList" layoutX="150.0" layoutY="83.0" prefHeight="250.0" prefWidth="150.0" />
+      <ListView fx:id="chipsList" layoutX="300.0" layoutY="83.0" prefHeight="250.0" prefWidth="150.0" />
+      <ListView fx:id="candiesList" layoutX="449.0" layoutY="83.0" prefHeight="250.0" prefWidth="150.0" />
+      <Button fx:id="buyButton" layoutX="253.0" layoutY="349.0" mnemonicParsing="false" onAction="#buyButtonClicked" prefHeight="30.0" prefWidth="94.0" text="Buy">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
