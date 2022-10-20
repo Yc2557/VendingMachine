@@ -19,7 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class PaymentChooser implements Controller {
+public class PaymentSelector implements Controller {
 
     @FXML
     private Button cashButton;
@@ -37,13 +37,13 @@ public class PaymentChooser implements Controller {
 
         String sceneName = "gui/";
         if (type.equals("cash")) {
-            //sceneName += "PayingCash.fxml";
-
+            sceneName += "PayingCash.fxml";
         } else if (type.equals("card")) {
             sceneName += "PayingCard.fxml";
-
         } else if (type.equals("back")) {
-            //back to select items
+
+            //BACK TO CART
+            sceneName += "";
         }
 
         FXMLLoader loader = new FXMLLoader();

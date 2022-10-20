@@ -50,20 +50,20 @@ public class PayingCardController implements Controller {
 
     private CardHandler handler = new CardHandler();
     private String nameText;
-    private int numberText;
+    private String numberText;
 
     public void payButtonAction(ActionEvent event) throws IOException {
 
-        if (cardName.getText() == null || cardNumber.getText() == null || !isNumeric(cardNumber.getText())) {
+        if (cardName.getText() == null || cardNumber.getText() == null) {
             //Invalid inputs
             errorText.setText("Please enter valid card details.");
             return;
         }
 
         this.nameText = cardName.getText();
-        this.numberText = Integer.parseInt(cardNumber.getText());
+        this.numberText = cardNumber.getText();
 
-        handler.checkCreditCard(this.nameText, this.numberText);
+        handler.checkCreditCard(getCardName(), getCardNum());
 
         if (handler.isValidCard()) {
             //paid successfully
@@ -83,13 +83,17 @@ public class PayingCardController implements Controller {
         } else if (type.equals("backCard")) {
             sceneName += "PayingCard.fxml";
         } else if (type.equals("backPay")) {
-            sceneName += "PaymentsSelector.fxml";
+            sceneName += "PaymentSelector.fxml";
+        } else if (type.equals("completed")) {
+            /*
+            * COMPLETED TRANSACTION
+            * CUSTOMER IS LOGGED OUT
+            * SET SCENE TO?*/
+            sceneName += "Login.fxml";
         }
 
-        //Same controller
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource(sceneName));
-
 
         Parent root = loader.load();
         Scene panelView = new Scene(root);
@@ -99,40 +103,28 @@ public class PayingCardController implements Controller {
     }
 
     public void backCardButtonAction(ActionEvent event) throws IOException {
-        //back from save card to card entry
+        //Go back from SaveCard to PayingCard
         changeScene(event, "backCard");
     }
     public void backPaymentsButtonAction(ActionEvent event) throws IOException {
-        //back from pay with card to pay options
+        //Go back from PayingCard to PaymentSelector
         changeScene(event, "backPay");
     }
 
     public void yesButtonAction(ActionEvent event) throws IOException {
         noButtonAction(event);
         //Transaction completed
+
     }
 
     public void noButtonAction(ActionEvent event) throws IOException {
         //Overwrites saved card details
-        handler.saveCardDetails("test", null, 0);
+        handler.saveCardDetails("test", null, null);
         //continues on to dispense items...?
     }
 
-    public static boolean isNumeric(String str) {
-        try {
-            Integer.parseInt(str);
-            return true;
-        } catch(NumberFormatException e){
-            return false;
-        }
-    }
-
-    public void setup() throws IOException {
-
-    }
-
     public String getCardName() {return this.nameText;}
-    public int getCardNum() {return this.numberText;}
+    public String getCardNum() {return this.numberText;}
 
 
 }

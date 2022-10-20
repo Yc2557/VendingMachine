@@ -17,7 +17,7 @@ public class CardHandler {
 
     private boolean validCard = false;
 
-    public void checkCreditCard(String cardName, int cardNumber) {
+    public void checkCreditCard(String cardName, String cardNumber) {
 
         try {
             JSONParser parser = new JSONParser();
@@ -28,9 +28,9 @@ public class CardHandler {
 
                 JSONObject cardDetails = (JSONObject) cardsDB.get(i);
                 String dbName = cardDetails.get("name").toString();
-                int dbNumber = Integer.parseInt(cardDetails.get("number").toString());
+                String dbNumber = cardDetails.get("number").toString();
 
-                if (dbName.equals(cardName) && dbNumber == cardNumber) {
+                if (dbName.equals(cardName) && dbNumber.equals(cardNumber)) {
                     validateCard();
                     return;
                 } else {
@@ -46,7 +46,7 @@ public class CardHandler {
         }
     }
 
-    public void saveCardDetails(String username, String cardName, int cardNumber) {
+    public void saveCardDetails(String username, String cardName, String cardNumber) {
 
         try {
             JSONParser parser = new JSONParser();

@@ -39,7 +39,7 @@ public class LoginController implements Controller {
         String password = passwordText.getText();
 
         // Check if username and password are correct
-    /*    if (username.equals(userManager.getUsername(username)) && password.equals(userManager.getPassword(username))) {
+        /*if (username.equals(userManager.getUsername(username)) && password.equals(userManager.getPassword(username))) {
             // Send signal to main controller
 
             // Change to successful login page
