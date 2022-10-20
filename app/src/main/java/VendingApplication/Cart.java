@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class Cart {
     private List<Item> cart;
 
-    public Cart(List<Item> cart) {
-        this.cart = cart;
+    public Cart() {
+        this.cart = new ArrayList<Item>();
     }
 
     public double totalCartPrice() {
