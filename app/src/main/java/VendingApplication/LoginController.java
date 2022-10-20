@@ -32,14 +32,14 @@ public class LoginController implements Controller {
     @FXML
     private Text invalidPathText;
 
-    public UserManager userManager = new UserManager();
+    //public UserManager userManager = new UserManager();
 
     public void loginButtonAction(ActionEvent event) throws IOException {
         String username = loginText.getText();
         String password = passwordText.getText();
 
         // Check if username and password are correct
-        if (username.equals(userManager.getUsername(username)) && password.equals(userManager.getPassword(username))) {
+    /*    if (username.equals(userManager.getUsername(username)) && password.equals(userManager.getPassword(username))) {
             // Send signal to main controller
 
             // Change to successful login page
@@ -47,7 +47,7 @@ public class LoginController implements Controller {
         } else {
             System.out.println("invalid");
             invalidMessage.setText("Username or password is invalid.");
-        }
+        }*/
     }
 
     public void createButtonAction(ActionEvent event) throws IOException {
@@ -64,12 +64,12 @@ public class LoginController implements Controller {
         String username = loginText.getText();
         String password = passwordText.getText();
 
-        if (userManager.addUser(username, password)) {
+        /*if (userManager.addUser(username, password)) {
             changeScene(event, "back");
             System.out.println("Successful login");
         } else {
             invalidMessage.setText("Username already exists.");
-        }
+        }*/
     }
 
     public void backLoginButtonAction(ActionEvent event) throws IOException {
