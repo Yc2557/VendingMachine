@@ -71,10 +71,11 @@ public class PayingCardController {
             //paid successfully
             if (vendingMachine.isLogin) {
                 vendingMachine.logOut();
+                changeScene(event, "validCard");
             }
             vendingMachine.getCart().clearCart();
-            changeScene(event, "validCard");
             handler.saveCardDetails("test",getCardName(), getCardNum());
+            changeScene(event, "completed");
         } else {
             //card error
             errorText.setText("Card cannot be found: Please try a different card, or pay with cash.");
@@ -91,11 +92,6 @@ public class PayingCardController {
         } else if (type.equals("backPay")) {
             sceneName += "PaymentSelector.fxml";
         } else if (type.equals("completed")) {
-            /*
-            * COMPLETED TRANSACTION
-            * CUSTOMER IS LOGGED OUT
-            * SET SCENE TO?*/
-
             sceneName += "Selection.fxml";
         }
 
@@ -140,7 +136,6 @@ public class PayingCardController {
         //Overwrites saved card details
         handler.saveCardDetails("test", null, null);
         changeScene(event, "completed");
-        //continues on to dispense items...?
     }
 
     public String getCardName() {return this.nameText;}
