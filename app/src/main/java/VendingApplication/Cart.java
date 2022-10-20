@@ -14,7 +14,7 @@ public class Cart {
         double price = 0;
 
         for (Item i : cart) {
-            price += i.getPrice();
+            price += i.getPrice() * i.getAmount();
         }
 
         return price;
@@ -30,5 +30,18 @@ public class Cart {
 
     public List<Item> getCart() {
         return cart;
+    }
+
+    public Item getItem(Item item) {
+        for (Item i : cart) {
+            if (i.getItemid().equals(item.getItemid())) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public void clearCart() {
+        cart.clear();
     }
 }

@@ -2,9 +2,9 @@ package VendingApplication;
 
 public class Item {
 
-    private String itemid;
-    private String name;
-    private String category;
+    private final String itemid;
+    private final String name;
+    private final String category;
     private int amount;
     private double price;
 

@@ -37,7 +37,7 @@
 
       <Button fx:id="loginButton" layoutX="360.0" layoutY="300.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="26.0" prefWidth="$buttonWidth" text="Login" />
       <Button fx:id="createButton" layoutX="275.0" layoutY="300.0" mnemonicParsing="false" onAction="#createButtonAction" prefHeight="26.0" prefWidth="$buttonWidth" text="Create Acc" />
-      <Button fx:id="backButton" layoutX="190.0" layoutY="300.0" mnemonicParsing="false" onAction="#createButtonAction" prefHeight="26.0" prefWidth="$buttonWidth" text="Back" />
+      <Button fx:id="backButton" layoutX="190.0" layoutY="300.0" mnemonicParsing="false" onAction="#backButtonAction" prefHeight="26.0" prefWidth="$buttonWidth" text="Back" />
       
       <Text fx:id="invalidMessage" fill="RED" layoutX="118.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="306.39999999999986" />
    </children>

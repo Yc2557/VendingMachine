@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class PaymentHandler {
 
-    private final String FILE_NAME = "src/main/resources/cash.json";
+    private final String FILE_NAME = "src/main/resources/data/cash.json";
     private boolean isEnoughMoney = true;
     private boolean hasEnoughChange = true;
     private Map<String,Long> cashAdded = new HashMap<>();

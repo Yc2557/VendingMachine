@@ -1,11 +1,18 @@
 package VendingApplication;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -49,6 +56,9 @@ public class PayingCashController {
     private Button Note100Dollar;
 
     private  List<Button> buttons = new ArrayList<>();
+    private double totalCost;
+
+    private VendingMachine vendingMachine;
 
     public void clickedOnMoney(Button button, PaymentHandler handler) {
         double currentAmount = Double.parseDouble(amountAdded.getText());
@@ -106,7 +116,7 @@ public class PayingCashController {
         currentAmount = Math.round(currentAmount*100);
         currentAmount /= 100;
 
-        String currentAmountStr = String.format("%.2f", currentAmount);
+        String currentAmountStr = String.format("%.02f", currentAmount);
         amountAdded.setText(currentAmountStr);
 
         // Keeping track of the coins/notes that need to be added if a transaction is completed
@@ -125,7 +135,7 @@ public class PayingCashController {
     public void clickedOnPay(PaymentHandler handler) {
         errorText.setText("");
 
-        handler.processPayment(30.30, Double.parseDouble(amountAdded.getText()));
+        handler.processPayment(totalCost, Double.parseDouble(amountAdded.getText()));
 
         if (!handler.getEnoughMoney()) {
             errorText.setText("Not enough money provided. Please enter the remaining amount or you can cancel the transaction.");
@@ -139,15 +149,38 @@ public class PayingCashController {
         }
         // If payment is successful
         else {
-            double changeAmount = Double.parseDouble(amountAdded.getText()) - 30.30;
-            String changeStr = String.format("%.2f", changeAmount);
+            errorText.setText("Payment Successful!");
+            errorText.setFill(Color.BLACK);
+            double changeAmount = Double.parseDouble(amountAdded.getText()) - totalCost;
+            String changeStr = String.format("%.02f", changeAmount);
             change.setText(changeStr);
+            vendingMachine.getCart().clearCart();
         }
+
+
     }
 
-    public void setup() {
+    public void clickOnBack(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getClassLoader().getResource("gui/cart.fxml"));
+        Parent root = loader.load();
+
+        Scene mainPanelView = new Scene(root);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        CartController controller = loader.getController();
+        controller.initialize(vendingMachine);
+
+        window.setScene(mainPanelView);
+        window.show();
+    }
+
+    public void setup(VendingMachine vm, double totalAmount) {
+        vendingMachine = vm;
         amountAdded.setText("0.00");
-        total.setText("30.30");
+        totalCost = totalAmount;
+        total.setText(String.format("%.02f", totalAmount));
         PaymentHandler handler = new PaymentHandler();
 
         payButton.setOnAction(event -> {
