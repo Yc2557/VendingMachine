@@ -70,12 +70,16 @@ public class PayingCardController {
         if (handler.isValidCard()) {
             //paid successfully
             if (vendingMachine.isLogin) {
+                //savecarddetails needs the first field to be username
+                handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum());
+                vendingMachine.getCart().clearCart();
                 vendingMachine.logOut();
                 changeScene(event, "validCard");
+            } else {
+                //not logged in, don't offer to save card
+                vendingMachine.getCart().clearCart();
+                changeScene(event, "completed");
             }
-            vendingMachine.getCart().clearCart();
-            handler.saveCardDetails("test",getCardName(), getCardNum());
-            changeScene(event, "completed");
         } else {
             //card error
             errorText.setText("Card cannot be found: Please try a different card, or pay with cash.");
@@ -134,7 +138,7 @@ public class PayingCardController {
 
     public void noButtonAction(ActionEvent event) throws IOException {
         //Overwrites saved card details
-        handler.saveCardDetails("test", null, null);
+        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), null, null);
         changeScene(event, "completed");
     }
 
