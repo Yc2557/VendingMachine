@@ -19,7 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class PayingCardController implements Controller {
+public class PayingCardController {
 
     @FXML
     private TextField cardName;
@@ -52,6 +52,8 @@ public class PayingCardController implements Controller {
     private String nameText;
     private String numberText;
 
+    private VendingMachine vendingMachine;
+
     public void payButtonAction(ActionEvent event) throws IOException {
 
         if (cardName.getText() == null || cardNumber.getText() == null) {
@@ -67,6 +69,10 @@ public class PayingCardController implements Controller {
 
         if (handler.isValidCard()) {
             //paid successfully
+            if (vendingMachine.isLogin) {
+                vendingMachine.logOut();
+            }
+            vendingMachine.getCart().clearCart();
             changeScene(event, "validCard");
             handler.saveCardDetails("test",getCardName(), getCardNum());
         } else {
@@ -89,7 +95,8 @@ public class PayingCardController implements Controller {
             * COMPLETED TRANSACTION
             * CUSTOMER IS LOGGED OUT
             * SET SCENE TO?*/
-            sceneName += "Login.fxml";
+
+            sceneName += "Selection.fxml";
         }
 
         FXMLLoader loader = new FXMLLoader();
@@ -98,6 +105,18 @@ public class PayingCardController implements Controller {
         Parent root = loader.load();
         Scene panelView = new Scene(root);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        switch (type) {
+            case "validCard", "backCard", "backPay" -> {
+                PayingCardController controller = loader.getController();
+                controller.initialize(vendingMachine);
+            }
+            case "completed" -> {
+                SelectionController controller = loader.getController();
+                controller.initialize(vendingMachine);
+            }
+        }
+
         window.setScene(panelView);
         window.show();
     }
@@ -112,7 +131,7 @@ public class PayingCardController implements Controller {
     }
 
     public void yesButtonAction(ActionEvent event) throws IOException {
-        noButtonAction(event);
+        changeScene(event, "completed");
         //Transaction completed
 
     }
@@ -120,11 +139,15 @@ public class PayingCardController implements Controller {
     public void noButtonAction(ActionEvent event) throws IOException {
         //Overwrites saved card details
         handler.saveCardDetails("test", null, null);
+        changeScene(event, "completed");
         //continues on to dispense items...?
     }
 
     public String getCardName() {return this.nameText;}
     public String getCardNum() {return this.numberText;}
 
-
+    public void initialize(VendingMachine vendingMachine)
+    {
+        this.vendingMachine = vendingMachine;
+    }
 }

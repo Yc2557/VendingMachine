@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class PayingCashController implements Controller {
+public class PayingCashController {
 
     @FXML
     private Text errorText;
@@ -132,7 +132,7 @@ public class PayingCashController implements Controller {
         handler.getCashAdded().clear();
     }
 
-    public void clickedOnPay(PaymentHandler handler) {
+    public void clickedOnPay(PaymentHandler handler, ActionEvent event) throws IOException {
         errorText.setText("");
 
         handler.processPayment(totalCost, Double.parseDouble(amountAdded.getText()));
@@ -155,6 +155,7 @@ public class PayingCashController implements Controller {
             String changeStr = String.format("%.02f", changeAmount);
             change.setText(changeStr);
             vendingMachine.getCart().clearCart();
+            changeScene(event);
         }
 
 
@@ -162,14 +163,30 @@ public class PayingCashController implements Controller {
 
     public void clickOnBack(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("gui/cart.fxml"));
+        loader.setLocation(getClass().getClassLoader().getResource("gui/PaymentSelector.fxml"));
         Parent root = loader.load();
 
         Scene mainPanelView = new Scene(root);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        CartController controller = loader.getController();
+        PaymentSelectorController controller = loader.getController();
+        controller.initialize(vendingMachine);
+
+        window.setScene(mainPanelView);
+        window.show();
+    }
+
+    public void changeScene(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getClassLoader().getResource("gui/Selection.fxml"));
+        Parent root = loader.load();
+
+        Scene mainPanelView = new Scene(root);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        SelectionController controller = loader.getController();
         controller.initialize(vendingMachine);
 
         window.setScene(mainPanelView);
@@ -184,7 +201,11 @@ public class PayingCashController implements Controller {
         PaymentHandler handler = new PaymentHandler();
 
         payButton.setOnAction(event -> {
-            clickedOnPay(handler);
+            try {
+                clickedOnPay(handler, event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         clearButton.setOnAction(event -> {

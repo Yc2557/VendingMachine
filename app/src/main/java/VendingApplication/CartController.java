@@ -94,16 +94,16 @@ public class CartController {
 
     public void purchaseAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("gui/PayingCash.fxml"));
+        loader.setLocation(getClass().getClassLoader().getResource("gui/PaymentSelector.fxml"));
         Parent root = loader.load();
 
         Scene mainPanelView = new Scene(root);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        PayingCashController controller = loader.getController();
+        PaymentSelectorController controller = loader.getController();
         Cart cart = vendingMachine.getCart();
-        controller.setup(vendingMachine, cart.totalCartPrice());
+        controller.initialize(vendingMachine);
 
         window.setScene(mainPanelView);
         window.show();

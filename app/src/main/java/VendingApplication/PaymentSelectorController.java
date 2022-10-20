@@ -6,20 +6,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 
-public class PaymentSelector implements Controller {
+public class PaymentSelectorController {
 
     @FXML
     private Button cashButton;
@@ -32,6 +25,8 @@ public class PaymentSelector implements Controller {
 
     @FXML
     private Text instructions;
+
+    private VendingMachine vendingMachine;
 
     public void changeScene(ActionEvent event, String type) throws IOException{
 
@@ -50,7 +45,21 @@ public class PaymentSelector implements Controller {
         loader.setLocation(getClass().getClassLoader().getResource(sceneName));
         Parent root = loader.load();
         Scene panelView = new Scene(root);
-        Controller controller = loader.getController();
+        switch (type) {
+            case "back" -> {
+                CartController controller = loader.getController();
+                controller.initialize(vendingMachine);
+            }
+            case "cash" -> {
+                PayingCashController controller = loader.getController();
+                controller.setup(vendingMachine, vendingMachine.getCart().totalCartPrice());
+            }
+            case "card" -> {
+                PayingCardController controller = loader.getController();
+                controller.initialize(vendingMachine);
+            }
+        }
+
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(panelView);
@@ -67,6 +76,10 @@ public class PaymentSelector implements Controller {
 
     public void backButtonAction(ActionEvent event) throws IOException {
         changeScene(event, "back");
+    }
+
+    public void initialize(VendingMachine vendingMachine) {
+        this.vendingMachine = vendingMachine;
     }
 
 }

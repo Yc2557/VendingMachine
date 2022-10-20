@@ -1,1 +1,17 @@
-{"users":[{"password":"hou","purchaseHistory":"","creditCard":"1234567890","username":"kevin"},{"password":"test","purchaseHistory":"","cardName":null,"cardNumber":0,"username":"test"}]}
+{
+  "users": [
+    {
+      "password": "hou",
+      "purchaseHistory": "",
+      "creditCard": "1234567890",
+      "username": "kevin"
+    },
+    {
+      "password": "test",
+      "purchaseHistory": "",
+      "cardName": null,
+      "cardNumber": null,
+      "username": "test"
+    }
+  ]
+}
