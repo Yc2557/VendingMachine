@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
@@ -18,12 +19,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class LoginController {
+public class LoginController implements Controller {
     @FXML
     private TextField loginText;
 
     @FXML
-    private TextField filePathText;
+    private PasswordField passwordText;
 
     @FXML
     private Text invalidMessage;
@@ -31,56 +32,82 @@ public class LoginController {
     @FXML
     private Text invalidPathText;
 
-    private String filePath = "src/main/resources/data/user.json";
+    public UserManager userManager = new UserManager();
 
     public void loginButtonAction(ActionEvent event) throws IOException {
-        if (loginText.getText().equalsIgnoreCase("user")) {
-            System.out.println("change to user");
+        String username = loginText.getText();
+        String password = passwordText.getText();
 
-            changeScene(event, "user");
-        } else if (loginText.getText().equalsIgnoreCase("admin")) {
-            System.out.println("change to admin");
+        // Check if username and password are correct
+        if (username.equals(userManager.getUsername(username)) && password.equals(userManager.getPassword(username))) {
+            // Send signal to main controller
 
-            changeScene(event, "admin");
-
+            // Change to successful login page
+            changeScene(event, "back");
         } else {
             System.out.println("invalid");
-            setInvalidMessage();
+            invalidMessage.setText("Username or password is invalid.");
         }
     }
 
-    public void setInvalidMessage() {
-        invalidMessage.setText("Invalid User");
+    public void createButtonAction(ActionEvent event) throws IOException {
+        changeScene(event, "create");
+        System.out.println("test");
     }
 
-    public void setInvalidPathMessage() {
-        invalidPathText.setText("Invalid Filepath");
+    public void backButtonAction(ActionEvent event) throws IOException {
+        changeScene(event, "back");
     }
 
+    public void createAccountButtonAction(ActionEvent event) throws IOException {
+        // Add account to login.json
+        String username = loginText.getText();
+        String password = passwordText.getText();
+
+        if (userManager.addUser(username, password)) {
+            changeScene(event, "back");
+            System.out.println("Successful login");
+        } else {
+            invalidMessage.setText("Username already exists.");
+        }
+    }
+
+    public void backLoginButtonAction(ActionEvent event) throws IOException {
+        changeScene(event, "login");
+    }
+
+    /**
+     * Changes the scene to the next relevant scene
+     * 
+     * @param event
+     * @param type
+     * @throws IOException
+     */
     public void changeScene(ActionEvent event, String type) throws IOException {
-        // FXMLLoader loader = new FXMLLoader();
-        // loader.setLocation(getClass().getClassLoader().getResource("mainPanel.fxml"));
-        // Parent root = loader.load();
-        // Scene mainPanelView = new Scene(root);
+        String sceneName = "gui/";
+        // Changes scene fxml file based on type
+        if (type.equalsIgnoreCase("login")) {
+            sceneName += "Login.fxml";
+        } else if (type.equalsIgnoreCase("create")) {
+            sceneName += "CreateAccount.fxml";
+        } else if (type.equalsIgnoreCase("back")) {
+            sceneName = "";
+        }
 
-        // mainPanelController controller = loader.getController();
-        // controller.initScene(type, filePath);
+        // Loads next relevant scene
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getClassLoader().getResource(sceneName));
+        Parent root = loader.load();
+        Scene panelView = new Scene(root);
 
-        // Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Controller controller = loader.getController();
 
-        // window.setScene(mainPanelView);
-        // window.show();
-
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(panelView);
+        window.show();
     }
 
-    public void setFilePathAction(ActionEvent event) {
-        try {
-            JSONParser jsonParser = new JSONParser();
-            JSONObject database = (JSONObject) jsonParser.parse(new FileReader(filePathText.getText()));
+    private void checkLogin(String login, String pass) {
 
-            this.filePath = filePathText.getText();
-        } catch (ParseException | IOException e) {
-            setInvalidPathMessage();
-        }
     }
 }
