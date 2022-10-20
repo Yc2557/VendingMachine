@@ -31,14 +31,10 @@ public class PaymentSelectorController {
     public void changeScene(ActionEvent event, String type) throws IOException{
 
         String sceneName = "gui/";
-        if (type.equals("cash")) {
-            sceneName += "PayingCash.fxml";
-        } else if (type.equals("card")) {
-            sceneName += "PayingCard.fxml";
-        } else if (type.equals("back")) {
-
-            //BACK TO CART
-            sceneName += "";
+        switch (type) {
+            case "cash" -> sceneName += "PayingCash.fxml";
+            case "card" -> sceneName += "PayingCard.fxml";
+            case "back" -> sceneName += "cart.fxml";
         }
 
         FXMLLoader loader = new FXMLLoader();

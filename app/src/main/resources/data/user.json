@@ -1,17 +1,1 @@
-{
-  "users": [
-    {
-      "password": "hou",
-      "purchaseHistory": "",
-      "creditCard": "1234567890",
-      "username": "kevin"
-    },
-    {
-      "password": "test",
-      "purchaseHistory": "",
-      "cardName": null,
-      "cardNumber": null,
-      "username": "test"
-    }
-  ]
-}
+{"users":[{"password":"hou","purchaseHistory":"","creditCard":"1234567890","username":"kevin"},{"password":"test","purchaseHistory":"","cardName":"m","cardNumber":"1","username":"test"},{"password":"123","purchaseHistory":"","creditCard":"","username":"yuhong"}]}
