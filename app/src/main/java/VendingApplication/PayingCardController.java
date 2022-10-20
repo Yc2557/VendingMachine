@@ -19,13 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-//takes in card details
-//validates card
-//offers to add card to user
-//adds card to user json
-
-
-public class PayingCardController {
+public class PayingCardController implements Controller {
 
     @FXML
     private TextField cardName;
@@ -37,7 +31,10 @@ public class PayingCardController {
     private TextField total;
 
     @FXML
-    private Button clearButton;
+    private Button backButtonCard;
+
+    @FXML
+    private Button backButtonPayments;
 
     @FXML
     private Button payButton;
@@ -45,56 +42,97 @@ public class PayingCardController {
     @FXML
     private Text errorText;
 
-    public void clickedPay(CardHandler handler) {
+    @FXML
+    private Button noButton;
 
-        String nameText = cardName.getText();
-        Integer numberText = Integer.parseInt(cardNumber.getText());
+    @FXML
+    private Button yesButton;
 
-        handler.checkCreditCard(nameText, numberText);
-        handler.validateCard();
+    private CardHandler handler = new CardHandler();
+    private String nameText;
+    private int numberText;
+
+    public void payButtonAction(ActionEvent event) throws IOException {
+
+        if (cardName.getText() == null || cardNumber.getText() == null || !isNumeric(cardNumber.getText())) {
+            //Invalid inputs
+            errorText.setText("Please enter valid card details.");
+            return;
+        }
+
+        this.nameText = cardName.getText();
+        this.numberText = Integer.parseInt(cardNumber.getText());
+
+        handler.checkCreditCard(this.nameText, this.numberText);
 
         if (handler.isValidCard()) {
             //paid successfully
-            sceneSaveCard();
-
-            //needs to know the username
-            //handler.saveCardDetails()
-
+            changeScene(event, "validCard");
+            handler.saveCardDetails("test",getCardName(), getCardNum());
         } else {
             //card error
-            errorText.setText("Card Details Invalid: Please Try A Different Card.");
+            errorText.setText("Card cannot be found: Please try a different card, or pay with cash.");
         }
-
     }
 
-    public void sceneSaveCard() {
-        
+    public void changeScene(ActionEvent event, String type) throws IOException{
+
+        String sceneName = "gui/";
+        if (type.equals("validCard")) {
+            sceneName += "SaveCard.fxml";
+        } else if (type.equals("backCard")) {
+            sceneName += "PayingCard.fxml";
+        } else if (type.equals("backPay")) {
+            sceneName += "PaymentsSelector.fxml";
+        }
+
+        //Same controller
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("gui/SaveCard.fxml"));
+        loader.setLocation(getClass().getClassLoader().getResource(sceneName));
+
+
         Parent root = loader.load();
         Scene panelView = new Scene(root);
-
-        Controller controller = loader.getController();
-
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(panelView);
         window.show();
+    }
 
+    public void backCardButtonAction(ActionEvent event) throws IOException {
+        //back from save card to card entry
+        changeScene(event, "backCard");
+    }
+    public void backPaymentsButtonAction(ActionEvent event) throws IOException {
+        //back from pay with card to pay options
+        changeScene(event, "backPay");
+    }
+
+    public void yesButtonAction(ActionEvent event) throws IOException {
+        noButtonAction(event);
+        //Transaction completed
+    }
+
+    public void noButtonAction(ActionEvent event) throws IOException {
+        //Overwrites saved card details
+        handler.saveCardDetails("test", null, 0);
+        //continues on to dispense items...?
+    }
+
+    public static boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+
+    public void setup() throws IOException {
 
     }
 
-    public void setup() {
-        CardHandler handler = new CardHandler();
-
-        payButton.setOnAction(event -> {
-            clickedPay(handler);
-        });
-
-
-
-    }
-
-
+    public String getCardName() {return this.nameText;}
+    public int getCardNum() {return this.numberText;}
 
 
 }
