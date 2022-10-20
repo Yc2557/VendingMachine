@@ -17,9 +17,15 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Login.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getClassLoader().getResource("Selection.fxml"));
+        Parent root = loader.load();
+
         primaryStage.setTitle("Vending Machine");
-        primaryStage.setScene(new Scene(root, 550, 400));
+        primaryStage.setScene(new Scene(root, 600, 400));
+
+        SelectionController controller = loader.getController();
+        controller.initialize();
         primaryStage.show();
     }
 }
