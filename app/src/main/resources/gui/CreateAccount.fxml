@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Text?>
 <?import java.lang.Double?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VendingApplication.LoginController">
+<AnchorPane maxHeight="400.0" maxWidth="550.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VendingApplication.LoginController">
   <fx:define>
         <Double fx:id="textLayoutX" fx:value="130.0"/>
         <Double fx:id="buttonWidth" fx:value="75.0"/>
@@ -38,6 +38,6 @@
       <Button fx:id="createAccountButton" layoutX="360.0" layoutY="300.0" mnemonicParsing="false" onAction="#createAccountButtonAction" prefHeight="26.0" prefWidth="$buttonWidth" text="Create" />
       <Button fx:id="backLoginButton" layoutX="275.0" layoutY="300.0" mnemonicParsing="false" onAction="#backLoginButtonAction" prefHeight="26.0" prefWidth="$buttonWidth" text="Back" />
       
-      <Text fx:id="invalidMessage" fill="RED" layoutX="118.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="306.39999999999986" />
+      <Text fx:id="invalidMessage" fill="RED" layoutX="118.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="200.39999999999986" />
    </children>
 </AnchorPane>

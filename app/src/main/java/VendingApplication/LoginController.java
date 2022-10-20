@@ -39,7 +39,7 @@ public class LoginController implements Controller {
         String password = passwordText.getText();
 
         // Check if username and password are correct
-        if (username.equals(userManager.getUsername(username)) && password.equals(userManager.getPassword(username))) {
+        if (checkLogin(username, password)) {
             // Send signal to main controller
 
             // Change to successful login page
@@ -65,8 +65,8 @@ public class LoginController implements Controller {
         String password = passwordText.getText();
 
         if (userManager.addUser(username, password)) {
-            changeScene(event, "back");
-            System.out.println("Successful login");
+            changeScene(event, "login");
+            System.out.println("Successful creation");
         } else {
             invalidMessage.setText("Username already exists.");
         }
@@ -100,14 +100,14 @@ public class LoginController implements Controller {
         Parent root = loader.load();
         Scene panelView = new Scene(root);
 
-        Controller controller = loader.getController();
+        // Controller controller = loader.getController();
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(panelView);
         window.show();
     }
 
-    private void checkLogin(String login, String pass) {
-
+    private boolean checkLogin(String login, String pass) {
+        return login.equals(userManager.getUsername(login)) && pass.equals(userManager.getPassword(login));
     }
 }
