@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.EventObject;
 import java.util.List;
 
-public class SelectionController {
+public class SelectionController implements Controller {
 
     @FXML
     private Button buyButton;
@@ -50,8 +50,6 @@ public class SelectionController {
     private List<String> listNames;
     private VendingMachine vendingMachine;
 
-
-
     public void initialize(VendingMachine vm) {
 
         vendingMachine = vm;
@@ -77,6 +75,8 @@ public class SelectionController {
         lists.add(inventory.getChips());
         lists.add(inventory.getChocolates());
         lists.add(inventory.getCandies());
+
+        cartButton.setText(String.format("Cart: %d Item(s)", vendingMachine.getCart().getCartSize()));
 
         selectedListIndex = 0;
         selectedList = lists.get(selectedListIndex);
@@ -114,39 +114,17 @@ public class SelectionController {
                 amountText.setText(String.valueOf(item.getAmount()));
             }
 
+            cartButton.setText(String.format("Cart: %d Item(s)", vendingMachine.getCart().getCartSize()));
+
         }
     }
 
     public void cartButtonClicked(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("gui/cart.fxml"));
-        Parent root = loader.load();
-
-        Scene mainPanelView = new Scene(root);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        CartController controller = loader.getController();
-        controller.initialize(vendingMachine);
-
-        window.setScene(mainPanelView);
-        window.show();
+        vendingMachine.changeScene(event, "gui/cart.fxml");
     }
 
     public void loginButtonClicked(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("gui/Login.fxml"));
-        Parent root = loader.load();
-
-        Scene mainPanelView = new Scene(root);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        LoginController controller = loader.getController();
-        controller.initialize(vendingMachine);
-
-        window.setScene(mainPanelView);
-        window.show();
+        vendingMachine.changeScene(event, "gui/Login.fxml");
     }
 
     public void addAmount() {

@@ -7,12 +7,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 public class UserManager {
-    private String filePath = "src/main/resources/data/user.json";
+    private final String filePath = "src/main/resources/data/user.json";
 
     /**
      * Finds the user JSONObject based on username.
      * 
-     * @param username
+     * @param username the username of the user
      * @return user's JSONObject
      */
     public JSONObject findUser(String username) {
@@ -42,14 +42,12 @@ public class UserManager {
 
     public String getPassword(String username) {
         JSONObject user = findUser(username);
-        String password = (String) user.get("password");
-        return password;
+        return (String) user.get("password");
     }
 
     public String getUsername(String username) {
         JSONObject user = findUser(username);
-        String usernameJSON = (String) user.get("username");
-        return usernameJSON;
+        return (String) user.get("username");
     }
 
     public boolean addUser(String username, String password) {

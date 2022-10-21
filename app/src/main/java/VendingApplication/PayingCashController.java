@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class PayingCashController {
+public class PayingCashController implements Controller {
 
     @FXML
     private Text errorText;
@@ -67,50 +67,50 @@ public class PayingCashController {
         String moneyStr = "";
 
         switch (button.getText()) {
-            case "5c":
+            case "5c" -> {
                 currentAmount += 0.05;
                 moneyStr = "0.05";
-                break;
-            case "10c":
+            }
+            case "10c" -> {
                 currentAmount += 0.10;
                 moneyStr = "0.10";
-                break;
-            case "20c":
+            }
+            case "20c" -> {
                 currentAmount += 0.20;
                 moneyStr = "0.20";
-                break;
-            case "50c":
+            }
+            case "50c" -> {
                 currentAmount += 0.50;
                 moneyStr = "0.50";
-                break;
-            case "$1":
+            }
+            case "$1" -> {
                 currentAmount += 1;
                 moneyStr = "1";
-                break;
-            case "$2":
+            }
+            case "$2" -> {
                 currentAmount += 2;
                 moneyStr = "2";
-                break;
-            case "$5":
+            }
+            case "$5" -> {
                 currentAmount += 5;
                 moneyStr = "5";
-                break;
-            case "$10":
+            }
+            case "$10" -> {
                 currentAmount += 10;
                 moneyStr = "10";
-                break;
-            case "$20":
+            }
+            case "$20" -> {
                 currentAmount += 20;
                 moneyStr = "20";
-                break;
-            case "$50":
+            }
+            case "$50" -> {
                 currentAmount += 50;
                 moneyStr = "50";
-                break;
-            case "$100":
+            }
+            case "$100" -> {
                 currentAmount += 100;
                 moneyStr = "100";
-                break;
+            }
         }
 
         currentAmount = Math.round(currentAmount*100);
@@ -155,49 +155,21 @@ public class PayingCashController {
             String changeStr = String.format("%.02f", changeAmount);
             change.setText(changeStr);
             vendingMachine.getCart().clearCart();
-            changeScene(event);
+            vendingMachine.changeScene(event, "gui/Selection.fxml");
         }
 
 
     }
 
     public void clickOnBack(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("gui/PaymentSelector.fxml"));
-        Parent root = loader.load();
-
-        Scene mainPanelView = new Scene(root);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        PaymentSelectorController controller = loader.getController();
-        controller.initialize(vendingMachine);
-
-        window.setScene(mainPanelView);
-        window.show();
+        vendingMachine.changeScene(event, "gui/PaymentSelector.fxml");
     }
 
-    public void changeScene(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("gui/Selection.fxml"));
-        Parent root = loader.load();
-
-        Scene mainPanelView = new Scene(root);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        SelectionController controller = loader.getController();
-        controller.initialize(vendingMachine);
-
-        window.setScene(mainPanelView);
-        window.show();
-    }
-
-    public void setup(VendingMachine vm, double totalAmount) {
+    public void initialize(VendingMachine vm) {
         vendingMachine = vm;
         amountAdded.setText("0.00");
-        totalCost = totalAmount;
-        total.setText(String.format("%.02f", totalAmount));
+        totalCost = vendingMachine.getCart().totalCartPrice();
+        total.setText(String.format("%.02f", totalCost));
         PaymentHandler handler = new PaymentHandler();
 
         payButton.setOnAction(event -> {

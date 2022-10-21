@@ -1,6 +1,14 @@
 package VendingApplication;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.checkerframework.checker.units.qual.C;
+
+import java.io.IOException;
 
 public class VendingMachine {
     private Inventory inventory;
@@ -42,5 +50,21 @@ public class VendingMachine {
     public void logOut() {
     	this.isLogin = false;
         this.account = null;
+    }
+
+    public void changeScene(ActionEvent event, String scene) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getClassLoader().getResource(scene));
+        Parent root = loader.load();
+
+        Scene mainPanelView = new Scene(root);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        Controller controller = loader.getController();
+        controller.initialize(this);
+
+        window.setScene(mainPanelView);
+        window.show();
     }
 }

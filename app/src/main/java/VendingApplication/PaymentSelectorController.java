@@ -12,7 +12,7 @@ import javafx.event.ActionEvent;
 
 import java.io.IOException;
 
-public class PaymentSelectorController {
+public class PaymentSelectorController implements Controller {
 
     @FXML
     private Button cashButton;
@@ -37,29 +37,7 @@ public class PaymentSelectorController {
             case "back" -> sceneName += "cart.fxml";
         }
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource(sceneName));
-        Parent root = loader.load();
-        Scene panelView = new Scene(root);
-        switch (type) {
-            case "back" -> {
-                CartController controller = loader.getController();
-                controller.initialize(vendingMachine);
-            }
-            case "cash" -> {
-                PayingCashController controller = loader.getController();
-                controller.setup(vendingMachine, vendingMachine.getCart().totalCartPrice());
-            }
-            case "card" -> {
-                PayingCardController controller = loader.getController();
-                controller.initialize(vendingMachine);
-            }
-        }
-
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(panelView);
-        window.show();
+        vendingMachine.changeScene(event, sceneName);
     }
 
     public void cashButtonAction(ActionEvent event) throws IOException {

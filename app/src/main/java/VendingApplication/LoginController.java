@@ -43,7 +43,7 @@ public class LoginController implements Controller {
         // Check if username and password are correct
         if (checkLogin(username, password)) {
             // Send signal to main controller - TO FIX
-            vendingMachine.addAccount(new Account(username, password, null, null, null));
+            vendingMachine.addAccount(new Account(username, password, null, null, null, "Normal"));
             // Change to successful login page
             changeScene(event, "back");
         } else {
@@ -67,7 +67,7 @@ public class LoginController implements Controller {
         String password = passwordText.getText();
 
         if (userManager.addUser(username, password)) {
-            vendingMachine.addAccount(new Account(username, password, null, null, null));
+            vendingMachine.addAccount(new Account(username, password, null, null, null, "Normal"));
             changeScene(event, "back");
             System.out.println("Successful creation");
         } else {
@@ -98,24 +98,7 @@ public class LoginController implements Controller {
         }
 
         // Loads next relevant scene
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource(sceneName));
-        Parent root = loader.load();
-        Scene panelView = new Scene(root);
-
-
-        if (type.equals("back")) {
-            SelectionController controller = loader.getController();
-            controller.initialize(vendingMachine);
-        } else {
-            LoginController controller = loader.getController();
-            controller.initialize(vendingMachine);
-        }
-
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(panelView);
-        window.show();
+        vendingMachine.changeScene(event, sceneName);
     }
 
     private boolean checkLogin(String login, String pass) {

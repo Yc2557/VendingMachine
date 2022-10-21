@@ -19,7 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class PayingCardController {
+public class PayingCardController implements Controller {
 
     @FXML
     private TextField cardName;
@@ -48,7 +48,7 @@ public class PayingCardController {
     @FXML
     private Button yesButton;
 
-    private CardHandler handler = new CardHandler();
+    private final CardHandler handler = new CardHandler();
     private String nameText;
     private String numberText;
 
@@ -85,36 +85,14 @@ public class PayingCardController {
     public void changeScene(ActionEvent event, String type) throws IOException{
 
         String sceneName = "gui/";
-        if (type.equals("validCard")) {
-            sceneName += "SaveCard.fxml";
-        } else if (type.equals("backCard")) {
-            sceneName += "PayingCard.fxml";
-        } else if (type.equals("backPay")) {
-            sceneName += "PaymentSelector.fxml";
-        } else if (type.equals("completed")) {
-            sceneName += "Selection.fxml";
-        }
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource(sceneName));
-
-        Parent root = loader.load();
-        Scene panelView = new Scene(root);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         switch (type) {
-            case "validCard", "backCard", "backPay" -> {
-                PayingCardController controller = loader.getController();
-                controller.initialize(vendingMachine);
-            }
-            case "completed" -> {
-                SelectionController controller = loader.getController();
-                controller.initialize(vendingMachine);
-            }
+            case "validCard" -> sceneName += "SaveCard.fxml";
+            case "backCard" -> sceneName += "PayingCard.fxml";
+            case "backPay" -> sceneName += "PaymentSelector.fxml";
+            case "completed" -> sceneName += "Selection.fxml";
         }
 
-        window.setScene(panelView);
-        window.show();
+        vendingMachine.changeScene(event, sceneName);
     }
 
     public void backCardButtonAction(ActionEvent event) throws IOException {

@@ -1,1 +1,1 @@
-{"users":[{"password":"hou","purchaseHistory":"","creditCard":"1234567890","username":"kevin"},{"password":"test","purchaseHistory":"","cardName":"m","cardNumber":"1","username":"test"}]}
+{"users":[{"password":"hou","purchaseHistory":"","role":"Normal","creditCard":"1234567890","username":"kevin"},{"password":"test","purchaseHistory":"","cardName":"m","cardNumber":"1","username":"test"}]}
