@@ -32,7 +32,7 @@ public class LoginController implements Controller {
     @FXML
     private Text invalidPathText;
 
-    public UserManager userManager = new UserManager();
+    public UserManager userManager = new UserManager("src/main/resources/data/user.json");
 
     private VendingMachine vendingMachine;
 

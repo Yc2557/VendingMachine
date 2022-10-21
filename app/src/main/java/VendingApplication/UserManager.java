@@ -7,7 +7,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 public class UserManager {
-    private final String filePath = "src/main/resources/data/user.json";
+    private String filePath;
+
+    public UserManager(String filePath) {
+        this.filePath = filePath;
+    }
 
     /**
      * Finds the user JSONObject based on username.
@@ -50,12 +54,22 @@ public class UserManager {
         return (String) user.get("username");
     }
 
+    public String getCardName(String username) {
+        JSONObject user = findUser(username);
+        return (String) user.get("cardName");
+    }
+
+    public String getCardNumber(String username) {
+        JSONObject user = findUser(username);
+        return (String) user.get("cardNumber");
+    }
+
     public boolean addUser(String username, String password) {
         // Check that both username and password are not null
-        if (username == null || password == null) {
+        if (username == null || username.contains(" ") || password == null) {
             return false;
         }
-        // Check is username already present in database
+        // Check if username already present in database
         if (findUser(username) != null) {
             return false;
         }
@@ -72,6 +86,41 @@ public class UserManager {
             newUser.put("creditCard", "");
             newUser.put("purchaseHistory", "");
             users.add(newUser);
+
+            FileWriter file = new FileWriter(filePath);
+            file.write(jsonObject.toJSONString());
+            file.flush();
+            file.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            throw new RuntimeException(e);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        return true;
+    }
+
+    public boolean addCreditCard(String username, String cardName, String cardNumber) {
+        // Check that both username and password are not null
+        if (username == null || cardName == null || cardNumber == null) {
+            return false;
+        }
+
+        try {
+            FileReader reader = new FileReader(filePath);
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+            JSONArray users = (JSONArray) jsonObject.get("users");
+
+            for (Object user : users) {
+                JSONObject userObject = (JSONObject) user;
+                String userUsername = (String) userObject.get("username");
+                if (userUsername.equals(username)) {
+                    userObject.put("cardName", cardName);
+                    userObject.put("cardNumber", cardNumber);
+                }
+            }
 
             FileWriter file = new FileWriter(filePath);
             file.write(jsonObject.toJSONString());
