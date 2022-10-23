@@ -28,7 +28,7 @@ public class PayingCardController implements Controller {
     private TextField cardNumber;
 
     @FXML
-    private TextField totalText;
+    private TextField totalText = new TextField("");
 
     @FXML
     private Button backButtonCard;
@@ -70,11 +70,9 @@ public class PayingCardController implements Controller {
         if (handler.isValidCard()) {
             // paid successfully
             if (vendingMachine.isLogin) {
-                // savecarddetails needs the first field to be username
                 handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum());
                 vendingMachine.addHistory();
                 vendingMachine.getCart().clearCart();
-                vendingMachine.logOut();
                 changeScene(event, "validCard");
             } else {
                 // not logged in, don't offer to save card
@@ -100,25 +98,20 @@ public class PayingCardController implements Controller {
         vendingMachine.changeScene(event, sceneName);
     }
 
-    public void backCardButtonAction(ActionEvent event) throws IOException {
-        // Go back from SaveCard to PayingCard
-        changeScene(event, "backCard");
-    }
-
     public void backPaymentsButtonAction(ActionEvent event) throws IOException {
         // Go back from PayingCard to PaymentSelector
         changeScene(event, "backPay");
     }
 
     public void yesButtonAction(ActionEvent event) throws IOException {
+        vendingMachine.logOut();
         changeScene(event, "completed");
-        // Transaction completed
-
     }
 
     public void noButtonAction(ActionEvent event) throws IOException {
         // Overwrites saved card details
         handler.saveCardDetails(vendingMachine.getAccount().getUsername(), null, null);
+        vendingMachine.logOut();
         changeScene(event, "completed");
     }
 
