@@ -28,7 +28,7 @@ public class PayingCardController implements Controller {
     private TextField cardNumber;
 
     @FXML
-    private TextField total;
+    private TextField totalText;
 
     @FXML
     private Button backButtonCard;
@@ -132,5 +132,6 @@ public class PayingCardController implements Controller {
 
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
+        this.totalText.setText("$" + String.format("%.02f", this.vendingMachine.getCart().totalCartPrice()));
     }
 }
