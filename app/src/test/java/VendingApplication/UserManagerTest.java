@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,6 +31,7 @@ class UserManagerTest {
         itemObj.put("cardName", "Joe");
         itemObj.put("cardNumber", "10000");
         itemObj.put("password", "password");
+        itemObj.put("userRole", "customer");
 
         users.add(itemObj);
 
@@ -40,6 +42,7 @@ class UserManagerTest {
         itemObj2.put("cardName", "Joe");
         itemObj2.put("cardNumber", "10000");
         itemObj2.put("password", "password");
+        itemObj.put("userRole", "customer");
 
         users.add(itemObj2);
 
@@ -60,17 +63,20 @@ class UserManagerTest {
         assertEquals("10000", userManager.getCardNumber("user"));
         assertEquals("password", userManager.getPassword("user"));
         assertEquals("user", userManager.getUsername("user"));
+        assertEquals("customer", userManager.getRole("user"));
+
     }
 
     @Test
     public void addUserTest() {
         UserManager userManager = new UserManager("src/test/resources/userManagerTest.json");
-        assertTrue(userManager.addUser("user3", "password"));
-        assertFalse(userManager.addUser("user3", "password"));
-        assertFalse(userManager.addUser("user", "password"));
-        assertFalse(userManager.addUser("user", null));
-        assertFalse(userManager.addUser(null, "password"));
-        assertFalse(userManager.addUser("  ", "password"));
+        assertTrue(userManager.addUser("user3", "password", "customer"));
+        assertFalse(userManager.addUser("user3", "password", "customer"));
+        assertFalse(userManager.addUser("user", "password", "customer"));
+        assertFalse(userManager.addUser("user", null, "customer"));
+        assertFalse(userManager.addUser(null, "password", "customer"));
+        assertFalse(userManager.addUser(null, "password", null));
+        assertFalse(userManager.addUser("  ", "password", "customer"));
     }
 
     @Test
@@ -80,6 +86,15 @@ class UserManagerTest {
         assertFalse(userManager.addCreditCard(null, "Joe", "10000"));
         assertFalse(userManager.addCreditCard("user", null, "10000"));
         assertFalse(userManager.addCreditCard("user", "Joe", null));
+    }
 
+    @Test
+    public void historyTest() {
+        UserManager userManager = new UserManager("src/test/resources/userManagerTest.json");
+        List<String> testHistory = new ArrayList<String>();
+        testHistory.add("test");
+        testHistory.add("test2");
+        userManager.addHistory("user", testHistory);
+        assertEquals(testHistory, userManager.getHistory("user"));
     }
 }
