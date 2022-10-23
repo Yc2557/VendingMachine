@@ -13,23 +13,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PaymentTest {
 
-    @Test
-    public void testCorrectQuantities() {
-        try {
-            PaymentHandler handler = new PaymentHandler();
-            handler.processPayment(30.00, 35.45);
+    // @Test
+    // public void testCorrectQuantities() {
+    // try {
+    // PaymentHandler handler = new PaymentHandler();
+    // handler.processPayment(30.00, 35.45);
 
-            JSONParser jsonParser = new JSONParser();
-            JSONObject database = (JSONObject) jsonParser.parse(new FileReader("src/main/resources/data/cash.json"));
-            assertEquals((long) database.get("5"),4);
-            assertEquals((long) database.get("0.20"), 3);
-            assertEquals((long) database.get("0.05"), 4);
+    // JSONParser jsonParser = new JSONParser();
+    // JSONObject database = (JSONObject) jsonParser.parse(new
+    // FileReader("src/main/resources/data/cash.json"));
+    // assertEquals((long) database.get("5"),4);
+    // assertEquals((long) database.get("0.20"), 3);
+    // assertEquals((long) database.get("0.05"), 4);
 
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found!");
-            throw new RuntimeException(e);
-        } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    // } catch (FileNotFoundException e) {
+    // System.out.println("File not found!");
+    // throw new RuntimeException(e);
+    // } catch (IOException | ParseException e) {
+    // throw new RuntimeException(e);
+    // }
+    // }
 }

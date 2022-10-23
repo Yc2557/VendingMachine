@@ -55,7 +55,7 @@ public class PayingCashController implements Controller {
     @FXML
     private Button Note100Dollar;
 
-    private  List<Button> buttons = new ArrayList<>();
+    private List<Button> buttons = new ArrayList<>();
     private double totalCost;
 
     private VendingMachine vendingMachine;
@@ -113,15 +113,16 @@ public class PayingCashController implements Controller {
             }
         }
 
-        currentAmount = Math.round(currentAmount*100);
+        currentAmount = Math.round(currentAmount * 100);
         currentAmount /= 100;
 
         String currentAmountStr = String.format("%.02f", currentAmount);
         amountAdded.setText(currentAmountStr);
 
-        // Keeping track of the coins/notes that need to be added if a transaction is completed
+        // Keeping track of the coins/notes that need to be added if a transaction is
+        // completed
         if (cashAdded.containsKey(moneyStr)) {
-            cashAdded.put(moneyStr, cashAdded.get(moneyStr)+1);
+            cashAdded.put(moneyStr, cashAdded.get(moneyStr) + 1);
         } else {
             cashAdded.put(moneyStr, (long) 1);
         }
@@ -138,12 +139,13 @@ public class PayingCashController implements Controller {
         handler.processPayment(totalCost, Double.parseDouble(amountAdded.getText()));
 
         if (!handler.getEnoughMoney()) {
-            errorText.setText("Not enough money provided. Please enter the remaining amount or you can cancel the transaction.");
+            errorText.setText(
+                    "Not enough money provided. Please enter the remaining amount or you can cancel the transaction.");
             errorText.setFill(Color.RED);
             handler.setEnoughMoney(true);
-        }
-        else if (!handler.getEnoughChange()) {
-            errorText.setText("There is no available change for the inserted money. You can try a different set of notes/coins or cancel the transaction.");
+        } else if (!handler.getEnoughChange()) {
+            errorText.setText(
+                    "There is no available change for the inserted money. You can try a different set of notes/coins or cancel the transaction.");
             errorText.setFill(Color.RED);
             handler.setEnoughChange(true);
         }
@@ -154,10 +156,10 @@ public class PayingCashController implements Controller {
             double changeAmount = Double.parseDouble(amountAdded.getText()) - totalCost;
             String changeStr = String.format("%.02f", changeAmount);
             change.setText(changeStr);
+            vendingMachine.addHistory();
             vendingMachine.getCart().clearCart();
             vendingMachine.changeScene(event, "gui/Selection.fxml");
         }
-
 
     }
 
@@ -187,8 +189,8 @@ public class PayingCashController implements Controller {
         Collections.addAll(buttons, Coin5Cent, Coin10Cent, Coin20Cent, Coin50Cent, Coin1Dollar, Coin2Dollar,
                 Note5Dollar, Note10Dollar, Note20Dollar, Note50Dollar, Note100Dollar);
 
-        for (Button b: buttons) {
-            //Define Button Action
+        for (Button b : buttons) {
+            // Define Button Action
             b.setOnAction(event -> {
                 clickedOnMoney(b, handler);
             });

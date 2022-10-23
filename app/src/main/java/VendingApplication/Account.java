@@ -11,7 +11,7 @@ public class Account {
     private List<String> history;
     private String role;
 
-    public Account(String u, String p, String cardNumber,  String cardName, List<String> history, String role) {
+    public Account(String u, String p, String cardNumber, String cardName, List<String> history, String role) {
         this.username = u;
         this.password = p;
         this.cardNumber = cardNumber;
@@ -35,8 +35,6 @@ public class Account {
     public String getRole() {
         return role;
     }
-
-
 
     public boolean verifyPassword(String p) {
         return p.equals(password);

@@ -2,15 +2,20 @@
   "users": [
     {
       "password": "hou",
-      "purchaseHistory": "",
+      "purchaseHistory": [
+        "Pepsi",
+        "Sprite"
+      ],
       "cardName": "m",
+      "userRole": "customer",
       "cardNumber": "1",
       "username": "kevin"
     },
     {
       "password": "test",
-      "purchaseHistory": "",
+      "purchaseHistory": [],
       "cardName": "m",
+      "userRole": "customer",
       "cardNumber": "1",
       "username": "test"
     }
