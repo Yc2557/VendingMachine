@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class PaymentHandler {
 
-    private final String FILE_NAME = "src/main/resources/data/cash.json";
+    private String file_name = "src/main/resources/data/cash.json";
     private boolean isEnoughMoney = true;
     private boolean hasEnoughChange = true;
     private Map<String,Long> cashAdded = new HashMap<>();
@@ -26,7 +26,7 @@ public class PaymentHandler {
             }
 
             JSONParser jsonParser = new JSONParser();
-            JSONObject database = (JSONObject) jsonParser.parse(new FileReader(FILE_NAME));
+            JSONObject database = (JSONObject) jsonParser.parse(new FileReader(file_name));
 
             String[] amounts = {"100", "50", "20", "10", "5", "2", "1", "0.50", "0.20", "0.10", "0.05"};
 
@@ -63,7 +63,7 @@ public class PaymentHandler {
                     long numNotesLeft = entry.getValue();
                     database.put(amount, numNotesLeft);
 
-                    FileWriter writer = new FileWriter(FILE_NAME);
+                    FileWriter writer = new FileWriter(file_name);
                     writer.write(database.toJSONString());
                     writer.flush();
                     writer.close();
@@ -74,7 +74,7 @@ public class PaymentHandler {
                     long numNotesAdded = entry.getValue();
                     database.put(amount, (long) database.get(amount) + numNotesAdded);
 
-                    FileWriter writer = new FileWriter(FILE_NAME);
+                    FileWriter writer = new FileWriter(file_name);
                     writer.write(database.toJSONString());
                     writer.flush();
                     writer.close();
@@ -106,5 +106,9 @@ public class PaymentHandler {
 
     public Map<String,Long> getCashAdded() {
         return this.cashAdded;
+    }
+
+    public void setFilename(String name) {
+        this.file_name = name;
     }
 }
