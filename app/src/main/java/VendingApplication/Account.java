@@ -9,6 +9,7 @@ public class Account {
     private String cardName;
 
     private List<String> history;
+    private String role; // owner, seller, cashier, user
 
     public Account(String u, String p, String cardNumber,  String cardName, List<String> history) {
         this.username = u;
@@ -16,6 +17,7 @@ public class Account {
         this.cardNumber = cardNumber;
         this.cardName = cardName;
         this.history = history;
+        this.role = "USER";
     }
 
     public String getUsername() {
@@ -26,9 +28,12 @@ public class Account {
         return password;
     }
 
-
-
     public boolean verifyPassword(String p) {
         return p.equals(password);
+    }
+
+    // Set by the owner
+    public void setType(String role) {
+        this.role = role;
     }
 }
