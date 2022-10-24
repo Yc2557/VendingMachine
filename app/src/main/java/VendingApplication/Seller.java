@@ -23,10 +23,10 @@ REQUIREMENTS
 
 public class Seller {
 
-    private String filepath;
+    private Inventory inventory;
 
-    public Seller(String filepath) {
-        this.filepath = filepath;
+    public Seller() {
+        this.inventory = new Inventory();
     }
 
     public JSONObject readJSON(String filepath) {
@@ -46,51 +46,71 @@ public class Seller {
     }
 
     public void modifyName(String currentName, String newName) {
-        JSONObject database = readJSON(filepath);
-        JSONArray products = (JSONArray) database.get("products");
+        JSONObject inventoryJSON = inventory.getJSON("src/main/resources/data/inventory.json");
+        JSONArray products = (JSONArray) inventoryJSON.get("products");
 
-        JSONObject item = null;
-        for (int i=0; i<products.size(); i++) {
-            JSONObject product = (JSONObject) products.get(i);
-            if (currentName.equals(product.get("name"))) {
-                item = product;
+//        System.out.println(currentName + "->" + newName);
+
+        for (Object product : products) {
+            JSONObject productObj = (JSONObject) product;
+            if (currentName.equals(productObj.get("name"))) {
+                System.out.println("BINGO!");
+                productObj.put("name", newName);
+                products.add(productObj);
                 break;
             }
         }
 
-        item.put("name", newName);
+        inventoryJSON.put("products", products);
+        inventory.writeJsonFile("src/main/resources/data/inventory.json", inventoryJSON);
     }
 
-    public void modifyCode(String currentCode, String newCode) {
-        JSONObject database = readJSON(filepath);
-        JSONArray products = (JSONArray) database.get("products");
+//    public void modifyName(String currentName, String newName) {
+//        JSONObject database = readJSON(filepath);
+//        JSONArray products = (JSONArray) database.get("products");
+//
+//        JSONObject item = null;
+//        for (int i=0; i<products.size(); i++) {
+//            JSONObject product = (JSONObject) products.get(i);
+//            if (currentName.equals(product.get("name"))) {
+//                item = product;
+//                break;
+//            }
+//        }
+//
+//        item.put("name", newName);
+//    }
 
-        JSONObject item = null;
-        for (int i=0; i<products.size(); i++) {
-            JSONObject product = (JSONObject) products.get(i);
-            if (currentCode.equals(product.get("code"))) {
-                item = product;
-                break;
-            }
-        }
-
-        item.put("code", newCode);
-    }
-
-    public void modifyCategory(String currentCategory, String newCategory) {
-        JSONObject database = readJSON(filepath);
-        JSONArray products = (JSONArray) database.get("products");
-
-        JSONObject item = null;
-        for (int i=0; i<products.size(); i++) {
-            JSONObject product = (JSONObject) products.get(i);
-            if (currentCategory.equals(product.get("category"))) {
-                item = product;
-                break;
-            }
-        }
-
-        item.put("code", newCategory);
-    }
+//    public void modifyCode(String currentCode, String newCode) {
+//        JSONObject database = readJSON(filepath);
+//        JSONArray products = (JSONArray) database.get("products");
+//
+//        JSONObject item = null;
+//        for (int i=0; i<products.size(); i++) {
+//            JSONObject product = (JSONObject) products.get(i);
+//            if (currentCode.equals(product.get("code"))) {
+//                item = product;
+//                break;
+//            }
+//        }
+//
+//        item.put("code", newCode);
+//    }
+//
+//    public void modifyCategory(String currentCategory, String newCategory) {
+//        JSONObject database = readJSON(filepath);
+//        JSONArray products = (JSONArray) database.get("products");
+//
+//        JSONObject item = null;
+//        for (int i=0; i<products.size(); i++) {
+//            JSONObject product = (JSONObject) products.get(i);
+//            if (currentCategory.equals(product.get("category"))) {
+//                item = product;
+//                break;
+//            }
+//        }
+//
+//        item.put("code", newCategory);
+//    }
 
 }

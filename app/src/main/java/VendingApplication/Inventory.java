@@ -6,6 +6,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,12 +62,32 @@ public class Inventory {
             inventory.add(item);
             List<String> list = categories.get(category);
             list.add(name);
-
         }
     }
 
-    public void writeJsonFile(String filePath) { //write inventory data
+    public void writeJsonFile(String filePath, JSONObject inventory) { //write inventory data
+        try {
+            FileWriter writer = new FileWriter(filePath);
+            writer.write(inventory.toJSONString());
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error reading file");
+        }
 
+    }
+
+    public JSONObject getJSON(String filepath) {
+        try {
+            JSONParser jsonParser = new JSONParser();
+            JSONObject inventory = (JSONObject) jsonParser.parse(new FileReader(filepath));
+            return inventory;
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+            System.out.println("Error reading file");
+            return null;
+        }
     }
 
     public void addAmount(Item item, int amount) { //add amount to inventory
