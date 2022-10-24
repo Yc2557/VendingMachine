@@ -43,10 +43,16 @@ public class PayingCardController implements Controller {
     private Text errorText;
 
     @FXML
+    private Text foundCardName = new Text();
+
+    @FXML
     private Button noButton;
 
     @FXML
     private Button yesButton;
+
+    @FXML
+    private Button existingCardButton = new Button();
 
     private final CardHandler handler = new CardHandler();
     private String nameText;
@@ -85,6 +91,18 @@ public class PayingCardController implements Controller {
         }
     }
 
+    public void suggestCard() {
+
+        String foundCardString = handler.findCard(vendingMachine.getAccount().getUsername());
+        if (foundCardString.equals("")) {
+            return;
+        } else {
+            foundCardName.setText("Saved Card Found: " + foundCardString);
+            foundCardName.setVisible(true);
+            existingCardButton.setVisible(true);
+        }
+    }
+
     public void changeScene(ActionEvent event, String type) throws IOException {
 
         String sceneName = "gui/";
@@ -96,6 +114,12 @@ public class PayingCardController implements Controller {
         }
 
         vendingMachine.changeScene(event, sceneName);
+    }
+
+    public void useExistingCardAction(ActionEvent event) throws IOException {
+        vendingMachine.getCart().clearCart();
+        vendingMachine.logOut();
+        changeScene(event, "completed");
     }
 
     public void backPaymentsButtonAction(ActionEvent event) throws IOException {
@@ -110,7 +134,7 @@ public class PayingCardController implements Controller {
 
     public void noButtonAction(ActionEvent event) throws IOException {
         // Overwrites saved card details
-        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), null, null);
+        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), "", "");
         vendingMachine.logOut();
         changeScene(event, "completed");
     }
@@ -126,5 +150,11 @@ public class PayingCardController implements Controller {
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
         this.totalText.setText("$" + String.format("%.02f", this.vendingMachine.getCart().totalCartPrice()));
+        this.foundCardName.setVisible(false);
+        this.existingCardButton.setVisible(false);
+
+        if (vendingMachine.isLogin) {
+            suggestCard();
+        }
     }
 }

@@ -11,7 +11,7 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <Button fx:id="PayButton" layoutX="450.0" layoutY="247.0" mnemonicParsing="false" onAction="#payButtonAction" prefWidth="63.0" text="Pay" />
+            <Button fx:id="PayButton" layoutX="186.0" layoutY="272.0" mnemonicParsing="false" onAction="#payButtonAction" prefWidth="63.0" text="Pay" />
             <TextField fx:id="cardName" layoutX="96.0" layoutY="145.0" promptText="Card Name" />
             <TextField fx:id="cardNumber" layoutX="96.0" layoutY="224.0" promptText="Card Number" />
           <Text fx:id="errorText" fill="RED" layoutX="118.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="306.39999999999986" />
@@ -30,17 +30,27 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Button fx:id="backButtonPayments" layoutX="363.0" layoutY="247.0" mnemonicParsing="false" onAction="#backPaymentsButtonAction" prefWidth="63.0" text="Back" />
-            <Text layoutX="374.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total">
+            <Button fx:id="backButtonPayments" layoutX="96.0" layoutY="272.0" mnemonicParsing="false" onAction="#backPaymentsButtonAction" prefWidth="63.0" text="Back" />
+            <Text layoutX="362.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextField fx:id="totalText" editable="false" layoutX="376.0" layoutY="175.0" prefHeight="34.0" prefWidth="163.0" text="\$">
+            <TextField fx:id="totalText" editable="false" layoutX="362.0" layoutY="176.0" prefHeight="34.0" prefWidth="163.0" text="\$">
                <font>
                   <Font size="18.0" />
                </font>
             </TextField>
+            <Button fx:id="existingCardButton" layoutX="362.0" layoutY="327.0" mnemonicParsing="false" onAction="#useExistingCardAction" prefHeight="25.0" prefWidth="163.0" text="Use Existing Card" visible="false">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Text fx:id="foundCardName" layoutX="363.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saved Card Found: " visible="false">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
       </children>
     </AnchorPane>
   </children>
