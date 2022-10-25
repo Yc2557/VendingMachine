@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VendingApplication.ListChangeController">
+   <children>
+      <ListView fx:id="moneyList" layoutX="144.0" layoutY="74.0" prefHeight="255.0" prefWidth="200.0" />
+      <ListView fx:id="quantityList" layoutX="344.0" layoutY="74.0" prefHeight="255.0" prefWidth="100.0" />
+      <Text layoutX="344.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantity">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="144.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Coin/Note">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="backButton" layoutX="520.0" layoutY="360.0" mnemonicParsing="false" onAction="#clickOnBackButton" prefHeight="35.0" prefWidth="76.0" text="Back" />
+   </children>
+</AnchorPane>

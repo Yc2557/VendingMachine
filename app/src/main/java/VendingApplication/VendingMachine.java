@@ -40,7 +40,7 @@ public class VendingMachine {
         return cart;
     }
 
-    public void addAccount(Account account) {
+    public void setAccount(Account account) {
         this.isLogin = true;
         this.account = account;
     }
