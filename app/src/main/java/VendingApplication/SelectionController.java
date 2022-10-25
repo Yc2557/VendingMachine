@@ -52,6 +52,7 @@ public class SelectionController implements Controller {
 
     public void initialize(VendingMachine vm) {
 
+        String StartText = "Latest Items Bought";
         vendingMachine = vm;
 
         if (vendingMachine.isLogin) {
@@ -60,6 +61,7 @@ public class SelectionController implements Controller {
             logOutButton.setDisable(false);
             logOutButton.setVisible(true);
             welcomeText.setText(String.format("Welcome %s!", vendingMachine.getAccount().getUsername()));
+            StartText = "Latest Items Bought by You";
         } else {
             loginButton.setDisable(false);
             loginButton.setVisible(true);
