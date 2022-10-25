@@ -78,7 +78,6 @@ public class InventoryTest {
         writer.write(database.toJSONString());
 
         writer.close();
-
     }
 
     @Test

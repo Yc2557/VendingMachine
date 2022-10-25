@@ -21,4 +21,9 @@ public class CashierSelectionController implements Controller {
     public void clickOnChangeReport(ActionEvent event) throws IOException {
         vendingMachine.changeScene(event, "gui/ListChange.fxml");
     }
+
+    public void clickLogOut(ActionEvent event) throws IOException {
+        vendingMachine.logOut();
+        vendingMachine.changeScene(event, "gui/Selection.fxml");
+    }
 }
