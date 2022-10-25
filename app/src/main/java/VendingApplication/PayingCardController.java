@@ -25,7 +25,7 @@ public class PayingCardController implements Controller {
     private TextField cardName;
 
     @FXML
-    private TextField cardNumber;
+    private PasswordField cardNumber;
 
     @FXML
     private TextField totalText = new TextField("");
@@ -50,6 +50,12 @@ public class PayingCardController implements Controller {
 
     @FXML
     private Button yesButton;
+
+    @FXML
+    private Text namePrompt = new Text();
+
+    @FXML
+    private Text numberPrompt = new Text();
 
     @FXML
     private Button existingCardButton = new Button();
@@ -94,12 +100,16 @@ public class PayingCardController implements Controller {
     public void suggestCard() {
 
         String foundCardString = handler.findCard(vendingMachine.getAccount().getUsername());
-        if (foundCardString.equals("")) {
-            return;
+
+        if (foundCardString.equals("") || foundCardString.equals(null)) {
+            //
         } else {
-            foundCardName.setText("Saved Card Found: " + foundCardString);
-            foundCardName.setVisible(true);
-            existingCardButton.setVisible(true);
+            this.foundCardName.setVisible(true);
+            this.foundCardName.setText("Saved Card Found: " + foundCardString);
+            this.namePrompt.setText("New Card Name");
+            this.numberPrompt.setText("New Card Number");
+            this.existingCardButton.setDisable(false);
+            this.existingCardButton.setVisible(true);
         }
     }
 
@@ -150,11 +160,15 @@ public class PayingCardController implements Controller {
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
         this.totalText.setText("$" + String.format("%.02f", this.vendingMachine.getCart().totalCartPrice()));
-        this.foundCardName.setVisible(false);
-        this.existingCardButton.setVisible(false);
+
 
         if (vendingMachine.isLogin) {
             suggestCard();
+        } else {
+            this.foundCardName.setVisible(false);
+            this.existingCardButton.setDisable(true);
+            this.existingCardButton.setVisible(false);
         }
+
     }
 }
