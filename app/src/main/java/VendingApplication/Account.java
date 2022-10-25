@@ -36,6 +36,10 @@ public class Account {
         return role;
     }
 
+    public List<String> getHistory() {
+        return history;
+    }
+
     public boolean verifyPassword(String p) {
         return p.equals(password);
     }

@@ -77,10 +77,11 @@ public class UserManager {
 
     public List<String> getHistory(String username) {
         JSONObject user = findUser(username);
-        List<String> history = new ArrayList<String>();
+        List<String> history = new ArrayList<>();
         JSONArray purchaseHistory = (JSONArray) user.get("purchaseHistory");
-        for (int i = 0; i < purchaseHistory.size(); i++) {
-            String purchase = (String) purchaseHistory.get(i);
+        for (Object o : purchaseHistory) {
+            String purchase = (String) o;
+            System.out.println(purchase);
             history.add(purchase);
         }
         return history;
