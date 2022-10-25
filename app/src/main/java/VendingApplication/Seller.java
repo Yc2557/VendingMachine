@@ -8,6 +8,9 @@ import org.json.simple.parser.ParseException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /*
 REQUIREMENTS
@@ -45,16 +48,14 @@ public class Seller {
         return null;
     }
 
+    // No duplicate products test case
     public void modifyName(String currentName, String newName) {
         JSONObject inventoryJSON = inventory.getJSON("src/main/resources/data/inventory.json");
         JSONArray products = (JSONArray) inventoryJSON.get("products");
 
-//        System.out.println(currentName + "->" + newName);
-
         for (Object product : products) {
             JSONObject productObj = (JSONObject) product;
             if (currentName.equals(productObj.get("name"))) {
-                System.out.println("BINGO!");
                 productObj.put("name", newName);
                 products.add(productObj);
                 break;
@@ -65,52 +66,95 @@ public class Seller {
         inventory.writeJsonFile("src/main/resources/data/inventory.json", inventoryJSON);
     }
 
-//    public void modifyName(String currentName, String newName) {
-//        JSONObject database = readJSON(filepath);
-//        JSONArray products = (JSONArray) database.get("products");
-//
-//        JSONObject item = null;
-//        for (int i=0; i<products.size(); i++) {
-//            JSONObject product = (JSONObject) products.get(i);
-//            if (currentName.equals(product.get("name"))) {
-//                item = product;
-//                break;
-//            }
-//        }
-//
-//        item.put("name", newName);
-//    }
+    // No duplicate ids test case
+    public boolean modifyId(String currentId, String newId) {
+        JSONObject inventoryJSON = inventory.getJSON("src/main/resources/data/inventory.json");
+        JSONArray products = (JSONArray) inventoryJSON.get("products");
+        String id;
 
-//    public void modifyCode(String currentCode, String newCode) {
-//        JSONObject database = readJSON(filepath);
-//        JSONArray products = (JSONArray) database.get("products");
-//
-//        JSONObject item = null;
-//        for (int i=0; i<products.size(); i++) {
-//            JSONObject product = (JSONObject) products.get(i);
-//            if (currentCode.equals(product.get("code"))) {
-//                item = product;
-//                break;
-//            }
-//        }
-//
-//        item.put("code", newCode);
-//    }
-//
-//    public void modifyCategory(String currentCategory, String newCategory) {
-//        JSONObject database = readJSON(filepath);
-//        JSONArray products = (JSONArray) database.get("products");
-//
-//        JSONObject item = null;
-//        for (int i=0; i<products.size(); i++) {
-//            JSONObject product = (JSONObject) products.get(i);
-//            if (currentCategory.equals(product.get("category"))) {
-//                item = product;
-//                break;
-//            }
-//        }
-//
-//        item.put("code", newCategory);
-//    }
+        for (Object product : products) {
+            JSONObject productObj = (JSONObject) product;
+            id = Long.toString((Long) productObj.get("id"));
+            if (currentId.equals(id)) {
+                productObj.put("id", Long.valueOf(newId));
+                products.add(productObj);
+                break;
+            }
+        }
+
+        inventoryJSON.put("products", products);
+        inventory.writeJsonFile("src/main/resources/data/inventory.json", inventoryJSON);
+        return true;
+    }
+
+    public boolean modifyCategory(String currentCategory, String newCategory) {
+        JSONObject inventoryJSON = inventory.getJSON("src/main/resources/data/inventory.json");
+        JSONArray products = (JSONArray) inventoryJSON.get("products");
+        List<String> categories = Arrays.asList("drinks", "chips", "chocolates", "candies");
+
+        if (!categories.contains(newCategory)) {
+            return false;
+        }
+
+        for (Object product : products) {
+            JSONObject productObj = (JSONObject) product;
+            if (currentCategory.equals(productObj.get("category"))) {
+                productObj.put("category", newCategory);
+                products.add(productObj);
+                break;
+            }
+        }
+
+        inventoryJSON.put("products", products);
+        inventory.writeJsonFile("src/main/resources/data/inventory.json", inventoryJSON);
+        return true;
+    }
+
+    public boolean modifyPrice(String name, String newPrice) {
+        JSONObject inventoryJSON = inventory.getJSON("src/main/resources/data/inventory.json");
+        JSONArray products = (JSONArray) inventoryJSON.get("products");
+
+        // Invalid price
+        if (Double.valueOf(newPrice) <= 0) {
+            return false;
+        }
+
+        for (Object product : products) {
+            JSONObject productObj = (JSONObject) product;
+            if (name.equals(productObj.get("name"))) {
+                productObj.put("price", Double.valueOf(newPrice));
+                products.add(productObj);
+                break;
+            }
+        }
+
+        inventoryJSON.put("products", products);
+        inventory.writeJsonFile("src/main/resources/data/inventory.json", inventoryJSON);
+        return true;
+    }
+
+    public boolean modifyQuantity(String name, String newQuantity) {
+        JSONObject inventoryJSON = inventory.getJSON("src/main/resources/data/inventory.json");
+        JSONArray products = (JSONArray) inventoryJSON.get("products");
+
+        if (Long.valueOf(newQuantity) < 0 || Long.valueOf(newQuantity) > 15) {
+            return false;
+        }
+
+        for (Object product : products) {
+            JSONObject productObj = (JSONObject) product;
+            if (name.equals(productObj.get("name"))) {
+                productObj.put("quantity", Long.valueOf(newQuantity));
+                products.add(productObj);
+                break;
+            }
+        }
+
+        inventoryJSON.put("products", products);
+        inventory.writeJsonFile("src/main/resources/data/inventory.json", inventoryJSON);
+        return true;
+    }
+
+    // Name Code Category Quantity Price
 
 }

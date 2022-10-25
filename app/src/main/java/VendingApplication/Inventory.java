@@ -75,7 +75,6 @@ public class Inventory {
             e.printStackTrace();
             System.out.println("Error reading file");
         }
-
     }
 
     public JSONObject getJSON(String filepath) {
