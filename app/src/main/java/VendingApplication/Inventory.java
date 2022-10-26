@@ -183,4 +183,19 @@ public class Inventory {
     public HashMap<String, List<String>> getCategories() {
         return categories;
     }
+
+    public boolean exists(String property, String attribute) {
+        String component = null;
+        for (Item item : inventory) {
+            switch (attribute) {
+                case "name" -> component = item.getName();
+                case "id" -> component = item.getItemid();
+            }
+
+            if (component.equals(property)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

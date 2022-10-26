@@ -29,20 +29,30 @@ public class Seller {
         this.inventory = inventory;
     }
 
-    public void modifyName(String currentName, String newName) {
+    public boolean modifyName(String currentName, String newName) {
         Item item = inventory.getItem(currentName);
+
+        if (inventory.exists(newName, "name")) {
+            return false;
+        }
         if (item != null) {
             item.setName(newName);
         }
         inventory.writeJsonFile("src/main/resources/data/inventory.json");
+        return true;
     }
 
-    public void modifyId(String currentName, String newCode) {
+    public boolean modifyId(String currentName, String newCode) {
         Item item = inventory.getItem(currentName);
+
+        if (inventory.exists(newCode, "id")) {
+            return false;
+        }
         if (item != null) {
             item.setItemid(newCode);
         }
         inventory.writeJsonFile("src/main/resources/data/inventory.json");
+        return true;
     }
 
     public boolean modifyCategory(String currentName, String newCategory) {
@@ -85,53 +95,5 @@ public class Seller {
 
         return true;
     }
-
-//    public void modifyName(String currentName, String newName) {
-//        JSONObject database = readJSON(filepath);
-//        JSONArray products = (JSONArray) database.get("products");
-//
-//        JSONObject item = null;
-//        for (int i=0; i<products.size(); i++) {
-//            JSONObject product = (JSONObject) products.get(i);
-//            if (currentName.equals(product.get("name"))) {
-//                item = product;
-//                break;
-//            }
-//        }
-//
-//        item.put("name", newName);
-//    }
-
-//    public void modifyCode(String currentCode, String newCode) {
-//        JSONObject database = readJSON(filepath);
-//        JSONArray products = (JSONArray) database.get("products");
-//
-//        JSONObject item = null;
-//        for (int i=0; i<products.size(); i++) {
-//            JSONObject product = (JSONObject) products.get(i);
-//            if (currentCode.equals(product.get("code"))) {
-//                item = product;
-//                break;
-//            }
-//        }
-//
-//        item.put("code", newCode);
-//    }
-//
-//    public void modifyCategory(String currentCategory, String newCategory) {
-//        JSONObject database = readJSON(filepath);
-//        JSONArray products = (JSONArray) database.get("products");
-//
-//        JSONObject item = null;
-//        for (int i=0; i<products.size(); i++) {
-//            JSONObject product = (JSONObject) products.get(i);
-//            if (currentCategory.equals(product.get("category"))) {
-//                item = product;
-//                break;
-//            }
-//        }
-//
-//        item.put("code", newCategory);
-//    }
 
 }
