@@ -68,12 +68,6 @@ public class PayingCardController implements Controller {
 
     public void payButtonAction(ActionEvent event) throws IOException {
 
-        if (cardName.getText() == null || cardNumber.getText() == null) {
-            // Invalid inputs
-            errorText.setText("Please enter valid card details.");
-            return;
-        }
-
         this.nameText = cardName.getText();
         this.numberText = cardNumber.getText();
 
