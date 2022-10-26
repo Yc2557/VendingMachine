@@ -2,9 +2,9 @@ package VendingApplication;
 
 public class Item {
 
-    private final String itemid;
-    private final String name;
-    private final String category;
+    private String itemid;
+    private String name;
+    private String category;
     private int amount;
     private double price;
 
@@ -48,4 +48,21 @@ public class Item {
     public void addAmount(int amount) {
         this.amount += amount;
     }
+
+    public void setName(String newName) {
+        this.name = newName;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setItemid(String itemid) {
+        this.itemid = itemid;
+    }
+
 }
