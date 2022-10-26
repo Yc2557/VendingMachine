@@ -25,44 +25,16 @@ public class Seller {
 
     private Inventory inventory;
 
-    public Seller() {
-        this.inventory = new Inventory();
-    }
-
-    public JSONObject readJSON(String filepath) {
-        try {
-            JSONParser jsonParser = new JSONParser();
-            JSONObject database = (JSONObject) jsonParser.parse(new FileReader(filepath));
-            return database;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("File not found");
-        }
-        catch (IOException | ParseException e) {
-            e.printStackTrace();
-            System.out.println("Error reading file");
-        }
-        return null;
+    public Seller(Inventory inventory) {
+        this.inventory = inventory;
     }
 
     public void modifyName(String currentName, String newName) {
-        JSONObject inventoryJSON = inventory.getJSON("src/main/resources/data/inventory.json");
-        JSONArray products = (JSONArray) inventoryJSON.get("products");
-
-//        System.out.println(currentName + "->" + newName);
-
-        for (Object product : products) {
-            JSONObject productObj = (JSONObject) product;
-            if (currentName.equals(productObj.get("name"))) {
-                System.out.println("BINGO!");
-                productObj.put("name", newName);
-                products.add(productObj);
-                break;
-            }
+        Item item = inventory.getItem(currentName);
+        if (item != null) {
+            item.setName(newName);
         }
-
-        inventoryJSON.put("products", products);
-        inventory.writeJsonFile("src/main/resources/data/inventory.json", inventoryJSON);
+        inventory.writeJsonFile("src/main/resources/data/inventory.json");
     }
 
 //    public void modifyName(String currentName, String newName) {

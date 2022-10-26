@@ -1,1 +1,53 @@
-{"products":[{"quantity":7,"price":1.5,"name":"Mineral Water","id":0,"category":"drinks"},{"quantity":7,"price":1.5,"name":"Sprite","id":1,"category":"drinks"},{"quantity":7,"price":1.5,"name":"Mars","id":2,"category":"chocolate"},{"quantity":7,"price":1.5,"name":"M&M","id":3,"category":"chocolate"},{"quantity":7,"price":1.5,"name":"Smiths","id":4,"category":"chips"},{"quantity":7,"price":1.5,"name":"Skittles","id":5,"category":"candies"},{"quantity":7,"price":1.5,"name":"Sour Patch","id":6,"category":"candies"}]}
+{
+  "products": [
+    {
+      "quantity": 7,
+      "price": 1.5,
+      "name": "Mineral Water",
+      "id": 0,
+      "category": "drinks"
+    },
+    {
+      "quantity": 7,
+      "price": 1.5,
+      "name": "Sprite",
+      "id": 1,
+      "category": "drinks"
+    },
+    {
+      "quantity": 7,
+      "price": 1.5,
+      "name": "Mars",
+      "id": 2,
+      "category": "chocolate"
+    },
+    {
+      "quantity": 7,
+      "price": 1.5,
+      "name": "M&M",
+      "id": 3,
+      "category": "chocolate"
+    },
+    {
+      "quantity": 7,
+      "price": 1.5,
+      "name": "Smiths",
+      "id": 4,
+      "category": "chips"
+    },
+    {
+      "quantity": 7,
+      "price": 1.5,
+      "name": "Skittles",
+      "id": 5,
+      "category": "candies"
+    },
+    {
+      "quantity": 7,
+      "price": 1.5,
+      "name": "Sour Patch",
+      "id": 6,
+      "category": "candies"
+    }
+  ]
+}

@@ -55,8 +55,7 @@ public class Inventory {
         JSONArray products = (JSONArray) database.get("products");
         for (Object product: products) {
             JSONObject productObject = (JSONObject) product;
-            Long itemidLong = (Long) productObject.get("id");
-            String itemid = itemidLong.toString();
+            String itemid = (String) productObject.get("id");
             String name = (String) productObject.get("name");
             String category = (String) productObject.get("category");
             double price = (double) productObject.get("price");
@@ -137,20 +136,46 @@ public class Inventory {
     }
 
     public List<String> getDrinks() {
+        drinks.clear();
+        for (Item item: inventory) {
+            if (item.getCategory().equalsIgnoreCase("drinks")) {
+                drinks.add(item.getName());
+            }
+        }
+
         return drinks;
     }
 
     public List<String> getChips() {
+        chips.clear();
+        for (Item item: inventory) {
+            if (item.getCategory().equalsIgnoreCase("chips")) {
+                chips.add(item.getName());
+            }
+        }
+
         return chips;
     }
 
     public List<String> getChocolates() {
+        chocolates.clear();
+        for (Item item: inventory) {
+            if (item.getCategory().equalsIgnoreCase("chocolate")) {
+                chocolates.add(item.getName());
+            }
+        }
+
         return chocolates;
     }
 
     public List<String> getCandies() {
+        candies.clear();
+        for (Item item: inventory) {
+            if (item.getCategory().equalsIgnoreCase("candies")) {
+                candies.add(item.getName());
+            }
+        }
+
         return candies;
     }
-
-
 }

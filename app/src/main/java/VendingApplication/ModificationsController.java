@@ -52,6 +52,8 @@ public class ModificationsController {
     private Inventory inventory;
     private Seller seller;
 
+    private Item item;
+
     @FXML
     void modifyProperties(MouseEvent event) {
 //        System.out.println(String.valueOf(nameText));
@@ -60,16 +62,21 @@ public class ModificationsController {
         if (!nameModifier.getText().isEmpty()) {
             seller.modifyName(nameText.getText(), nameModifier.getText());
         }
+        setList();
+        fillText(item);
     }
 
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
         this.inventory = vendingMachine.getInventory();
-        this.seller = new Seller();
+        this.seller = new Seller(this.inventory);
         setList();
+
     }
 
     public void setList() {
+        itemList.getItems().clear();
+
         // Setting Drinks
         for (String s : inventory.getDrinks()) {
             itemList.getItems().add(s);
@@ -92,12 +99,18 @@ public class ModificationsController {
     }
 
     public void selectItem() {
-        Item item = inventory.getItem(itemList.getSelectionModel().getSelectedItem());
-        nameText.setText(item.getName());
-        codeText.setText(item.getItemid());
-        priceText.setText(Double.toString(item.getPrice()));
-        quantityText.setText(Integer.toString(item.getAmount()));
-        categoryText.setText(item.getCategory());
+        item = inventory.getItem(itemList.getSelectionModel().getSelectedItem());
+        fillText(item);
+    }
+
+    public void fillText(Item item) {
+        if (item != null) {
+            nameText.setText(item.getName());
+            codeText.setText(item.getItemid());
+            priceText.setText(Double.toString(item.getPrice()));
+            quantityText.setText(Integer.toString(item.getAmount()));
+            categoryText.setText(item.getCategory());
+        }
     }
 
 }
