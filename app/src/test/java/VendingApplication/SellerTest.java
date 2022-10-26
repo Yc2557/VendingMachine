@@ -14,12 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SellerTest {
 
-    Inventory inventory;
-    Seller seller;
-
     // Reads in the inventory JSON file
     @BeforeAll
-    public void writeJsonFile() {
+    public static void writeJsonFile() {
         try {
             JSONObject inventoryJson = new JSONObject();
             JSONArray products = new JSONArray();
@@ -29,31 +26,31 @@ public class SellerTest {
             mineralWater.put("quantity", 7);
             mineralWater.put("price", 1.5);
             mineralWater.put("name", "Mineral Water");
-            mineralWater.put("id", 0);
+            mineralWater.put("id", "0");
             mineralWater.put("category", "drinks");
 
             // Sprite
             JSONObject sprite = new JSONObject();
             sprite.put("quantity", 7);
-            sprite.put("price", 1.5);
+            sprite.put("price", (double) 1.5);
             sprite.put("name", "Sprite");
-            sprite.put("id", 1);
+            sprite.put("id", "1");
             sprite.put("category", "drinks");
 
             // M&M
             JSONObject mnm = new JSONObject();
             mnm.put("quantity", 7);
-            mnm.put("price", 2);
+            mnm.put("price", (double) 2);
             mnm.put("name", "M&M");
-            mnm.put("id", 2);
+            mnm.put("id", "2");
             mnm.put("category", "chocolate");
 
             // Smiths
             JSONObject smiths = new JSONObject();
             smiths.put("quantity", 7);
-            smiths.put("price", 1);
+            smiths.put("price", (double) 1);
             smiths.put("name", "Smiths");
-            smiths.put("id", 3);
+            smiths.put("id", "3");
             smiths.put("category", "chips");
 
             products.add(mineralWater);
@@ -69,21 +66,22 @@ public class SellerTest {
             writer.write(inventoryJson.toJSONString());
             writer.close();
 
-            this.inventory = new Inventory();
-            inventory.readJsonFile("src/test/resources/sellerTest.json");
-            this.seller = new Seller(inventory);
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
+
     @Test
     public void nameModifyTest() {
+        Inventory inventory = new Inventory();
+        inventory.readJsonFile("src/test/resources/sellerTest.json");
+        Seller seller = new Seller(inventory);
+
         // Changing a name
         assertFalse(inventory.exists("Pepsi", "name"));
         seller.modifyName("Sprite", "Pepsi");
-        assertTrue(inventory.exists("Sprite", "name"));
+        assertTrue(inventory.exists("Pepsi", "name"));
 
         // Preventing duplicates
         assertFalse(seller.modifyName("M&M", "M&M"));
@@ -91,6 +89,10 @@ public class SellerTest {
 
     @Test
     public void idModifyTest() {
+        Inventory inventory = new Inventory();
+        inventory.readJsonFile("src/test/resources/sellerTest.json");
+        Seller seller = new Seller(inventory);
+
         // Changing an ID
         assertFalse(inventory.exists("7", "id"));
         seller.modifyId("M&M", "7");
@@ -102,6 +104,10 @@ public class SellerTest {
 
     @Test
     public void categoryModifyTest() {
+        Inventory inventory = new Inventory();
+        inventory.readJsonFile("src/test/resources/sellerTest.json");
+        Seller seller = new Seller(inventory);
+
         // Changing the category
         assertTrue(inventory.getItem("M&M").getCategory().equals("chocolate"));
         seller.modifyCategory("M&M", "drinks");
@@ -113,6 +119,10 @@ public class SellerTest {
 
     @Test
     public void quantityModifyTest() {
+        Inventory inventory = new Inventory();
+        inventory.readJsonFile("src/test/resources/sellerTest.json");
+        Seller seller = new Seller(inventory);
+
         // Changing the quantity
         assertTrue(inventory.getItem("Smiths").getAmount() == 7);
         seller.modifyQuantity("Smiths", "10");
@@ -125,6 +135,10 @@ public class SellerTest {
 
     @Test
     public void priceModifyTest() {
+        Inventory inventory = new Inventory();
+        inventory.readJsonFile("src/test/resources/sellerTest.json");
+        Seller seller = new Seller(inventory);
+
         // Changing the price
         assertTrue(inventory.getItem("Mineral Water").getPrice() == 1.5);
         seller.modifyPrice("Mineral Water", "2.0");
