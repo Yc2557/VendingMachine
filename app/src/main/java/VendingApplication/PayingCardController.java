@@ -19,7 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class PayingCardController {
+public class PayingCardController implements Controller {
 
     @FXML
     private TextField cardName;
@@ -28,7 +28,7 @@ public class PayingCardController {
     private TextField cardNumber;
 
     @FXML
-    private TextField total;
+    private TextField totalText;
 
     @FXML
     private Button backButtonCard;
@@ -48,7 +48,7 @@ public class PayingCardController {
     @FXML
     private Button yesButton;
 
-    private CardHandler handler = new CardHandler();
+    private final CardHandler handler = new CardHandler();
     private String nameText;
     private String numberText;
 
@@ -57,7 +57,7 @@ public class PayingCardController {
     public void payButtonAction(ActionEvent event) throws IOException {
 
         if (cardName.getText() == null || cardNumber.getText() == null) {
-            //Invalid inputs
+            // Invalid inputs
             errorText.setText("Please enter valid card details.");
             return;
         }
@@ -68,81 +68,70 @@ public class PayingCardController {
         handler.checkCreditCard(getCardName(), getCardNum());
 
         if (handler.isValidCard()) {
-            //paid successfully
+            // paid successfully
             if (vendingMachine.isLogin) {
+                // savecarddetails needs the first field to be username
+                handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum());
+                vendingMachine.addHistory();
+                vendingMachine.getCart().clearCart();
                 vendingMachine.logOut();
                 changeScene(event, "validCard");
+            } else {
+                // not logged in, don't offer to save card
+                vendingMachine.getCart().clearCart();
+                changeScene(event, "completed");
             }
-            vendingMachine.getCart().clearCart();
-            handler.saveCardDetails("test",getCardName(), getCardNum());
-            changeScene(event, "completed");
         } else {
-            //card error
+            // card error
             errorText.setText("Card cannot be found: Please try a different card, or pay with cash.");
         }
     }
 
-    public void changeScene(ActionEvent event, String type) throws IOException{
+    public void changeScene(ActionEvent event, String type) throws IOException {
 
         String sceneName = "gui/";
-        if (type.equals("validCard")) {
-            sceneName += "SaveCard.fxml";
-        } else if (type.equals("backCard")) {
-            sceneName += "PayingCard.fxml";
-        } else if (type.equals("backPay")) {
-            sceneName += "PaymentSelector.fxml";
-        } else if (type.equals("completed")) {
-            sceneName += "Selection.fxml";
-        }
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource(sceneName));
-
-        Parent root = loader.load();
-        Scene panelView = new Scene(root);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         switch (type) {
-            case "validCard", "backCard", "backPay" -> {
-                PayingCardController controller = loader.getController();
-                controller.initialize(vendingMachine);
-            }
-            case "completed" -> {
-                SelectionController controller = loader.getController();
-                controller.initialize(vendingMachine);
-            }
+            case "validCard" -> sceneName += "SaveCard.fxml";
+            case "backCard" -> sceneName += "PayingCard.fxml";
+            case "backPay" -> sceneName += "PaymentSelector.fxml";
+            case "completed" -> sceneName += "Selection.fxml";
         }
 
-        window.setScene(panelView);
-        window.show();
+        vendingMachine.changeScene(event, sceneName);
     }
 
     public void backCardButtonAction(ActionEvent event) throws IOException {
-        //Go back from SaveCard to PayingCard
+        // Go back from SaveCard to PayingCard
         changeScene(event, "backCard");
     }
+
     public void backPaymentsButtonAction(ActionEvent event) throws IOException {
-        //Go back from PayingCard to PaymentSelector
+        // Go back from PayingCard to PaymentSelector
         changeScene(event, "backPay");
     }
 
     public void yesButtonAction(ActionEvent event) throws IOException {
         changeScene(event, "completed");
-        //Transaction completed
+        // Transaction completed
 
     }
 
     public void noButtonAction(ActionEvent event) throws IOException {
-        //Overwrites saved card details
-        handler.saveCardDetails("test", null, null);
+        // Overwrites saved card details
+        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), null, null);
         changeScene(event, "completed");
     }
 
-    public String getCardName() {return this.nameText;}
-    public String getCardNum() {return this.numberText;}
+    public String getCardName() {
+        return this.nameText;
+    }
 
-    public void initialize(VendingMachine vendingMachine)
-    {
+    public String getCardNum() {
+        return this.numberText;
+    }
+
+    public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
+        this.totalText.setText("$" + String.format("%.02f", this.vendingMachine.getCart().totalCartPrice()));
     }
 }

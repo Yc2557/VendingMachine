@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartController {
+public class CartController implements Controller{
 
     @FXML
     private ListView<String> nameView;
@@ -61,19 +61,7 @@ public class CartController {
     }
 
     public void backAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("gui/Selection.fxml"));
-        Parent root = loader.load();
-
-        Scene mainPanelView = new Scene(root);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        SelectionController controller = loader.getController();
-        controller.initialize(vendingMachine);
-
-        window.setScene(mainPanelView);
-        window.show();
+        vendingMachine.changeScene(event, "gui/Selection.fxml");
     }
 
     public void cancelAction() {
@@ -93,20 +81,7 @@ public class CartController {
     }
 
     public void purchaseAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("gui/PaymentSelector.fxml"));
-        Parent root = loader.load();
-
-        Scene mainPanelView = new Scene(root);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        PaymentSelectorController controller = loader.getController();
-        Cart cart = vendingMachine.getCart();
-        controller.initialize(vendingMachine);
-
-        window.setScene(mainPanelView);
-        window.show();
+        vendingMachine.changeScene(event, "gui/PaymentSelector.fxml");
     }
 
     public List<String> getNames(List<Item> items) {
@@ -134,7 +109,7 @@ public class CartController {
     }
 
     public List<String> getSubtotals(List<Item> items) {
-        List<String> subtotals = new ArrayList<String>();
+        List<String> subtotals = new ArrayList<>();
         for (Item i : items) {
             subtotals.add(String.format("$%.02f", i.totalPrice(i.getAmount())));
         }

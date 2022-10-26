@@ -12,7 +12,7 @@ import javafx.event.ActionEvent;
 
 import java.io.IOException;
 
-public class PaymentSelectorController {
+public class PaymentSelectorController implements Controller {
 
     @FXML
     private Button cashButton;
@@ -31,39 +31,13 @@ public class PaymentSelectorController {
     public void changeScene(ActionEvent event, String type) throws IOException{
 
         String sceneName = "gui/";
-        if (type.equals("cash")) {
-            sceneName += "PayingCash.fxml";
-        } else if (type.equals("card")) {
-            sceneName += "PayingCard.fxml";
-        } else if (type.equals("back")) {
-
-            //BACK TO CART
-            sceneName += "";
-        }
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource(sceneName));
-        Parent root = loader.load();
-        Scene panelView = new Scene(root);
         switch (type) {
-            case "back" -> {
-                CartController controller = loader.getController();
-                controller.initialize(vendingMachine);
-            }
-            case "cash" -> {
-                PayingCashController controller = loader.getController();
-                controller.setup(vendingMachine, vendingMachine.getCart().totalCartPrice());
-            }
-            case "card" -> {
-                PayingCardController controller = loader.getController();
-                controller.initialize(vendingMachine);
-            }
+            case "cash" -> sceneName += "PayingCash.fxml";
+            case "card" -> sceneName += "PayingCard.fxml";
+            case "back" -> sceneName += "cart.fxml";
         }
 
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(panelView);
-        window.show();
+        vendingMachine.changeScene(event, sceneName);
     }
 
     public void cashButtonAction(ActionEvent event) throws IOException {

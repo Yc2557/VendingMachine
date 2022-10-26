@@ -32,7 +32,7 @@ public class LoginController implements Controller {
     @FXML
     private Text invalidPathText;
 
-    public UserManager userManager = new UserManager();
+    public UserManager userManager = new UserManager("src/main/resources/data/user.json");
 
     private VendingMachine vendingMachine;
 
@@ -43,7 +43,7 @@ public class LoginController implements Controller {
         // Check if username and password are correct
         if (checkLogin(username, password)) {
             // Send signal to main controller - TO FIX
-            vendingMachine.addAccount(new Account(username, password, null, null, null));
+            vendingMachine.addAccount(new Account(username, password, null, null, null, "customer"));
             // Change to successful login page
             changeScene(event, "back");
         } else {
@@ -66,8 +66,8 @@ public class LoginController implements Controller {
         String username = loginText.getText();
         String password = passwordText.getText();
 
-        if (userManager.addUser(username, password)) {
-            vendingMachine.addAccount(new Account(username, password, null, null, null));
+        if (userManager.addUser(username, password, "customer")) {
+            vendingMachine.addAccount(new Account(username, password, null, null, null, "customer"));
             changeScene(event, "back");
             System.out.println("Successful creation");
         } else {
@@ -98,27 +98,11 @@ public class LoginController implements Controller {
         }
 
         // Loads next relevant scene
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource(sceneName));
-        Parent root = loader.load();
-        Scene panelView = new Scene(root);
-
-
-        if (type.equals("back")) {
-            SelectionController controller = loader.getController();
-            controller.initialize(vendingMachine);
-        } else {
-            LoginController controller = loader.getController();
-            controller.initialize(vendingMachine);
-        }
-
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(panelView);
-        window.show();
+        vendingMachine.changeScene(event, sceneName);
     }
 
     private boolean checkLogin(String login, String pass) {
+
         return login.equals(userManager.getUsername(login)) && pass.equals(userManager.getPassword(login));
     }
 

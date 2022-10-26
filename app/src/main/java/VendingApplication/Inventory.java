@@ -1,10 +1,15 @@
 package VendingApplication;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
+import java.awt.event.ActionEvent;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,13 +18,13 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Inventory {
-    private List<Item> inventory;
-    private List<String> drinks;
-    private List<String> chips;
-    private List<String> chocolates;
-    private List<String> candies;
+    private final List<Item> inventory;
+    private final List<String> drinks;
+    private final List<String> chips;
+    private final List<String> chocolates;
+    private final List<String> candies;
 
-    private HashMap<String, List<String>> categories;
+    private final HashMap<String, List<String>> categories;
 
     public Inventory() {
         inventory = new ArrayList<>();
@@ -36,7 +41,7 @@ public class Inventory {
     }
 
     public void readJsonFile(String filePath) { //get inventory data
-        JSONObject database = null;
+        JSONObject database;
         try {
             JSONParser jsonParser = new JSONParser();
             database = (JSONObject) jsonParser.parse(new FileReader(filePath));
@@ -62,32 +67,34 @@ public class Inventory {
             inventory.add(item);
             List<String> list = categories.get(category);
             list.add(name);
+
         }
     }
 
-    public void writeJsonFile(String filePath, JSONObject inventory) { //write inventory data
-        try {
-            FileWriter writer = new FileWriter(filePath);
-            writer.write(inventory.toJSONString());
-            writer.flush();
-            writer.close();
+    public void writeJsonFile(String filePath) { //write inventory data
+        JSONObject database = new JSONObject();
+        JSONArray products = new JSONArray();
+
+        for (Item item: inventory) {
+            JSONObject product = new JSONObject();
+            product.put("id", item.getItemid());
+            product.put("name", item.getName());
+            product.put("category", item.getCategory());
+            product.put("price", item.getPrice());
+            product.put("quantity", item.getAmount());
+            products.add(product);
+        }
+
+        database.put("products", products);
+
+        try (FileWriter file = new FileWriter(filePath)) {
+            file.write(database.toJSONString());
+            file.flush();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error reading file");
+            System.out.println("Error writing to file");
         }
 
-    }
-
-    public JSONObject getJSON(String filepath) {
-        try {
-            JSONParser jsonParser = new JSONParser();
-            JSONObject inventory = (JSONObject) jsonParser.parse(new FileReader(filepath));
-            return inventory;
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-            System.out.println("Error reading file");
-            return null;
-        }
     }
 
     public void addAmount(Item item, int amount) { //add amount to inventory
@@ -144,4 +151,6 @@ public class Inventory {
     public List<String> getCandies() {
         return candies;
     }
+
+
 }

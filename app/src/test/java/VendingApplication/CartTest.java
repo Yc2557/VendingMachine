@@ -13,7 +13,7 @@ public class CartTest {
         Cart cart = new Cart();
         Item item = new Item("1001", "Mineral Water", "Drinks", 1, 4);
         cart.addItem(item);
-        assertEquals(cart, Arrays.asList(item));
+        assertEquals(cart.getCart(), List.of(item));
     }
 
     @Test
@@ -23,7 +23,7 @@ public class CartTest {
         Item mineralWater = new Item("1001", "Mineral Water", "Drinks", 3, 4);
         cart.addItem(mineralWater);
         cart.removeItem(mineralWater);
-        assertEquals(cart, Arrays.asList());
+        assertEquals(cart.getCart(), List.of());
         // Going to have to re-assess how amounts are stored in the cart
 
     }
@@ -37,9 +37,10 @@ public class CartTest {
         cart.addItem(sprite);
         cart.addItem(mineralWater);
         // Checking that they have been added in
-        assertEquals(cart, Arrays.asList(sprite, mineralWater));
+        assertEquals(cart.getCart(), Arrays.asList(sprite, mineralWater));
+        cart.clearCart();
         // Checking their removal
-        assertEquals(cart, Arrays.asList());
+        assertEquals(cart.getCart(), List.of());
     }
 
     @Test

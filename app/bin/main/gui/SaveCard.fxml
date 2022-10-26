@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VendingApplication.PayingCardController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+      <children>
+            <Text layoutX="43.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Save Card Details to Your Account?">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <Button fx:id="noButton" layoutX="247.0" layoutY="244.0" mnemonicParsing="false" onAction="#noButtonAction" prefHeight="26.0" prefWidth="59.0" text="No" />
+            <Button fx:id="yesButton" layoutX="353.0" layoutY="244.0" mnemonicParsing="false" onAction="#yesButtonAction" prefHeight="26.0" prefWidth="59.0" text="Yes" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>

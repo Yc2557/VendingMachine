@@ -3,21 +3,21 @@ package VendingApplication;
 import java.util.List;
 
 public class Account {
-    private String username;
-    private String password;
+    private final String username;
+    private final String password;
     private String cardNumber;
     private String cardName;
 
     private List<String> history;
-    private String role; // owner, seller, cashier, user
+    private String role;
 
-    public Account(String u, String p, String cardNumber,  String cardName, List<String> history) {
+    public Account(String u, String p, String cardNumber, String cardName, List<String> history, String role) {
         this.username = u;
         this.password = p;
         this.cardNumber = cardNumber;
         this.cardName = cardName;
         this.history = history;
-        this.role = "USER";
+        this.role = role;
     }
 
     public String getUsername() {
@@ -28,12 +28,15 @@ public class Account {
         return password;
     }
 
-    public boolean verifyPassword(String p) {
-        return p.equals(password);
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    // Set by the owner
-    public void setType(String role) {
-        this.role = role;
+    public String getRole() {
+        return role;
+    }
+
+    public boolean verifyPassword(String p) {
+        return p.equals(password);
     }
 }
