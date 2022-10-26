@@ -46,8 +46,6 @@ public class ModificationsController {
 
     @FXML
     private Text quantityText;
-//    private List<List<String>> lists;
-//    private List<String> selectedList;
     private VendingMachine vendingMachine;
     private Inventory inventory;
     private Seller seller;
@@ -56,11 +54,31 @@ public class ModificationsController {
 
     @FXML
     void modifyProperties(MouseEvent event) {
-//        System.out.println(String.valueOf(nameText));
-//        System.out.println(nameModifier.getText());
-        System.out.println(nameText.getText());
         if (!nameModifier.getText().isEmpty()) {
             seller.modifyName(nameText.getText(), nameModifier.getText());
+            nameModifier.clear();
+        }
+        if (!codeModifier.getText().isEmpty()) {
+            seller.modifyId(codeText.getText(), codeModifier.getText());
+            codeModifier.clear();
+        }
+        if (!categoryModifier.getText().isEmpty()) {
+            if (!seller.modifyCategory(categoryText.getText(), categoryModifier.getText())) {
+                System.out.println("Invalid Category!");
+                categoryModifier.clear();
+            }
+        }
+        if (!priceModifier.getText().isEmpty()) {
+            if (!seller.modifyPrice(nameText.getText(), priceModifier.getText())) {
+                System.out.println("Invalid Price!");
+                priceModifier.clear();
+            }
+        }
+        if (!quantityModifier.getText().isEmpty()) {
+            if (!seller.modifyQuantity(nameText.getText(), quantityModifier.getText())) {
+                System.out.println("Invalid Quantity - Must be between 0-15!");
+                quantityModifier.clear();
+            }
         }
         setList();
         fillText(item);
