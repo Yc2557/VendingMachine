@@ -12,10 +12,15 @@ import java.io.IOException;
 
 public class CardHandler {
 
-    private final String cardPath = "src/main/resources/data/credit_cards.json";
-    private final String userPath = "src/main/resources/data/user.json";
+    private String cardPath;
+    private String userPath;
 
     private boolean validCard = false;
+
+    public CardHandler(String cardPath, String userPath) {
+        this.cardPath = cardPath;
+        this.userPath = userPath;
+    }
 
     public void checkCreditCard(String cardName, String cardNumber) {
 

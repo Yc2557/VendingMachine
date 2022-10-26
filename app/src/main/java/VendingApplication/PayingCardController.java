@@ -60,7 +60,7 @@ public class PayingCardController implements Controller {
     @FXML
     private Button existingCardButton = new Button();
 
-    private final CardHandler handler = new CardHandler();
+    private CardHandler handler;
     private String nameText;
     private String numberText;
 
@@ -159,8 +159,10 @@ public class PayingCardController implements Controller {
 
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
+        String cardPath = "src/main/resources/data/credit_cards.json";
+        String userPath = "src/main/resources/data/user.json";
+        this.handler = new CardHandler(cardPath, userPath);
         this.totalText.setText("$" + String.format("%.02f", this.vendingMachine.getCart().totalCartPrice()));
-
 
         if (vendingMachine.isLogin) {
             suggestCard();
