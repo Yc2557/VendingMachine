@@ -37,6 +37,55 @@ public class Seller {
         inventory.writeJsonFile("src/main/resources/data/inventory.json");
     }
 
+    public void modifyId(String currentName, String newCode) {
+        Item item = inventory.getItem(currentName);
+        if (item != null) {
+            item.setItemid(newCode);
+        }
+        inventory.writeJsonFile("src/main/resources/data/inventory.json");
+    }
+
+    public boolean modifyCategory(String currentName, String newCategory) {
+
+        if (!inventory.getCategories().containsKey(newCategory)) {
+            return false;
+        }
+
+        Item item = inventory.getItem(currentName);
+        if (item != null) {
+            item.setCategory(newCategory);
+        }
+        inventory.writeJsonFile("src/main/resources/data/inventory.json");
+        return true;
+    }
+
+    public boolean modifyQuantity(String currentName, String newQuantity) {
+        if (Integer.parseInt(newQuantity) > 15 || Integer.parseInt(newQuantity) < 0) {
+            return false;
+        }
+
+        Item item = inventory.getItem(currentName);
+        if (item != null) {
+            item.setAmount(Integer.parseInt(newQuantity));
+        }
+        inventory.writeJsonFile("src/main/resources/data/inventory.json");
+        return true;
+    }
+
+    public boolean modifyPrice(String currentName, String newPrice) {
+        if (Double.parseDouble(newPrice) < 0) {
+            return false;
+        }
+
+        Item item = inventory.getItem(currentName);
+        if (item != null) {
+            item.setPrice(Double.parseDouble(newPrice));
+        }
+        inventory.writeJsonFile("src/main/resources/data/inventory.json");
+
+        return true;
+    }
+
 //    public void modifyName(String currentName, String newName) {
 //        JSONObject database = readJSON(filepath);
 //        JSONArray products = (JSONArray) database.get("products");

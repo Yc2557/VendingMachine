@@ -59,26 +59,27 @@ public class ModificationsController {
             nameModifier.clear();
         }
         if (!codeModifier.getText().isEmpty()) {
-            seller.modifyId(codeText.getText(), codeModifier.getText());
+            seller.modifyId(nameText.getText(), codeModifier.getText());
             codeModifier.clear();
         }
+
         if (!categoryModifier.getText().isEmpty()) {
-            if (!seller.modifyCategory(categoryText.getText(), categoryModifier.getText())) {
+            if (!seller.modifyCategory(nameText.getText(), categoryModifier.getText())) {
                 System.out.println("Invalid Category!");
-                categoryModifier.clear();
             }
+            categoryModifier.clear();
         }
         if (!priceModifier.getText().isEmpty()) {
             if (!seller.modifyPrice(nameText.getText(), priceModifier.getText())) {
                 System.out.println("Invalid Price!");
-                priceModifier.clear();
             }
+            priceModifier.clear();
         }
         if (!quantityModifier.getText().isEmpty()) {
             if (!seller.modifyQuantity(nameText.getText(), quantityModifier.getText())) {
                 System.out.println("Invalid Quantity - Must be between 0-15!");
-                quantityModifier.clear();
             }
+            quantityModifier.clear();
         }
         setList();
         fillText(item);
