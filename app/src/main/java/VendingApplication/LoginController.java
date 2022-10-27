@@ -103,6 +103,8 @@ public class LoginController implements Controller {
             sceneName += "Selection.fxml";
         } else if (type.equalsIgnoreCase("cashier")) {
             sceneName += "CashierSelection.fxml";
+        } else if (type.equalsIgnoreCase("seller")) {
+            sceneName += "Modifications.fxml";
         }
 
         // Loads next relevant scene

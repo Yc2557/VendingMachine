@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 
 import java.util.List;
 
-public class ModificationsController {
+public class ModificationsController implements Controller{
 
     @FXML
     private TextField categoryModifier;
