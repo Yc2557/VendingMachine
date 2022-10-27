@@ -170,4 +170,17 @@ public class InventoryTest {
 
         assertEquals(candiesList, inventory.getCandies());
     }
+
+    @Test
+    public void writeJSONTest() {
+        Inventory inventory = new Inventory();
+        inventory.readJsonFile("src/test/resources/inventoryTest.json");
+        List<Item> inventoryList = inventory.getInventory();
+
+        inventory.writeJsonFile("src/test/resources/inventoryTest.json");
+
+        inventory.readJsonFile("src/test/resources/inventoryTest.json");
+
+        assertEquals(inventoryList, inventory.getInventory());
+    }
 }
