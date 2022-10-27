@@ -12,10 +12,15 @@ import java.io.IOException;
 
 public class CardHandler {
 
-    private final String cardPath = "src/main/resources/data/credit_cards.json";
-    private final String userPath = "src/main/resources/data/user.json";
+    private String cardPath;
+    private String userPath;
 
     private boolean validCard = false;
+
+    public CardHandler(String cardPath, String userPath) {
+        this.cardPath = cardPath;
+        this.userPath = userPath;
+    }
 
     public void checkCreditCard(String cardName, String cardNumber) {
 
@@ -74,6 +79,29 @@ public class CardHandler {
             throw new RuntimeException(e);
         }
     }
+
+    public String findCard(String username) {
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject usersObject = (JSONObject) parser.parse(new FileReader(userPath));
+            JSONArray usersArray = (JSONArray) usersObject.get("users");
+
+            for (int i = 0; i < usersArray.size(); i++) {
+                JSONObject userDetails = (JSONObject) usersArray.get(i);
+                if (userDetails.get("username").toString().equals(username)) {
+                    return userDetails.get("cardName").toString();
+                }
+            }
+            return null;
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            throw new RuntimeException(e);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void validateCard() {this.validCard = true;}
 

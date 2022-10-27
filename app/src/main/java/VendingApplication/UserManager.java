@@ -120,7 +120,8 @@ public class UserManager {
             JSONObject newUser = new JSONObject();
             newUser.put("username", username);
             newUser.put("password", password);
-            newUser.put("creditCard", "");
+            newUser.put("cardName", "");
+            newUser.put("cardNumber", "");
             newUser.put("purchaseHistory", new JSONArray());
             newUser.put("userRole", role);
             users.add(newUser);
