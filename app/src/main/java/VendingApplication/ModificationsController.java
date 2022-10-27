@@ -1,5 +1,6 @@
 package VendingApplication;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -7,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ModificationsController implements Controller{
@@ -134,6 +136,11 @@ public class ModificationsController implements Controller{
             quantityText.setText(Integer.toString(item.getAmount()));
             categoryText.setText(item.getCategory());
         }
+    }
+
+    public void clickLogOut(ActionEvent event) throws IOException {
+        vendingMachine.logOut();
+        vendingMachine.changeScene(event, "gui/Selection.fxml");
     }
 
 }
