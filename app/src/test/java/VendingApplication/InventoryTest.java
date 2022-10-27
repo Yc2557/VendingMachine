@@ -29,7 +29,7 @@ public class InventoryTest {
         for (String item: drinksList) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("name", item);
-            itemObj.put("id", i);
+            itemObj.put("id", String.valueOf(i));
             itemObj.put("price", 1.5);
             itemObj.put("quantity", 7);
             itemObj.put("category", "drinks");
@@ -40,7 +40,7 @@ public class InventoryTest {
         for (String item: chocolateList) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("name", item);
-            itemObj.put("id", i);
+            itemObj.put("id", String.valueOf(i));
             itemObj.put("price", 1.5);
             itemObj.put("quantity", 7);
             itemObj.put("category", "chocolate");
@@ -51,7 +51,7 @@ public class InventoryTest {
         for (String item: chipsList) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("name", item);
-            itemObj.put("id", i);
+            itemObj.put("id", String.valueOf(i));
             itemObj.put("price", 1.5);
             itemObj.put("quantity", 7);
             itemObj.put("category", "chips");
@@ -62,7 +62,7 @@ public class InventoryTest {
         for (String item: candiesList) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("name", item);
-            itemObj.put("id", i);
+            itemObj.put("id", String.valueOf(i));
             itemObj.put("price", 1.5);
             itemObj.put("quantity", 7);
             itemObj.put("category", "candies");
