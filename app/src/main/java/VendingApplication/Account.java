@@ -1,5 +1,6 @@
 package VendingApplication;
 
+import javax.swing.text.html.ListView;
 import java.util.List;
 
 public class Account {
@@ -37,6 +38,15 @@ public class Account {
     }
 
     public List<String> getHistory() {
+        return history;
+    }
+
+    // Remove first element and add new if size is 5
+    public List<String> addHistory(String purchase) {
+        if (history.size() == 5) {
+            history.remove(0);
+        }
+        history.add(purchase);
         return history;
     }
 

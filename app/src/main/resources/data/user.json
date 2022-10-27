@@ -14,11 +14,14 @@
     {
       "password": "1",
       "purchaseHistory": [
-        "Mineral Water"
+        "Coca Cola",
+        "Pepsi",
+        "Pringles",
+        "Thins"
       ],
-      "cardName": "m",
+      "cardName": "Charles",
       "userRole": "customer",
-      "cardNumber": "1",
+      "cardNumber": "40691",
       "username": "m"
     },
     {

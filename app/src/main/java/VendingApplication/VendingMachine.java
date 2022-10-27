@@ -18,10 +18,12 @@ public class VendingMachine {
 
     public boolean isLogin = false;
     private Account account = null;
+    private UserManager userManager;
 
     public VendingMachine() {
         this.inventory = new Inventory();
         this.cart = new Cart();
+        this.userManager = new UserManager();
 
         inventory.readJsonFile("src/main/resources/data/inventory.json");
     }
@@ -75,14 +77,15 @@ public class VendingMachine {
      */
     public void addHistory() {
         List<Item> cartItems = this.cart.getCart();
-        List<String> history = new ArrayList();
-        if (cartItems.size() > 5) {
+        List<String> history = new ArrayList<>();
+        if (cartItems.size() >= 5) {
+
             for (int i = 0; i < 5; i++) {
                 history.add(cartItems.get(i).getName());
             }
         } else {
-            for (int i = 0; i < cartItems.size(); i++) {
-                history.add(cartItems.get(i).getName());
+            for (Item cartItem : cartItems) {
+                history.add(cartItem.getName());
             }
         }
 

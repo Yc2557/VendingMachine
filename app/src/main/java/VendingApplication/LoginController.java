@@ -64,7 +64,7 @@ public class LoginController implements Controller {
     }
 
     public void backButtonAction(ActionEvent event) throws IOException {
-        changeScene(event, "back");
+        changeScene(event, "customer");
     }
 
     public void createAccountButtonAction(ActionEvent event) throws IOException {

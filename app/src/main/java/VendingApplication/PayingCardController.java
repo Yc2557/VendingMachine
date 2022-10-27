@@ -121,6 +121,7 @@ public class PayingCardController implements Controller {
     }
 
     public void useExistingCardAction(ActionEvent event) throws IOException {
+        vendingMachine.addHistory();
         vendingMachine.getCart().clearCart();
         vendingMachine.logOut();
         changeScene(event, "completed");

@@ -204,6 +204,7 @@ public class UserManager {
             file.write(jsonObject.toJSONString());
             file.flush();
             file.close();
+            System.out.println("History added");
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
             throw new RuntimeException(e);
