@@ -26,7 +26,7 @@ public class InventoryTest {
         List<String> chipsList = List.of("Smiths");
         List<String> candiesList = List.of("Skittles", "Sour Patch");
 
-        for (String item: drinksList) {
+        for (String item : drinksList) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("name", item);
             itemObj.put("id", i);
@@ -37,7 +37,7 @@ public class InventoryTest {
             products.add(itemObj);
         }
 
-        for (String item: chocolateList) {
+        for (String item : chocolateList) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("name", item);
             itemObj.put("id", i);
@@ -48,7 +48,7 @@ public class InventoryTest {
             products.add(itemObj);
         }
 
-        for (String item: chipsList) {
+        for (String item : chipsList) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("name", item);
             itemObj.put("id", i);
@@ -59,7 +59,7 @@ public class InventoryTest {
             products.add(itemObj);
         }
 
-        for (String item: candiesList) {
+        for (String item : candiesList) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("name", item);
             itemObj.put("id", i);
@@ -89,7 +89,7 @@ public class InventoryTest {
 
         inventory.readJsonFile("src/test/resources/inventoryTest.json");
 
-        for (Item item: inventory.getInventory()) {
+        for (Item item : inventory.getInventory()) {
             assertEquals(productsList.get(i), item.getName());
             assertEquals(7, item.getAmount());
             assertEquals(1.5, item.getPrice());
