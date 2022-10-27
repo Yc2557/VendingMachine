@@ -22,9 +22,9 @@ public class PaymentTest {
 
             JSONParser jsonParser = new JSONParser();
             JSONObject database = (JSONObject) jsonParser.parse(new FileReader("src/test/resources/cashTest.json"));
-            assertEquals((long) database.get("5"),4);
-            assertEquals((long) database.get("0.20"), 3);
-            assertEquals((long) database.get("0.05"), 4);
+            assertEquals((long) database.get("5"),2);
+            assertEquals((long) database.get("0.20"), 0);
+            assertEquals((long) database.get("0.05"), 2);
 
         } catch (FileNotFoundException e) {
             System.out.println("File not found!");
