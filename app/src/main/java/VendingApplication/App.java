@@ -19,14 +19,14 @@ public class App extends Application {
         VendingMachine vendingMachine = new VendingMachine();
 
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getClassLoader().getResource("gui/Modifications.fxml"));
+        loader.setLocation(getClass().getClassLoader().getResource("gui/Selection.fxml"));
         Parent root = loader.load();
 
         primaryStage.setTitle("Vending Machine");
         primaryStage.setScene(new Scene(root, 600, 400));
 
 //        SelectionController controller = loader.getController();
-        ModificationsController controller = loader.getController();
+        Controller controller = loader.getController();
         controller.initialize(vendingMachine);
         primaryStage.show();
     }
