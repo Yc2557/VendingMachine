@@ -55,11 +55,15 @@ public class ModificationsController {
     @FXML
     void modifyProperties(MouseEvent event) {
         if (!nameModifier.getText().isEmpty()) {
-            seller.modifyName(nameText.getText(), nameModifier.getText());
+            if (!seller.modifyName(nameText.getText(), nameModifier.getText())) {
+                System.out.println("Invalid Name!");
+            }
             nameModifier.clear();
         }
         if (!codeModifier.getText().isEmpty()) {
-            seller.modifyId(nameText.getText(), codeModifier.getText());
+            if (!seller.modifyId(nameText.getText(), codeModifier.getText())) {
+                System.out.println("Invalid ID!");
+            }
             codeModifier.clear();
         }
 
