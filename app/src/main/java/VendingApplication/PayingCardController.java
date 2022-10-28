@@ -37,31 +37,22 @@ public class PayingCardController implements Controller {
     private TextField expiryDate;
 
     @FXML
-    private Button backButtonCard;
-
-    @FXML
-    private Button backButtonPayments;
-
-    @FXML
-    private Button payButton;
-
-    @FXML
     private Text errorText;
 
     @FXML
     private Text foundCardName = new Text();
 
     @FXML
-    private Button noButton;
-
-    @FXML
-    private Button yesButton;
-
-    @FXML
     private Text namePrompt = new Text();
 
     @FXML
     private Text numberPrompt = new Text();
+
+    @FXML
+    private Text expiryPrompt = new Text();
+
+    @FXML
+    private Text CVVPrompt = new Text();
 
     @FXML
     private Button existingCardButton = new Button();
@@ -79,7 +70,7 @@ public class PayingCardController implements Controller {
     public void payButtonAction(ActionEvent event) throws IOException {
 
 
-        if (cardName.getText() == null || cardNumber.getText() == null || CVV.getText() == null || expiryDate.getText() == null) {
+        if (cardName.getText().equals("") || cardNumber.getText().equals("") || CVV.getText().equals("") || expiryDate.getText().equals("")) {
             // Invalid inputs
             errorText.setText("Please enter valid card details.");
             return;
@@ -89,6 +80,11 @@ public class PayingCardController implements Controller {
         this.numberText = cardNumber.getText();
         this.expiryDateText = expiryDate.getText();
         this.CVVText = CVV.getText();
+
+        if (!handler.checkCVV(getCVV()) || !handler.checkExpiry(getExpiryDate())) {
+            errorText.setText("Please enter valid card details.");
+            return;
+        }
 
         handler.checkCreditCard(getCardName(), getCardNum(), getExpiryDate(), getCVV());
 
@@ -122,6 +118,8 @@ public class PayingCardController implements Controller {
             this.foundCardName.setText("Saved Card Found: " + foundCardString);
             this.namePrompt.setText("New Card Name");
             this.numberPrompt.setText("New Card Number");
+            this.expiryPrompt.setText("New Expiry Date");
+            this.CVVPrompt.setText("New CVV");
             this.existingCardButton.setDisable(false);
             this.existingCardButton.setVisible(true);
         }
@@ -181,9 +179,7 @@ public class PayingCardController implements Controller {
 
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
-        String cardPath = "src/main/resources/data/credit_cards.json";
-        String userPath = "src/main/resources/data/user.json";
-        this.handler = new CardHandler(cardPath, userPath);
+        this.handler = new CardHandler("src/main/resources/data/credit_cards.json");
         this.totalText.setText("$" + String.format("%.02f", this.vendingMachine.getCart().totalCartPrice()));
 
         if (vendingMachine.isLogin) {
