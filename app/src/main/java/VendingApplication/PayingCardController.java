@@ -37,9 +37,6 @@ public class PayingCardController implements Controller {
     private TextField expiryDate;
 
     @FXML
-    private TextField totalText;
-
-    @FXML
     private Button backButtonCard;
 
     @FXML
@@ -93,7 +90,7 @@ public class PayingCardController implements Controller {
         this.expiryDateText = expiryDate.getText();
         this.CVVText = CVV.getText();
 
-        handler.checkCreditCard(getCardName(), getCardNum());
+        handler.checkCreditCard(getCardName(), getCardNum(), getExpiryDate(), getCVV());
 
         if (handler.isValidCard()) {
             // paid successfully
@@ -161,7 +158,7 @@ public class PayingCardController implements Controller {
 
     public void noButtonAction(ActionEvent event) throws IOException {
         // Overwrites saved card details
-        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), "", "");
+        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), "", "", "", "");
         vendingMachine.logOut();
         changeScene(event, "completed");
     }

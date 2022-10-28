@@ -8,7 +8,7 @@ public class Account {
     private String cardNumber;
     private String cardName;
 
-    private String ccv;
+    private String CVV;
 
     private String expiryDate;
 
@@ -20,7 +20,7 @@ public class Account {
         this.password = p;
         this.cardNumber = cardNumber;
         this.cardName = cardName;
-        this.cvv = cvv;
+        this.CVV = cvv;
         this.expiryDate = expiryDate;
         this.history = history;
         this.role = role;

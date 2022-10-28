@@ -43,7 +43,7 @@ public class LoginController implements Controller {
         // Check if username and password are correct
         if (checkLogin(username, password)) {
             // Send signal to main controller - TO FIX
-            vendingMachine.addAccount(new Account(username, password, null, null, null, "customer"));
+            vendingMachine.addAccount(new Account(username, password, null, null, null, null, null, "customer"));
             // Change to successful login page
             changeScene(event, "back");
         } else {
@@ -67,7 +67,7 @@ public class LoginController implements Controller {
         String password = passwordText.getText();
 
         if (userManager.addUser(username, password, "customer")) {
-            vendingMachine.addAccount(new Account(username, password, null, null, null, "customer"));
+            vendingMachine.addAccount(new Account(username, password, null, null, null, null, null, "customer"));
             changeScene(event, "back");
             System.out.println("Successful creation");
         } else {
