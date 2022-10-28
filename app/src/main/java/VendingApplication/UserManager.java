@@ -120,7 +120,10 @@ public class UserManager {
             JSONObject newUser = new JSONObject();
             newUser.put("username", username);
             newUser.put("password", password);
-            newUser.put("creditCard", "");
+            newUser.put("cardName", "");
+            newUser.put("cardNumber", "");
+            newUser.put("CVV", "");
+            newUser.put("expiryDate", "");
             newUser.put("purchaseHistory", new JSONArray());
             newUser.put("userRole", role);
             users.add(newUser);
@@ -139,7 +142,7 @@ public class UserManager {
         return true;
     }
 
-    public boolean addCreditCard(String username, String cardName, String cardNumber) {
+    public boolean addCreditCard(String username, String cardName, String cardNumber, String expiryDate, String CVV) {
         // Check that both username and password are not null
         if (username == null || cardName == null || cardNumber == null) {
             return false;
@@ -157,6 +160,8 @@ public class UserManager {
                 if (userUsername.equals(username)) {
                     userObject.put("cardName", cardName);
                     userObject.put("cardNumber", cardNumber);
+                    userObject.put("expiryDate", expiryDate);
+                    userObject.put("CVV", CVV);
                 }
             }
 

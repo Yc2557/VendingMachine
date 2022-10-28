@@ -28,6 +28,12 @@ public class PayingCardController implements Controller {
     private TextField cardNumber;
 
     @FXML
+    private TextField CVV;
+
+    @FXML
+    private TextField expiryDate;
+
+    @FXML
     private TextField totalText;
 
     @FXML
@@ -52,11 +58,15 @@ public class PayingCardController implements Controller {
     private String nameText;
     private String numberText;
 
+    private String expiryDateText;
+
+    private String CVVText;
+
     private VendingMachine vendingMachine;
 
     public void payButtonAction(ActionEvent event) throws IOException {
 
-        if (cardName.getText() == null || cardNumber.getText() == null) {
+        if (cardName.getText() == null || cardNumber.getText() == null || CVV.getText() == null || expiryDate.getText() == null) {
             // Invalid inputs
             errorText.setText("Please enter valid card details.");
             return;
@@ -64,6 +74,8 @@ public class PayingCardController implements Controller {
 
         this.nameText = cardName.getText();
         this.numberText = cardNumber.getText();
+        this.expiryDateText = expiryDate.getText();
+        this.CVVText = CVV.getText();
 
         handler.checkCreditCard(getCardName(), getCardNum());
 
@@ -71,7 +83,7 @@ public class PayingCardController implements Controller {
             // paid successfully
             if (vendingMachine.isLogin) {
                 // savecarddetails needs the first field to be username
-                handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum());
+                handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(), getCVV(), getExpiryDate());
                 vendingMachine.addHistory();
                 vendingMachine.getCart().clearCart();
                 vendingMachine.logOut();
@@ -128,6 +140,14 @@ public class PayingCardController implements Controller {
 
     public String getCardNum() {
         return this.numberText;
+    }
+
+    public String getCVV(){
+        return this.CVVText;
+    }
+
+    public String getExpiryDate() {
+        return this.expiryDateText;
     }
 
     public void initialize(VendingMachine vendingMachine) {
