@@ -52,27 +52,42 @@ public class UserManager {
 
     public String getPassword(String username) {
         JSONObject user = findUser(username);
-        return (String) user.get("password");
+        if (user != null) {
+            return (String) user.get("password");
+        }
+        return null;
     }
 
     public String getUsername(String username) {
         JSONObject user = findUser(username);
-        return (String) user.get("username");
+        if (user != null) {
+            return (String) user.get("username");
+        }
+        return null;
     }
 
     public String getCardName(String username) {
         JSONObject user = findUser(username);
-        return (String) user.get("cardName");
+        if (user != null) {
+            return (String) user.get("cardName");
+        }
+        return null;
     }
 
     public String getCardNumber(String username) {
         JSONObject user = findUser(username);
-        return (String) user.get("cardNumber");
+        if (user != null) {
+            return (String) user.get("cardNumber");
+        }
+        return null;
     }
 
     public String getRole(String username) {
         JSONObject user = findUser(username);
-        return (String) user.get("userRole");
+        if (user != null) {
+            return (String) user.get("userRole");
+        }
+        return null;
     }
 
     public List<String> getHistory(String username) {
@@ -107,6 +122,8 @@ public class UserManager {
             newUser.put("password", password);
             newUser.put("cardName", "");
             newUser.put("cardNumber", "");
+            newUser.put("CVV", "");
+            newUser.put("expiryDate", "");
             newUser.put("purchaseHistory", new JSONArray());
             newUser.put("userRole", role);
             users.add(newUser);
@@ -125,7 +142,7 @@ public class UserManager {
         return true;
     }
 
-    public boolean addCreditCard(String username, String cardName, String cardNumber) {
+    public boolean addCreditCard(String username, String cardName, String cardNumber, String expiryDate, String CVV) {
         // Check that both username and password are not null
         if (username == null || cardName == null || cardNumber == null) {
             return false;
@@ -143,6 +160,8 @@ public class UserManager {
                 if (userUsername.equals(username)) {
                     userObject.put("cardName", cardName);
                     userObject.put("cardNumber", cardNumber);
+                    userObject.put("expiryDate", expiryDate);
+                    userObject.put("CVV", CVV);
                 }
             }
 

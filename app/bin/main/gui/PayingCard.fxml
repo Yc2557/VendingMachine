@@ -9,28 +9,38 @@
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VendingApplication.PayingCardController">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" >
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <Button fx:id="PayButton" layoutX="450.0" layoutY="247.0" mnemonicParsing="false" onAction="#payButtonAction" prefWidth="63.0" text="Pay" />
             <TextField fx:id="cardName" layoutX="96.0" layoutY="145.0" promptText="Card Name" />
-            <TextField fx:id="cardNumber" layoutX="96.0" layoutY="223.0" promptText="Card Number" />
+            <TextField fx:id="cardNumber" layoutX="96.0" layoutY="224.0" promptText="Card Number" />
           <Text fx:id="errorText" fill="RED" layoutX="118.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="306.39999999999986" />
             <Text layoutX="103.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Credit Card Details:">
                <font>
                   <Font size="40.0" />
                </font>
             </Text>
-            <Text layoutX="96.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Name">
+            <Text layoutX="96.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Name">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text layoutX="96.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Number">
+            <Text layoutX="96.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Number">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
             <Button fx:id="backButtonPayments" layoutX="363.0" layoutY="247.0" mnemonicParsing="false" onAction="#backPaymentsButtonAction" prefWidth="63.0" text="Back" />
+            <Text layoutX="374.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="totalText" editable="false" layoutX="376.0" layoutY="175.0" prefHeight="34.0" prefWidth="163.0" text="\$">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
       </children>
     </AnchorPane>
   </children>

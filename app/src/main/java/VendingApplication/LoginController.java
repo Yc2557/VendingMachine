@@ -102,6 +102,7 @@ public class LoginController implements Controller {
     }
 
     private boolean checkLogin(String login, String pass) {
+
         return login.equals(userManager.getUsername(login)) && pass.equals(userManager.getPassword(login));
     }
 

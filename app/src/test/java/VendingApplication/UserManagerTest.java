@@ -60,10 +60,15 @@ class UserManagerTest {
     public void getInformationTest() {
         UserManager userManager = new UserManager("src/test/resources/userManagerTest.json");
         assertEquals("Joe", userManager.getCardName("user"));
+        assertEquals(null, userManager.getCardName("notUser"));
         assertEquals("10000", userManager.getCardNumber("user"));
+        assertEquals(null, userManager.getCardNumber("notUser"));
         assertEquals("password", userManager.getPassword("user"));
+        assertEquals(null, userManager.getPassword("notUser"));
         assertEquals("user", userManager.getUsername("user"));
+        assertEquals(null, userManager.getUsername("notUser"));
         assertEquals("customer", userManager.getRole("user"));
+        assertEquals(null, userManager.getRole("notUser"));
 
     }
 
