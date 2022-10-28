@@ -25,8 +25,11 @@ public class PayingCardController implements Controller {
     private TextField cardName;
 
     @FXML
-    private TextField cardNumber;
+    private PasswordField cardNumber;
 
+    @FXML
+    private TextField totalText = new TextField("");
+  
     @FXML
     private TextField CVV;
 
@@ -49,12 +52,24 @@ public class PayingCardController implements Controller {
     private Text errorText;
 
     @FXML
+    private Text foundCardName = new Text();
+
+    @FXML
     private Button noButton;
 
     @FXML
     private Button yesButton;
 
-    private final CardHandler handler = new CardHandler();
+    @FXML
+    private Text namePrompt = new Text();
+
+    @FXML
+    private Text numberPrompt = new Text();
+
+    @FXML
+    private Button existingCardButton = new Button();
+
+    private CardHandler handler;
     private String nameText;
     private String numberText;
 
@@ -65,6 +80,7 @@ public class PayingCardController implements Controller {
     private VendingMachine vendingMachine;
 
     public void payButtonAction(ActionEvent event) throws IOException {
+
 
         if (cardName.getText() == null || cardNumber.getText() == null || CVV.getText() == null || expiryDate.getText() == null) {
             // Invalid inputs
@@ -86,7 +102,6 @@ public class PayingCardController implements Controller {
                 handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(), getCVV(), getExpiryDate());
                 vendingMachine.addHistory();
                 vendingMachine.getCart().clearCart();
-                vendingMachine.logOut();
                 changeScene(event, "validCard");
             } else {
                 // not logged in, don't offer to save card
@@ -96,6 +111,22 @@ public class PayingCardController implements Controller {
         } else {
             // card error
             errorText.setText("Card cannot be found: Please try a different card, or pay with cash.");
+        }
+    }
+
+    public void suggestCard() {
+
+        String foundCardString = handler.findCard(vendingMachine.getAccount().getUsername());
+
+        if (foundCardString.equals("") || foundCardString.equals(null)) {
+            //
+        } else {
+            this.foundCardName.setVisible(true);
+            this.foundCardName.setText("Saved Card Found: " + foundCardString);
+            this.namePrompt.setText("New Card Name");
+            this.numberPrompt.setText("New Card Number");
+            this.existingCardButton.setDisable(false);
+            this.existingCardButton.setVisible(true);
         }
     }
 
@@ -112,9 +143,10 @@ public class PayingCardController implements Controller {
         vendingMachine.changeScene(event, sceneName);
     }
 
-    public void backCardButtonAction(ActionEvent event) throws IOException {
-        // Go back from SaveCard to PayingCard
-        changeScene(event, "backCard");
+    public void useExistingCardAction(ActionEvent event) throws IOException {
+        vendingMachine.getCart().clearCart();
+        vendingMachine.logOut();
+        changeScene(event, "completed");
     }
 
     public void backPaymentsButtonAction(ActionEvent event) throws IOException {
@@ -123,14 +155,14 @@ public class PayingCardController implements Controller {
     }
 
     public void yesButtonAction(ActionEvent event) throws IOException {
+        vendingMachine.logOut();
         changeScene(event, "completed");
-        // Transaction completed
-
     }
 
     public void noButtonAction(ActionEvent event) throws IOException {
         // Overwrites saved card details
-        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), null, null);
+        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), "", "");
+        vendingMachine.logOut();
         changeScene(event, "completed");
     }
 
@@ -152,6 +184,18 @@ public class PayingCardController implements Controller {
 
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
+        String cardPath = "src/main/resources/data/credit_cards.json";
+        String userPath = "src/main/resources/data/user.json";
+        this.handler = new CardHandler(cardPath, userPath);
         this.totalText.setText("$" + String.format("%.02f", this.vendingMachine.getCart().totalCartPrice()));
+
+        if (vendingMachine.isLogin) {
+            suggestCard();
+        } else {
+            this.foundCardName.setVisible(false);
+            this.existingCardButton.setDisable(true);
+            this.existingCardButton.setVisible(false);
+        }
+
     }
 }
