@@ -211,4 +211,38 @@ public class UserManager {
 
         return true;
     }
+
+    public List<Account> getAllUsers() {
+        List<Account> users = new ArrayList<Account>();
+        try {
+            FileReader reader = new FileReader(filePath);
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+            JSONArray usersArray = (JSONArray) jsonObject.get("users");
+
+            for (Object user : usersArray) {
+                JSONObject userObject = (JSONObject) user;
+                String username = (String) userObject.get("username");
+                String password = (String) userObject.get("password");
+                String cardName = (String) userObject.get("cardName");
+                String cardNumber = (String) userObject.get("cardNumber");
+                String role = (String) userObject.get("userRole");
+                JSONArray purchaseHistory = (JSONArray) userObject.get("purchaseHistory");
+                List<String> history = new ArrayList<String>();
+                for (int i = 0; i < purchaseHistory.size(); i++) {
+                    String purchase = (String) purchaseHistory.get(i);
+                    history.add(purchase);
+                }
+                Account account = new Account(username, password, cardName, cardNumber, history, role);
+                users.add(account);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            throw new RuntimeException(e);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        return users;
+    }
 }
