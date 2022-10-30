@@ -86,7 +86,9 @@ public class VendingMachine {
             }
         }
 
-        UserManager userManager = new UserManager();
-        userManager.addHistory(this.account.getUsername(), history);
+        if (isLogin) {
+            UserManager userManager = new UserManager();
+            userManager.addHistory(this.account.getUsername(), history);
+        }
     }
 }

@@ -60,6 +60,8 @@ public class PayingCashController implements Controller {
 
     private VendingMachine vendingMachine;
 
+    private TransactionHandler transactionHandler;
+
     public void clickedOnMoney(Button button, PaymentHandler handler) {
         double currentAmount = Double.parseDouble(amountAdded.getText());
 
@@ -157,7 +159,9 @@ public class PayingCashController implements Controller {
             String changeStr = String.format("%.02f", changeAmount);
             change.setText(changeStr);
             vendingMachine.addHistory();
+            transactionHandler.writeTransaction("cash", Double.toString(changeAmount));
             vendingMachine.getCart().clearCart();
+            vendingMachine.logOut();
             vendingMachine.changeScene(event, "gui/Selection.fxml");
         }
 
@@ -173,7 +177,7 @@ public class PayingCashController implements Controller {
         totalCost = vendingMachine.getCart().totalCartPrice();
         total.setText(String.format("%.02f", totalCost));
         PaymentHandler handler = new PaymentHandler();
-
+        transactionHandler = new TransactionHandler(vendingMachine);
         payButton.setOnAction(event -> {
             try {
                 clickedOnPay(handler, event);

@@ -58,6 +58,8 @@ public class PayingCardController implements Controller {
     private Button existingCardButton = new Button();
 
     private CardHandler handler;
+
+    private TransactionHandler transactionHandler;
     private String nameText;
     private String numberText;
 
@@ -90,6 +92,7 @@ public class PayingCardController implements Controller {
 
         if (handler.isValidCard()) {
             // paid successfully
+            transactionHandler.writeTransaction("card", "");
             if (vendingMachine.isLogin) {
                 // savecarddetails needs the first field to be username
                 handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(), getCVV(), getExpiryDate());
@@ -139,6 +142,7 @@ public class PayingCardController implements Controller {
     }
 
     public void useExistingCardAction(ActionEvent event) throws IOException {
+        transactionHandler.writeTransaction("card", "");
         vendingMachine.getCart().clearCart();
         vendingMachine.logOut();
         changeScene(event, "completed");
@@ -179,6 +183,7 @@ public class PayingCardController implements Controller {
 
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
+        this.transactionHandler = new TransactionHandler(this.vendingMachine);
         this.handler = new CardHandler("src/main/resources/data/credit_cards.json");
         this.totalText.setText("$" + String.format("%.02f", this.vendingMachine.getCart().totalCartPrice()));
 
