@@ -54,6 +54,7 @@ public class OwnerController implements Controller {
 
     private VendingMachine vendingMachine;
     private TransactionHandler transactionHandler;
+    private ReportGenerator reportGenerator;
     private List<Account> accounts;
     private Account selectedAccount;
 
@@ -73,6 +74,7 @@ public class OwnerController implements Controller {
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
         this.transactionHandler = new TransactionHandler();
+        this.reportGenerator = new ReportGenerator();
         UserManager manager = new UserManager();
         this.accounts = manager.getAllUsers();
         setList();
@@ -121,12 +123,14 @@ public class OwnerController implements Controller {
 
     public void clickCancelDownload(ActionEvent event) throws IOException {
         // TO DO: Download list of cancelled transactions
-        transactionHandler.exportCancelledTransactionReport(transactionHandler.getCancelledTransactions());
+        List<CancelledTransaction> cancelledTransactions = transactionHandler.getCancelledTransactions();
+        reportGenerator.exportCancelledTransactionReport(cancelledTransactions);
         downloadText.setText("Downloaded!");
     }
 
     public void clickRoleDownload(ActionEvent event) throws IOException {
         // TO DO: Download list of current roles
+        reportGenerator.exportUserRoleReport(accounts);
         downloadText2.setText("Downloaded!");
     }
 

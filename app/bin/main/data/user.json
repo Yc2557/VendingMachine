@@ -1,32 +1,48 @@
 {
-    "users": [
-        {
-            "password": "hou",
-            "purchaseHistory": [
-                "Mineral Water",
-                "Coca Cola",
-                "Kettle"
-            ],
-            "cardName": "m",
-            "userRole": "customer",
-            "cardNumber": "1",
-            "username": "kevin"
-        },
-        {
-            "password": "test",
-            "purchaseHistory": [],
-            "cardName": "m",
-            "userRole": "customer",
-            "cardNumber": "1",
-            "username": "test"
-        },
-        {
-            "password": "admin",
-            "purchaseHistory": [],
-            "cardName": "m",
-            "userRole": "owner",
-            "cardNumber": "1",
-            "username": "admin"
-        }
-    ]
+  "users": [
+    {
+      "password": "hou",
+      "purchaseHistory": [
+        "Mineral Water",
+        "Coca Cola",
+        "Kettle"
+      ],
+      "cardName": "m",
+      "userRole": "customer",
+      "cardNumber": "1",
+      "username": "kevin"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "seller",
+      "cardNumber": "",
+      "username": "sell"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "cashier",
+      "cardNumber": "",
+      "username": "cash"
+    },
+    {
+      "password": "test",
+      "purchaseHistory": [],
+      "cardName": "m",
+      "userRole": "customer",
+      "cardNumber": "1",
+      "username": "test"
+    },
+    {
+      "password": "admin",
+      "purchaseHistory": [],
+      "cardName": "m",
+      "userRole": "owner",
+      "cardNumber": "1",
+      "username": "admin"
+    }
+  ]
 }

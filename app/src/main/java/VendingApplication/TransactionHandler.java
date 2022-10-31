@@ -8,27 +8,21 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
 
 public class TransactionHandler {
     private String cancelledFilePath;
     private String normalFilePath;
-    private String reportsFilePath;
 
-    public TransactionHandler(String normalFilePath, String cancelledFilePath, String reportsFilePath) {
+    public TransactionHandler(String normalFilePath, String cancelledFilePath) {
         this.normalFilePath = normalFilePath;
         this.cancelledFilePath = cancelledFilePath;
-        this.reportsFilePath = reportsFilePath;
     }
 
     public TransactionHandler() {
         this.normalFilePath = "";
         this.cancelledFilePath = "src/main/resources/data/cancelled_transaction.json";
-        this.reportsFilePath = "src/main/reports";
     }
 
     public List<CancelledTransaction> getCancelledTransactions() {
@@ -57,24 +51,5 @@ public class TransactionHandler {
         }
 
         return transactions;
-    }
-
-    /** Print out csv of cancelled transactions */
-    public void exportCancelledTransactionReport(List<CancelledTransaction> transactions) {
-        String reportPath = reportsFilePath + "/cancelled_transaction_report.csv";
-        try {
-            BufferedWriter writer = Files.newBufferedWriter(Paths.get(reportPath));
-            CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
-                    .withHeader("Date", "Time", "User", "Reason"));
-
-            for (CancelledTransaction transaction : transactions) {
-                csvPrinter.printRecord(transaction.getDate(), transaction.getTime(), transaction.getUsername(),
-                        transaction.getReason());
-            }
-
-            csvPrinter.flush();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

@@ -13,6 +13,22 @@
       "username": "kevin"
     },
     {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "seller",
+      "cardNumber": "",
+      "username": "sell"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "cashier",
+      "cardNumber": "",
+      "username": "cash"
+    },
+    {
       "password": "test",
       "purchaseHistory": [],
       "cardName": "m",
