@@ -31,10 +31,12 @@
          </font>
       </Text>
       <Text layoutX="287.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cancelled Transactions" />
-      <Text layoutX="287.0" layoutY="338.0" strokeType="OUTSIDE" strokeWidth="0.0" text="List of Current Roles/Users" />
-      <Button fx:id="roleDownloadBtn" layoutX="468.0" layoutY="321.0" mnemonicParsing="false" onAction="#clickRoleDownload" text="Download" />
+      <Text layoutX="287.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="List of Current Roles/Users" />
+      <Button fx:id="roleDownloadBtn" layoutX="468.0" layoutY="324.0" mnemonicParsing="false" onAction="#clickRoleDownload" text="Download" />
       <Button fx:id="cashierBtn" layoutX="251.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickCashier" prefHeight="26.0" prefWidth="97.0" text="Cashier Mode" />
       <Button fx:id="sellerBtn" layoutX="359.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickSeller" prefHeight="26.0" prefWidth="97.0" text="Seller Mode" />
       <Text fx:id="errorText" fill="RED" layoutX="455.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="downloadText" fill="RED" layoutX="503.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="downloadText2" fill="RED" layoutX="503.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>

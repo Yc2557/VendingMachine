@@ -46,10 +46,15 @@ public class OwnerController implements Controller {
     @FXML
     private Text errorText;
 
+    @FXML
+    private Text downloadText;
+
+    @FXML
+    private Text downloadText2;
+
     private VendingMachine vendingMachine;
-
+    private TransactionHandler transactionHandler;
     private List<Account> accounts;
-
     private Account selectedAccount;
 
     @FXML
@@ -67,6 +72,7 @@ public class OwnerController implements Controller {
 
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
+        this.transactionHandler = new TransactionHandler();
         UserManager manager = new UserManager();
         this.accounts = manager.getAllUsers();
         setList();
@@ -115,10 +121,13 @@ public class OwnerController implements Controller {
 
     public void clickCancelDownload(ActionEvent event) throws IOException {
         // TO DO: Download list of cancelled transactions
+        transactionHandler.exportCancelledTransactionReport(transactionHandler.getCancelledTransactions());
+        downloadText.setText("Downloaded!");
     }
 
     public void clickRoleDownload(ActionEvent event) throws IOException {
-        // TO DO: Download list of cancelled transactions
+        // TO DO: Download list of current roles
+        downloadText2.setText("Downloaded!");
     }
 
     private boolean modifyRole(String currentRole, String inputText) {
