@@ -22,7 +22,7 @@ public class CardHandler {
         this.userPath = userPath;
     }
 
-    public void checkCreditCard(String cardName, String cardNumber) {
+    public void checkCreditCard(String cardName, String cardNumber, String CVV, String expiryDate) {
 
         try {
             JSONParser parser = new JSONParser();
@@ -32,10 +32,13 @@ public class CardHandler {
             for (int i = 0; i < cardsDB.size(); i++) {
 
                 JSONObject cardDetails = (JSONObject) cardsDB.get(i);
+
                 String dbName = cardDetails.get("name").toString();
                 String dbNumber = cardDetails.get("number").toString();
+                String dbCVV = cardDetails.get("CVV").toString();
+                String dbExpiryDate = cardDetails.get("expiryDate").toString();
 
-                if (dbName.equals(cardName) && dbNumber.equals(cardNumber)) {
+                if (dbName.equals(cardName) && dbNumber.equals(cardNumber) && dbCVV.equals(CVV) && dbExpiryDate.equals(expiryDate)) {
                     validateCard();
                     return;
                 } else {
@@ -51,33 +54,11 @@ public class CardHandler {
         }
     }
 
-    public void saveCardDetails(String username, String cardName, String cardNumber) {
+    public void saveCardDetails(String username, String cardName, String cardNumber, String expiryDate, String CVV) {
 
-        try {
-            JSONParser parser = new JSONParser();
-            JSONObject usersObject = (JSONObject) parser.parse(new FileReader(userPath));
-            JSONArray usersArray = (JSONArray) usersObject.get("users");
+        UserManager userManager = new UserManager();
+        userManager.addCreditCard(username, cardName, cardNumber, expiryDate, CVV);
 
-            for (int i = 0; i < usersArray.size(); i++) {
-                JSONObject userDetails = (JSONObject) usersArray.get(i);
-                if (userDetails.get("username").equals(username)) {
-                    userDetails.put("cardName", cardName);
-                    userDetails.put("cardNumber", cardNumber);
-
-                    FileWriter writer = new FileWriter(userPath);
-                    writer.write(usersObject.toJSONString());
-                    writer.flush();
-                    writer.close();
-                    return;
-                }
-            }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found!");
-            throw new RuntimeException(e);
-        } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public String findCard(String username) {
