@@ -30,7 +30,6 @@ public class LoginController implements Controller {
         String username = loginText.getText().trim();
         String password = passwordText.getText();
 
-
         // Check if username and password are correct
         if (checkLogin(username, password)) {
             String cardName = userManager.getCardName(username);
@@ -94,6 +93,11 @@ public class LoginController implements Controller {
             sceneName += "CashierSelection.fxml";
         } else if (type.equalsIgnoreCase("seller")) {
             sceneName += "Modifications.fxml";
+        } else if (type.equalsIgnoreCase("owner")) {
+            sceneName += "OwnerSelection.fxml";
+        } else {
+            invalidPathText.setText("Invalid path");
+            return;
         }
 
         // Loads next relevant scene

@@ -1,147 +1,32 @@
 {
   "users": [
     {
-      "password": "",
+      "password": "hou",
       "purchaseHistory": [
         "Mineral Water",
-        "Coca Cola"
-      ],
-      "cardName": "",
-      "userRole": "customer",
-      "cardNumber": "",
-      "username": "anon"
-    },
-    {
-      "password": "1",
-      "purchaseHistory": [
-        "3",
-        "4",
-        "8",
-        "4",
-        "5"
-      ],
-      "cardName": "Charles",
-      "userRole": "customer",
-      "cardNumber": "40691",
-      "username": "m"
-    },
-    {
-      "password": "1",
-      "purchaseHistory": [
-        "Coca Cola"
+        "Coca Cola",
+        "Kettle"
       ],
       "cardName": "m",
       "userRole": "customer",
       "cardNumber": "1",
-      "username": "p"
+      "username": "kevin"
     },
     {
-      "password": "1",
-      "purchaseHistory": [
-        "Smiths"
-      ],
-      "cardName": "m",
-      "userRole": "customer",
-      "cardNumber": "1",
-      "username": "jokes"
-    },
-    {
-      "password": "1",
-      "purchaseHistory": [
-        "Mineral Water"
-      ],
-      "cardName": "m",
-      "userRole": "customer",
-      "cardNumber": "1",
-      "username": "mas"
-    },
-    {
-      "password": "1",
-      "purchaseHistory": [
-        "Mineral Water"
-      ],
-      "cardName": "m",
-      "userRole": "customer",
-      "cardNumber": "1",
-      "username": "mos"
-    },
-    {
-      "password": "1",
-      "purchaseHistory": [],
-      "cardName": "",
-      "userRole": "seller",
-      "cardNumber": "",
-      "username": "look"
-    },
-    {
-      "password": "1",
-      "purchaseHistory": [],
-      "cardName": "",
-      "userRole": "cashier",
-      "cardNumber": "",
-      "username": "pol"
-    },
-    {
-      "password": "1",
-      "purchaseHistory": [],
-      "cardName": "",
-      "userRole": "customer",
-      "cardNumber": "",
-      "username": "jo"
-    },
-    {
-      "password": "1",
-      "purchaseHistory": [],
-      "cardName": "",
-      "userRole": "customer",
-      "cardNumber": "",
-      "username": "ko"
-    },
-    {
-      "password": "1",
+      "password": "test",
       "purchaseHistory": [],
       "cardName": "m",
       "userRole": "customer",
       "cardNumber": "1",
-      "username": "k"
+      "username": "test"
     },
     {
-      "password": "1",
-      "purchaseHistory": [
-        "Mineral Water"
-      ],
-      "cardName": "m",
-      "userRole": "customer",
-      "cardNumber": "1",
-      "username": "lo"
-    },
-    {
-      "password": "1",
+      "password": "admin",
       "purchaseHistory": [],
-      "cardName": "",
-      "userRole": "customer",
-      "cardNumber": "",
-      "username": "lok1"
-    },
-    {
-      "password": "123",
-      "purchaseHistory": [
-        "Mineral Water"
-      ],
       "cardName": "m",
-      "userRole": "customer",
+      "userRole": "owner",
       "cardNumber": "1",
-      "username": "a"
-    },
-    {
-      "password": "1",
-      "purchaseHistory": [
-        "Coca Cola"
-      ],
-      "cardName": "m",
-      "userRole": "customer",
-      "cardNumber": "1",
-      "username": "y"
+      "username": "admin"
     }
   ]
 }

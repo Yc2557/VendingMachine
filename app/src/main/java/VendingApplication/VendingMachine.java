@@ -92,7 +92,7 @@ public class VendingMachine {
 
     public List<String> getHistoryAsName() {
         List<String> nameList = new ArrayList<>();
-        for (String id: account.getHistory()) {
+        for (String id : account.getHistory()) {
             Item item = inventory.getItem(id, "id");
             if (item != null) {
                 nameList.add(item.getName());

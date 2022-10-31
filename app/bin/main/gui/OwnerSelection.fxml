@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VendingApplication.OwnerController">
+   <children>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="27.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Owner Panel">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <ListView fx:id="userList" layoutX="23.0" layoutY="85.0" onMouseClicked="#selectItem" prefHeight="271.0" prefWidth="200.0" />
+      <Text layoutX="25.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Users" />
+      <Text layoutX="351.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current" underline="true" />
+      <Text layoutX="496.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modify" underline="true" />
+      <Text layoutX="275.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role" />
+      <Text fx:id="roleText" layoutX="359.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role" />
+      <Button fx:id="modifyBtn" layoutX="506.0" layoutY="158.0" mnemonicParsing="false" onAction="#modifyProperties" text="Modify" />
+      <TextField fx:id="roleModifier" layoutX="450.0" layoutY="107.0" prefHeight="26.0" prefWidth="135.0" />
+      <Button layoutX="497.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickLogOut" prefHeight="26.0" prefWidth="72.0" text="Logout" />
+      <Button fx:id="cancelDownloadBtn" layoutX="468.0" layoutY="272.0" mnemonicParsing="false" onAction="#clickCancelDownload" text="Download" />
+      <Text layoutX="266.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Report Downloads">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <Text layoutX="287.0" layoutY="289.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cancelled Transactions" />
+      <Text layoutX="287.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="List of Current Roles/Users" />
+      <Button fx:id="roleDownloadBtn" layoutX="468.0" layoutY="324.0" mnemonicParsing="false" onAction="#clickRoleDownload" text="Download" />
+      <Button fx:id="cashierBtn" layoutX="251.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickCashier" prefHeight="26.0" prefWidth="97.0" text="Cashier Mode" />
+      <Button fx:id="sellerBtn" layoutX="359.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickSeller" prefHeight="26.0" prefWidth="97.0" text="Seller Mode" />
+      <Text fx:id="errorText" fill="RED" layoutX="455.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="downloadText" fill="RED" layoutX="503.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="downloadText2" fill="RED" layoutX="503.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+   </children>
+</AnchorPane>
