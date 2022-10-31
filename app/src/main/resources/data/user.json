@@ -17,7 +17,6 @@
         "3",
         "4",
         "8",
-        "4",
         "5"
       ],
       "cardName": "Charles",
@@ -28,7 +27,6 @@
     {
       "password": "1",
       "purchaseHistory": [
-        "Coca Cola"
       ],
       "cardName": "m",
       "userRole": "customer",
@@ -38,7 +36,6 @@
     {
       "password": "1",
       "purchaseHistory": [
-        "Smiths"
       ],
       "cardName": "m",
       "userRole": "customer",
@@ -48,7 +45,6 @@
     {
       "password": "1",
       "purchaseHistory": [
-        "Mineral Water"
       ],
       "cardName": "m",
       "userRole": "customer",
@@ -58,7 +54,6 @@
     {
       "password": "1",
       "purchaseHistory": [
-        "Mineral Water"
       ],
       "cardName": "m",
       "userRole": "customer",
@@ -126,7 +121,6 @@
     {
       "password": "123",
       "purchaseHistory": [
-        "Mineral Water"
       ],
       "cardName": "m",
       "userRole": "customer",
@@ -136,7 +130,6 @@
     {
       "password": "1",
       "purchaseHistory": [
-        "Coca Cola"
       ],
       "cardName": "m",
       "userRole": "customer",

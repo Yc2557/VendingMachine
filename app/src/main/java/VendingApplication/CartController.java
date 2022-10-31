@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,6 +32,9 @@ public class CartController implements Controller{
 
     @FXML
     private TextField totalText;
+
+    @FXML
+    private Text errorText;
 
     private VendingMachine vendingMachine;
 
@@ -81,6 +85,10 @@ public class CartController implements Controller{
     }
 
     public void purchaseAction(ActionEvent event) throws IOException {
+        if (vendingMachine.getCart().getCartSize() == 0) {
+            errorText.setText("Cart is empty");
+            return;
+        }
         vendingMachine.changeScene(event, "gui/PaymentSelector.fxml");
     }
 
