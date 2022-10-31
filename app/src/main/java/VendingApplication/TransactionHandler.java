@@ -24,6 +24,7 @@ public class TransactionHandler {
     }
 
     public void writeTransaction(String paymentType, String change) {
+
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         String dateString = format.format(date).toString();

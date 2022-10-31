@@ -109,13 +109,15 @@
       "username": "a"
     },
     {
-      "expiryDate": "111",
+      "expiryDate": "",
       "password": "1",
-      "CVV": "1\/11",
-      "purchaseHistory": [],
-      "cardName": "m",
+      "CVV": "",
+      "purchaseHistory": [
+        "Mineral Water"
+      ],
+      "cardName": "",
       "userRole": "customer",
-      "cardNumber": "1",
+      "cardNumber": "",
       "username": "m"
     },
     {

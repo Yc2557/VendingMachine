@@ -93,8 +93,8 @@ public class PayingCardController implements Controller {
         if (handler.isValidCard()) {
             // paid successfully
             transactionHandler.writeTransaction("card", "");
+
             if (vendingMachine.isLogin) {
-                // savecarddetails needs the first field to be username
                 handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(), getCVV(), getExpiryDate());
                 vendingMachine.addHistory();
                 vendingMachine.getCart().clearCart();
@@ -114,8 +114,8 @@ public class PayingCardController implements Controller {
 
         String foundCardString = handler.findCard(vendingMachine.getAccount().getUsername());
 
-        if (foundCardString.equals("") || foundCardString.equals(null)) {
-            //
+        if (foundCardString.equals("")) {
+            //no card found, buttons have already been init invisible
         } else {
             this.foundCardName.setVisible(true);
             this.foundCardName.setText("Saved Card Found: " + foundCardString);
@@ -133,7 +133,6 @@ public class PayingCardController implements Controller {
         String sceneName = "gui/";
         switch (type) {
             case "validCard" -> sceneName += "SaveCard.fxml";
-            case "backCard" -> sceneName += "PayingCard.fxml";
             case "backPay" -> sceneName += "PaymentSelector.fxml";
             case "completed" -> sceneName += "Selection.fxml";
         }

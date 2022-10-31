@@ -10,40 +10,6 @@
         }
       ],
       "paymentType": "card"
-    },
-    {
-      "date": "30-10-2022 20:05",
-      "price": "21.0",
-      "change": "",
-      "items": [
-        {
-          "Pepsi": "7"
-        },
-        {
-          "Kettle": "1"
-        },
-        {
-          "Thins": "1"
-        },
-        {
-          "Smiths": "1"
-        },
-        {
-          "Sour Patch": "4"
-        }
-      ],
-      "paymentType": "card"
-    },
-    {
-      "date": "30-10-2022 20:12",
-      "price": "4.5",
-      "change": "0.5",
-      "items": [
-        {
-          "Coca Cola": "3"
-        }
-      ],
-      "paymentType": "cash"
     }
   ]
 }
