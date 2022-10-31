@@ -14,6 +14,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PaymentTest {
 
+    @BeforeEach
+    public void setupJSON() {
+        Cashier cashier = new Cashier();
+        cashier.setFilename("src/test/resources/cashTest.json");
+        cashier.modifyChange("5", "5c");
+        cashier.modifyChange("5", "10c");
+        cashier.modifyChange("5", "20c");
+        cashier.modifyChange("5", "50c");
+        cashier.modifyChange("5", "$1");
+        cashier.modifyChange("5", "$2");
+        cashier.modifyChange("5", "$5");
+        cashier.modifyChange("5", "$10");
+        cashier.modifyChange("5", "$20");
+        cashier.modifyChange("5", "$50");
+        cashier.modifyChange("5", "$100");
+    }
+
     @Test
     public void testCorrectQuantities() {
         try {
