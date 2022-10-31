@@ -52,4 +52,30 @@ public class TransactionHandler {
 
         return transactions;
     }
+
+    public void addCancelledTransaction(CancelledTransaction transaction) {
+        try {
+            FileReader reader = new FileReader(cancelledFilePath);
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+            JSONArray transactions = (JSONArray) jsonObject.get("transactions");
+
+            JSONObject newTransaction = new JSONObject();
+            newTransaction.put("date", transaction.getDate());
+            newTransaction.put("time", transaction.getTime());
+            newTransaction.put("user", transaction.getUsername());
+            newTransaction.put("reason", transaction.getReason());
+            transactions.add(newTransaction);
+
+            FileWriter file = new FileWriter(cancelledFilePath);
+            file.write(jsonObject.toJSONString());
+            file.flush();
+            file.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            throw new RuntimeException(e);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
