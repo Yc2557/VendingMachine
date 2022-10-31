@@ -72,7 +72,7 @@ public class CartController implements Controller{
             List<Item> list = cart.getCart();
             Item item = cart.getItem(list.get(selectedItemIndex));
             Inventory inventory = vendingMachine.getInventory();
-            inventory.addAmount(inventory.getItem(item.getName()), item.getAmount());
+            inventory.addAmount(inventory.getItem(item.getName(), "name"), item.getAmount());
             cart.removeItem(item);
             updateCart();
 

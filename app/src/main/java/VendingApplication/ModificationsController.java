@@ -20,9 +20,6 @@ public class ModificationsController implements Controller{
     private Text categoryText;
 
     @FXML
-    private TextField codeModifier;
-
-    @FXML
     private Text codeText;
 
     @FXML
@@ -61,12 +58,6 @@ public class ModificationsController implements Controller{
                 System.out.println("Invalid Name!");
             }
             nameModifier.clear();
-        }
-        if (!codeModifier.getText().isEmpty()) {
-            if (!seller.modifyId(nameText.getText(), codeModifier.getText())) {
-                System.out.println("Invalid ID!");
-            }
-            codeModifier.clear();
         }
 
         if (!categoryModifier.getText().isEmpty()) {
@@ -124,7 +115,7 @@ public class ModificationsController implements Controller{
     }
 
     public void selectItem() {
-        item = inventory.getItem(itemList.getSelectionModel().getSelectedItem());
+        item = inventory.getItem(itemList.getSelectionModel().getSelectedItem(), "name");
         fillText(item);
     }
 

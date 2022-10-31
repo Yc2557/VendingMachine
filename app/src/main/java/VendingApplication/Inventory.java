@@ -123,11 +123,21 @@ public class Inventory {
         }
     }
 
-    public Item getItem(String name) {
-        for (Item item: inventory) {
-            if (item.getName().equalsIgnoreCase(name)) {
-                return item;
+    public Item getItem(String name, String type) {
+        if (type.equalsIgnoreCase("name")) {
+            for (Item item: inventory) {
+                if (item.getName().equalsIgnoreCase(name)) {
+                    return item;
+                }
             }
+
+        } else if (type.equalsIgnoreCase("id")) {
+            for (Item item: inventory) {
+                if (item.getItemid().equalsIgnoreCase(name)) {
+                    return item;
+                }
+            }
+
         }
         return null;
     }

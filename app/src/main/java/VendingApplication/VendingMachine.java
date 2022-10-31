@@ -6,11 +6,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.checkerframework.checker.units.qual.C;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class VendingMachine {
     private Inventory inventory;
@@ -18,12 +17,10 @@ public class VendingMachine {
 
     public boolean isLogin = false;
     private Account account = null;
-    private UserManager userManager;
 
     public VendingMachine() {
         this.inventory = new Inventory();
         this.cart = new Cart();
-        this.userManager = new UserManager();
 
         inventory.readJsonFile("src/main/resources/data/inventory.json");
     }
@@ -77,19 +74,30 @@ public class VendingMachine {
      */
     public void addHistory() {
         List<Item> cartItems = this.cart.getCart();
-        List<String> history = new ArrayList<>();
-        if (cartItems.size() >= 5) {
 
-            for (int i = 0; i < 5; i++) {
-                history.add(cartItems.get(i).getName());
-            }
-        } else {
-            for (Item cartItem : cartItems) {
-                history.add(cartItem.getName());
+        for (Item item : cartItems) {
+            if (!this.account.getHistory().contains(item.getItemid())) {
+                if (this.account.getHistory().size() < 5) {
+                    this.account.getHistory().add(item.getItemid());
+                } else {
+                    this.account.getHistory().remove(0);
+                    this.account.getHistory().add(item.getItemid());
+                }
             }
         }
 
         UserManager userManager = new UserManager();
-        userManager.addHistory(this.account.getUsername(), history);
+        userManager.addHistory(this.account.getUsername(), this.account.getHistory());
+    }
+
+    public List<String> getHistoryAsName() {
+        List<String> nameList = new ArrayList<>();
+        for (String id: account.getHistory()) {
+            Item item = inventory.getItem(id, "id");
+            if (item != null) {
+                nameList.add(item.getName());
+            }
+        }
+        return nameList;
     }
 }

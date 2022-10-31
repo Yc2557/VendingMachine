@@ -30,11 +30,11 @@
       <Text fx:id="codeText" layoutX="353.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Code" />
       <Text fx:id="nameText" layoutX="353.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
       <Button fx:id="modifyBtn" layoutX="489.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#modifyProperties" text="Modify" />
-      <TextField fx:id="quantityModifier" layoutX="452.0" layoutY="248.0" prefHeight="26.0" prefWidth="135.0" />
-      <TextField fx:id="priceModifier" layoutX="451.0" layoutY="300.0" prefHeight="26.0" prefWidth="135.0" />
-      <TextField fx:id="categoryModifier" layoutX="450.0" layoutY="193.0" prefHeight="26.0" prefWidth="135.0" />
-      <TextField fx:id="codeModifier" layoutX="450.0" layoutY="149.0" prefHeight="26.0" prefWidth="135.0" />
+      <TextField fx:id="quantityModifier" layoutX="451.0" layoutY="242.0" prefHeight="26.0" prefWidth="135.0" />
+      <TextField fx:id="priceModifier" layoutX="451.0" layoutY="291.0" prefHeight="26.0" prefWidth="135.0" />
+      <TextField fx:id="categoryModifier" layoutX="451.0" layoutY="193.0" prefHeight="26.0" prefWidth="135.0" />
       <TextField fx:id="nameModifier" layoutX="450.0" layoutY="107.0" prefHeight="26.0" prefWidth="135.0" />
       <Button layoutX="497.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickLogOut" prefHeight="26.0" prefWidth="72.0" text="Logout" />
+      <Text layoutX="450.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Can not change ID." textAlignment="CENTER" wrappingWidth="135.20000000000005" />
    </children>
 </AnchorPane>

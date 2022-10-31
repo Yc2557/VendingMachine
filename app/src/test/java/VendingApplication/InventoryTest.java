@@ -102,9 +102,10 @@ public class InventoryTest {
         inventory.readJsonFile("src/test/resources/inventoryTest.json");
         List<Item> inventoryList = inventory.getInventory();
 
-        assertEquals(inventoryList.get(0), inventory.getItem("Mineral Water"));
-        assertEquals(inventoryList.get(3), inventory.getItem("M&M"));
-        assertEquals(inventoryList.get(6), inventory.getItem("Sour Patch"));
+        assertEquals(inventoryList.get(0), inventory.getItem("Mineral Water", "name"));
+        assertEquals(inventoryList.get(3), inventory.getItem("M&M", "name"));
+        assertEquals(inventoryList.get(6), inventory.getItem("Sour Patch", "name"));
+        assertEquals(inventoryList.get(1), inventory.getItem("1", "id"));
     }
 
     @Test
@@ -128,7 +129,7 @@ public class InventoryTest {
         inventory.removeItem(inventoryList.get(0));
 
         assertEquals(size - 1, inventoryList.size());
-        assertEquals(inventoryList.get(0), inventory.getItem("Sprite"));
+        assertEquals(inventoryList.get(0), inventory.getItem("Sprite", "name"));
     }
 
     @Test
