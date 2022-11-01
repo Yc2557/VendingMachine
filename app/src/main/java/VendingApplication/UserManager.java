@@ -82,6 +82,22 @@ public class UserManager {
         return null;
     }
 
+    public String getExpiryDate(String username) {
+        JSONObject user = findUser(username);
+        if (user != null) {
+            return (String) user.get("expiryDate");
+        }
+        return null;
+    }
+
+    public String getCVV(String username) {
+        JSONObject user = findUser(username);
+        if (user != null) {
+            return (String) user.get("CVV");
+        }
+        return null;
+    }
+
     public String getRole(String username) {
         JSONObject user = findUser(username);
         if (user != null) {
@@ -255,6 +271,8 @@ public class UserManager {
                 String password = (String) userObject.get("password");
                 String cardName = (String) userObject.get("cardName");
                 String cardNumber = (String) userObject.get("cardNumber");
+                String expiryDate = (String) userObject.get("expiryDate");
+                String cvv = (String) userObject.get("CVV");
                 String role = (String) userObject.get("userRole");
                 JSONArray purchaseHistory = (JSONArray) userObject.get("purchaseHistory");
                 List<String> history = new ArrayList<String>();
@@ -262,7 +280,7 @@ public class UserManager {
                     String purchase = (String) purchaseHistory.get(i);
                     history.add(purchase);
                 }
-                Account account = new Account(username, password, cardName, cardNumber, history, role);
+                Account account = new Account(username, password, cardName, cardNumber, expiryDate, cvv, history, role);
                 users.add(account);
             }
         } catch (FileNotFoundException e) {

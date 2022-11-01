@@ -180,8 +180,8 @@ public class PayingCardController implements Controller {
     }
 
     public void createWriteTransaction() {
-        CompletedTransaction ct = new CompletedTransaction(vendingMachine.getCart(), "card", Double.toString(vendingMachine.getCart().totalCartPrice()), "");
-        transactionHandler.writeTransaction(ct);
+        CompletedTransaction ct = new CompletedTransaction(vendingMachine.getAccount().getUsername(), vendingMachine.getCart(), "card", Double.toString(vendingMachine.getCart().totalCartPrice()), "");
+        transactionHandler.addCompletedTransaction(ct);
     }
 
     public void initialize(VendingMachine vendingMachine) {

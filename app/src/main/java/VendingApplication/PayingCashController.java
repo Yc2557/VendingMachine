@@ -159,8 +159,8 @@ public class PayingCashController implements Controller {
             String changeStr = String.format("%.02f", changeAmount);
             change.setText(changeStr);
             vendingMachine.addHistory();
-            CompletedTransaction ct = new CompletedTransaction(vendingMachine.getCart(), "cash", total.getText(), Double.toString(changeAmount));
-            transactionHandler.writeTransaction(ct);
+            CompletedTransaction ct = new CompletedTransaction(vendingMachine.getAccount().getUsername(), vendingMachine.getCart(), "cash", total.getText(), Double.toString(changeAmount));
+            transactionHandler.addCompletedTransaction(ct);
             vendingMachine.getCart().clearCart();
             vendingMachine.logOut();
             vendingMachine.changeScene(event, "gui/Selection.fxml");
