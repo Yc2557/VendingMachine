@@ -51,4 +51,43 @@ public class ReportGenerator {
             throw new RuntimeException(e);
         }
     }
+
+    public void exportCurrentInventoryReport(Inventory inventory) {
+        String reportPath = reportsFilePath + "/inventory_report.csv";
+
+        try {
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(reportPath));
+            CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
+                    .withHeader("Name", "ID", "Category", "Quantity", "Price"));
+
+            for (Item item : inventory.getInventory()) {
+                csvPrinter.printRecord(item.getName(), item.getItemid(), item.getCategory(),
+                        item.getAmount(), item.getPrice());
+            }
+
+            csvPrinter.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void exportItemSummaryReport(Inventory inventory) {
+        String reportPath = reportsFilePath + "/item_summary_report.txt";
+
+        try {
+            FileWriter writer = new FileWriter(reportPath);
+
+            for (Item item : inventory.getInventory()) {
+                StringBuilder str = new StringBuilder();
+                str.append(item.getName() + "; ");
+                str.append(item.getItemid() + "; ");
+                str.append(item.getAmount() + "\n");
+                writer.write(String.valueOf(str));
+            }
+
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
