@@ -9,19 +9,19 @@ public class Account {
     private String cardNumber;
     private String cardName;
 
-    private String ccv;
+    private String CVV;
 
     private String expiryDate;
 
     private List<String> history;
     private String role;
 
-    public Account(String u, String p, String cardNumber, String cardName, String cvv, String expiryDate, List<String> history, String role) {
+    public Account(String u, String p, String cardNumber, String cardName, String CVV, String expiryDate, List<String> history, String role) {
         this.username = u;
         this.password = p;
         this.cardNumber = cardNumber;
         this.cardName = cardName;
-        this.cvv = cvv;
+        this.CVV = CVV;
         this.expiryDate = expiryDate;
         this.history = history;
         this.role = role;
