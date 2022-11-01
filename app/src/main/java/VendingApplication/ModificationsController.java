@@ -32,6 +32,12 @@ public class ModificationsController implements Controller{
     private TextField nameModifier;
 
     @FXML
+    private Button downloadCurrentInventory;
+
+    @FXML
+    private Button downloadItemSummary;
+
+    @FXML
     private Text nameText;
 
     @FXML
@@ -132,6 +138,18 @@ public class ModificationsController implements Controller{
     public void clickLogOut(ActionEvent event) throws IOException {
         vendingMachine.logOut();
         vendingMachine.changeScene(event, "gui/Selection.fxml");
+    }
+
+    public void downloadCurrentInventory() {
+        ReportGenerator rg = new ReportGenerator();
+        rg.exportCurrentInventoryReport(inventory);
+        System.out.println("Downloaded Current Inventory Report!");
+    }
+
+    public void downloadItemSummary() {
+        ReportGenerator rg = new ReportGenerator();
+        rg.exportItemSummaryReport(inventory);
+        System.out.println("Downloaded Item Summary Report!");
     }
 
 }
