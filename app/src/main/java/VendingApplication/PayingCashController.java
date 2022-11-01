@@ -156,7 +156,12 @@ public class PayingCashController implements Controller {
             double changeAmount = Double.parseDouble(amountAdded.getText()) - totalCost;
             String changeStr = String.format("%.02f", changeAmount);
             change.setText(changeStr);
-            vendingMachine.addHistory();
+            if (vendingMachine.isLogin) {
+                vendingMachine.addHistory();
+            } else {
+                vendingMachine.addAnonymousHistory();
+            }
+
             vendingMachine.getCart().clearCart();
             vendingMachine.changeScene(event, "gui/Selection.fxml");
         }

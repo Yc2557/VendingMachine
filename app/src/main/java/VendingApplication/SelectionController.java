@@ -63,6 +63,7 @@ public class SelectionController implements Controller {
             logOutButton.setVisible(true);
             welcomeText.setText(String.format("Welcome %s!", vendingMachine.getAccount().getUsername()));
             StartText = "Latest Items Bought by You!";
+            System.out.println(vendingMachine.getAccount().getHistory());
             lists.add(vendingMachine.getAccount().getHistory());
         } else {
             loginButton.setDisable(false);
@@ -70,11 +71,22 @@ public class SelectionController implements Controller {
             logOutButton.setDisable(true);
             logOutButton.setVisible(false);
             welcomeText.setText("");
-            lists.add(Arrays.asList("Pringles", "Thins"));
+
+            List<String> historyDisplayed = new ArrayList<>();
+
+            if (vendingMachine.getAnonymousHistory().size() <= 5) {
+                lists.add(vendingMachine.getAnonymousHistory());
+            } else {
+                int size = vendingMachine.getAnonymousHistory().size();
+
+                for (int i = size-1; i > size-6; i--) {
+                    historyDisplayed.add(vendingMachine.getAnonymousHistory().get(i));
+                }
+                lists.add(historyDisplayed);
+            }
         }
 
         inventory = vendingMachine.getInventory();
-
 
         lists.add(inventory.getDrinks());
         lists.add(inventory.getChips());

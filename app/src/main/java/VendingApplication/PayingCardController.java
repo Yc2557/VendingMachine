@@ -82,6 +82,7 @@ public class PayingCardController implements Controller {
                 changeScene(event, "validCard");
             } else {
                 // not logged in, don't offer to save card
+                vendingMachine.addAnonymousHistory();
                 vendingMachine.getCart().clearCart();
                 changeScene(event, "completed");
             }

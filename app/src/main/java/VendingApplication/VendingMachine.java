@@ -15,10 +15,10 @@ import java.util.ArrayList;
 public class VendingMachine {
     private Inventory inventory;
     private Cart cart;
-
     public boolean isLogin = false;
     private Account account = null;
     private UserManager userManager;
+    private List<String> anonymousHistory = new ArrayList<>();
 
     public VendingMachine() {
         this.inventory = new Inventory();
@@ -56,6 +56,8 @@ public class VendingMachine {
         this.account = null;
     }
 
+    public List<String> getAnonymousHistory() { return this.anonymousHistory; }
+
     public void changeScene(ActionEvent event, String scene) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource(scene));
@@ -91,5 +93,13 @@ public class VendingMachine {
 
         UserManager userManager = new UserManager();
         userManager.addHistory(this.account.getUsername(), history);
+    }
+
+    public void addAnonymousHistory() {
+        List<Item> cartItems = this.cart.getCart();
+
+        for (Item cartItem : cartItems) {
+            anonymousHistory.add(cartItem.getName());
+        }
     }
 }
