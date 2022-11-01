@@ -26,8 +26,9 @@ class UserManagerTest {
         JSONArray users = new JSONArray();
 
         JSONObject itemObj = new JSONObject();
+        JSONArray jarr = new JSONArray();
         itemObj.put("username", "user");
-        itemObj.put("purchaseHistory", "");
+        itemObj.put("purchaseHistory", jarr);
         itemObj.put("cardName", "Joe");
         itemObj.put("cardNumber", "10000");
         itemObj.put("password", "password");
@@ -36,9 +37,9 @@ class UserManagerTest {
         users.add(itemObj);
 
         JSONObject itemObj2 = new JSONObject();
-
+        JSONArray jarr2 = new JSONArray();
         itemObj2.put("username", "user2");
-        itemObj2.put("purchaseHistory", "");
+        itemObj2.put("purchaseHistory", jarr2);
         itemObj2.put("cardName", "Joe");
         itemObj2.put("cardNumber", "10000");
         itemObj2.put("password", "password");
@@ -69,7 +70,6 @@ class UserManagerTest {
         assertEquals(null, userManager.getUsername("notUser"));
         assertEquals("customer", userManager.getRole("user"));
         assertEquals(null, userManager.getRole("notUser"));
-
     }
 
     @Test
@@ -101,5 +101,14 @@ class UserManagerTest {
         testHistory.add("test2");
         userManager.addHistory("user", testHistory);
         assertEquals(testHistory, userManager.getHistory("user"));
+    }
+
+    @Test
+    public void getAllTest() {
+        UserManager userManager = new UserManager("src/test/resources/userManagerTest.json");
+        List<Account> accounts = userManager.getAllUsers();
+        assertEquals(3, accounts.size());
+        assertEquals("user", accounts.get(0).getUsername());
+        assertEquals("user2", accounts.get(1).getUsername());
     }
 }

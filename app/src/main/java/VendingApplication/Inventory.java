@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Inventory {
     private final List<Item> inventory;
@@ -55,8 +56,7 @@ public class Inventory {
         JSONArray products = (JSONArray) database.get("products");
         for (Object product: products) {
             JSONObject productObject = (JSONObject) product;
-            Long itemidLong = (Long) productObject.get("id");
-            String itemid = itemidLong.toString();
+            String itemid = (String) productObject.get("id");
             String name = (String) productObject.get("name");
             String category = (String) productObject.get("category");
             double price = (double) productObject.get("price");
@@ -123,11 +123,21 @@ public class Inventory {
         }
     }
 
-    public Item getItem(String name) {
-        for (Item item: inventory) {
-            if (item.getName().equalsIgnoreCase(name)) {
-                return item;
+    public Item getItem(String name, String type) {
+        if (type.equalsIgnoreCase("name")) {
+            for (Item item: inventory) {
+                if (item.getName().equalsIgnoreCase(name)) {
+                    return item;
+                }
             }
+
+        } else if (type.equalsIgnoreCase("id")) {
+            for (Item item: inventory) {
+                if (item.getItemid().equalsIgnoreCase(name)) {
+                    return item;
+                }
+            }
+
         }
         return null;
     }
@@ -137,20 +147,65 @@ public class Inventory {
     }
 
     public List<String> getDrinks() {
+        drinks.clear();
+        for (Item item: inventory) {
+            if (item.getCategory().equalsIgnoreCase("drinks")) {
+                drinks.add(item.getName());
+            }
+        }
+
         return drinks;
     }
 
     public List<String> getChips() {
+        chips.clear();
+        for (Item item: inventory) {
+            if (item.getCategory().equalsIgnoreCase("chips")) {
+                chips.add(item.getName());
+            }
+        }
+
         return chips;
     }
 
     public List<String> getChocolates() {
+        chocolates.clear();
+        for (Item item: inventory) {
+            if (item.getCategory().equalsIgnoreCase("chocolate")) {
+                chocolates.add(item.getName());
+            }
+        }
+
         return chocolates;
     }
 
     public List<String> getCandies() {
+        candies.clear();
+        for (Item item: inventory) {
+            if (item.getCategory().equalsIgnoreCase("candies")) {
+                candies.add(item.getName());
+            }
+        }
+
         return candies;
     }
 
+    public HashMap<String, List<String>> getCategories() {
+        return categories;
+    }
 
+    public boolean exists(String property, String attribute) {
+        String component = null;
+        for (Item item : inventory) {
+            switch (attribute) {
+                case "name" -> component = item.getName();
+                case "id" -> component = item.getItemid();
+            }
+
+            if (component.equals(property)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

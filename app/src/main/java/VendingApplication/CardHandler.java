@@ -12,12 +12,17 @@ import java.io.IOException;
 
 public class CardHandler {
 
-    private final String cardPath = "src/main/resources/data/credit_cards.json";
-    private final String userPath = "src/main/resources/data/user.json";
+    private String cardPath;
 
+    private UserManager userManager;
     private boolean validCard = false;
 
-    public void checkCreditCard(String cardName, String cardNumber) {
+    public CardHandler(String cardPath) {
+        this.cardPath = cardPath;
+        this.userManager = new UserManager();
+    }
+
+    public void checkCreditCard(String cardName, String cardNumber, String expiryDate, String CVV) {
 
         try {
             JSONParser parser = new JSONParser();
@@ -27,11 +32,15 @@ public class CardHandler {
             for (int i = 0; i < cardsDB.size(); i++) {
 
                 JSONObject cardDetails = (JSONObject) cardsDB.get(i);
+
                 String dbName = cardDetails.get("name").toString();
                 String dbNumber = cardDetails.get("number").toString();
+                String dbCVV = cardDetails.get("CVV").toString();
+                String dbExpiryDate = cardDetails.get("expiryDate").toString();
 
-                if (dbName.equals(cardName) && dbNumber.equals(cardNumber)) {
+                if (dbName.equals(cardName) && dbNumber.equals(cardNumber) && dbCVV.equals(CVV) && dbExpiryDate.equals(expiryDate)) {
                     validateCard();
+
                     return;
                 } else {
                     invalidateCard();
@@ -46,33 +55,22 @@ public class CardHandler {
         }
     }
 
-    public void saveCardDetails(String username, String cardName, String cardNumber) {
+    public void saveCardDetails(String username, String cardName, String cardNumber, String expiryDate, String CVV) {
+        this.userManager.addCreditCard(username, cardName, cardNumber, expiryDate, CVV);
+    }
 
-        try {
-            JSONParser parser = new JSONParser();
-            JSONObject usersObject = (JSONObject) parser.parse(new FileReader(userPath));
-            JSONArray usersArray = (JSONArray) usersObject.get("users");
+    public String findCard(String username) {
+        return userManager.findCard(username);
+    }
 
-            for (int i = 0; i < usersArray.size(); i++) {
-                JSONObject userDetails = (JSONObject) usersArray.get(i);
-                if (userDetails.get("username").equals(username)) {
-                    userDetails.put("cardName", cardName);
-                    userDetails.put("cardNumber", cardNumber);
+    public boolean checkCVV(String CVV) {
+        return (CVV.length() == 3) && (isNumeric(CVV));
+    }
 
-                    FileWriter writer = new FileWriter(userPath);
-                    writer.write(usersObject.toJSONString());
-                    writer.flush();
-                    writer.close();
-                    return;
-                }
-            }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found!");
-            throw new RuntimeException(e);
-        } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
-        }
+    public boolean checkExpiry(String expiryDate) {
+        int eLen = expiryDate.length();
+        String[] dates = expiryDate.split("/");
+        return ( (eLen == 4 || eLen == 5) && isNumeric(dates[0]) && isNumeric(dates[1]) && (Integer.parseInt(dates[0])<13));
     }
 
     public void validateCard() {this.validCard = true;}
@@ -80,5 +78,14 @@ public class CardHandler {
     public void invalidateCard() {this.validCard = false;}
 
     public boolean isValidCard() {return this.validCard; }
+
+    public boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
 
 }

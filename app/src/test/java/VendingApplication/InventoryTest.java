@@ -26,10 +26,10 @@ public class InventoryTest {
         List<String> chipsList = List.of("Smiths");
         List<String> candiesList = List.of("Skittles", "Sour Patch");
 
-        for (String item: drinksList) {
+        for (String item : drinksList) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("name", item);
-            itemObj.put("id", i);
+            itemObj.put("id", String.valueOf(i));
             itemObj.put("price", 1.5);
             itemObj.put("quantity", 7);
             itemObj.put("category", "drinks");
@@ -37,10 +37,10 @@ public class InventoryTest {
             products.add(itemObj);
         }
 
-        for (String item: chocolateList) {
+        for (String item : chocolateList) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("name", item);
-            itemObj.put("id", i);
+            itemObj.put("id", String.valueOf(i));
             itemObj.put("price", 1.5);
             itemObj.put("quantity", 7);
             itemObj.put("category", "chocolate");
@@ -48,10 +48,10 @@ public class InventoryTest {
             products.add(itemObj);
         }
 
-        for (String item: chipsList) {
+        for (String item : chipsList) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("name", item);
-            itemObj.put("id", i);
+            itemObj.put("id", String.valueOf(i));
             itemObj.put("price", 1.5);
             itemObj.put("quantity", 7);
             itemObj.put("category", "chips");
@@ -59,10 +59,10 @@ public class InventoryTest {
             products.add(itemObj);
         }
 
-        for (String item: candiesList) {
+        for (String item : candiesList) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("name", item);
-            itemObj.put("id", i);
+            itemObj.put("id", String.valueOf(i));
             itemObj.put("price", 1.5);
             itemObj.put("quantity", 7);
             itemObj.put("category", "candies");
@@ -78,7 +78,6 @@ public class InventoryTest {
         writer.write(database.toJSONString());
 
         writer.close();
-
     }
 
     @Test
@@ -89,7 +88,7 @@ public class InventoryTest {
 
         inventory.readJsonFile("src/test/resources/inventoryTest.json");
 
-        for (Item item: inventory.getInventory()) {
+        for (Item item : inventory.getInventory()) {
             assertEquals(productsList.get(i), item.getName());
             assertEquals(7, item.getAmount());
             assertEquals(1.5, item.getPrice());
@@ -103,9 +102,10 @@ public class InventoryTest {
         inventory.readJsonFile("src/test/resources/inventoryTest.json");
         List<Item> inventoryList = inventory.getInventory();
 
-        assertEquals(inventoryList.get(0), inventory.getItem("Mineral Water"));
-        assertEquals(inventoryList.get(3), inventory.getItem("M&M"));
-        assertEquals(inventoryList.get(6), inventory.getItem("Sour Patch"));
+        assertEquals(inventoryList.get(0), inventory.getItem("Mineral Water", "name"));
+        assertEquals(inventoryList.get(3), inventory.getItem("M&M", "name"));
+        assertEquals(inventoryList.get(6), inventory.getItem("Sour Patch", "name"));
+        assertEquals(inventoryList.get(1), inventory.getItem("1", "id"));
     }
 
     @Test
@@ -129,7 +129,7 @@ public class InventoryTest {
         inventory.removeItem(inventoryList.get(0));
 
         assertEquals(size - 1, inventoryList.size());
-        assertEquals(inventoryList.get(0), inventory.getItem("Sprite"));
+        assertEquals(inventoryList.get(0), inventory.getItem("Sprite", "name"));
     }
 
     @Test
@@ -170,5 +170,18 @@ public class InventoryTest {
         List<String> candiesList = List.of("Skittles", "Sour Patch");
 
         assertEquals(candiesList, inventory.getCandies());
+    }
+
+    @Test
+    public void writeJSONTest() {
+        Inventory inventory = new Inventory();
+        inventory.readJsonFile("src/test/resources/inventoryTest.json");
+        List<Item> inventoryList = inventory.getInventory();
+
+        inventory.writeJsonFile("src/test/resources/inventoryTest.json");
+
+        inventory.readJsonFile("src/test/resources/inventoryTest.json");
+
+        assertEquals(inventoryList, inventory.getInventory());
     }
 }

@@ -2,112 +2,112 @@
   "products": [
     {
       "name": "Mineral Water",
-      "id": 1,
+      "id": "1",
       "price": 1.5,
       "quantity": 7,
       "category": "drinks"
     },
     {
       "name": "Sprite",
-      "id": 2,
+      "id": "2",
       "price": 1.5,
       "quantity": 7,
       "category": "drinks"
     },
     {
       "name": "Coca Cola",
-      "id": 3,
+      "id": "3",
       "price": 1.5,
       "quantity": 7,
       "category": "drinks"
     },
     {
       "name": "Pepsi",
-      "id": 4,
+      "id": "4",
       "price": 1.5,
       "quantity": 7,
       "category": "drinks"
     },
     {
       "name": "Juice",
-      "id": 5,
+      "id": "5",
       "price": 1.5,
       "quantity": 7,
       "category": "drinks"
     },
     {
       "name": "Mars",
-      "id": 6,
+      "id": "6",
       "price": 1.5,
       "quantity": 7,
       "category": "chocolate"
     },
     {
       "name": "M&M",
-      "id": 7,
+      "id": "7",
       "price": 1.5,
       "quantity": 7,
       "category": "chocolate"
     },
     {
       "name": "Bounty",
-      "id": 8,
+      "id": "8",
       "price": 1.5,
       "quantity": 7,
       "category": "chocolate"
     },
     {
         "name": "Snickers",
-        "id": 9,
+        "id": "9",
         "price": 1.5,
         "quantity": 7,
         "category": "chocolate"
     },
     {
       "name": "Smiths",
-      "id": 10,
+      "id": "10",
       "price": 1.5,
       "quantity": 7,
       "category": "chips"
     },
     {
       "name": "Pringles",
-      "id": 11,
+      "id": "11",
       "price": 1.5,
       "quantity": 7,
       "category": "chips"
     },
     {
       "name": "Kettle",
-      "id": 12,
+      "id": "12",
       "price": 1.5,
       "quantity": 7,
       "category": "chips"
     },
     {
       "name": "Thins",
-      "id": 13,
+      "id": "13",
       "price": 1.5,
       "quantity": 7,
       "category": "chips"
     },
     {
       "name": "Mentos",
-      "id": 14,
+      "id": "14",
       "price": 1.5,
       "quantity": 7,
       "category": "candies"
     },
     {
       "name": "Sour Patch",
-      "id": 15,
+      "id": "15",
       "price": 1.5,
       "quantity": 7,
       "category": "candies"
     },
     {
       "name": "Skittles",
-      "id": 16,
+      "id": "16",
       "price": 1.5,
       "quantity": 7,
       "category": "candies"

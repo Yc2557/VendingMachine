@@ -52,7 +52,9 @@ public class SelectionController implements Controller {
 
     public void initialize(VendingMachine vm) {
 
+        String StartText = "Latest Items Bought";
         vendingMachine = vm;
+        lists = new ArrayList<>();
 
         if (vendingMachine.isLogin) {
             loginButton.setDisable(true);
@@ -60,17 +62,20 @@ public class SelectionController implements Controller {
             logOutButton.setDisable(false);
             logOutButton.setVisible(true);
             welcomeText.setText(String.format("Welcome %s!", vendingMachine.getAccount().getUsername()));
+            StartText = "Latest Items Bought by You!";
+            lists.add(vendingMachine.getHistoryAsName());
         } else {
             loginButton.setDisable(false);
             loginButton.setVisible(true);
             logOutButton.setDisable(true);
             logOutButton.setVisible(false);
             welcomeText.setText("");
+            lists.add(Arrays.asList("Pringles", "Thins"));
         }
 
         inventory = vendingMachine.getInventory();
 
-        lists = new ArrayList<>();
+
         lists.add(inventory.getDrinks());
         lists.add(inventory.getChips());
         lists.add(inventory.getChocolates());
@@ -80,7 +85,8 @@ public class SelectionController implements Controller {
 
         selectedListIndex = 0;
         selectedList = lists.get(selectedListIndex);
-        listNames = Arrays.asList("Drinks", "Chips", "Chocolates", "Candies");
+        listNames = Arrays.asList(StartText, "Drinks", "Chips", "Chocolates", "Candies");
+        categoryText.setText(listNames.get(selectedListIndex));
         fillList();
     }
 
@@ -91,13 +97,14 @@ public class SelectionController implements Controller {
         logOutButton.setDisable(true);
         logOutButton.setVisible(false);
         welcomeText.setText("");
+        initialize(vendingMachine);
     }
 
     public void buyButtonClicked() {
         int amount = Integer.parseInt(amountText.getText());
         if (Integer.parseInt(amountText.getText()) > 0) {
             Cart cart = vendingMachine.getCart();
-            Item item = inventory.getItem(selectedList.get(mainView.getSelectionModel().getSelectedIndex()));
+            Item item = inventory.getItem(selectedList.get(mainView.getSelectionModel().getSelectedIndex()), "name");
             Item checkCart = cart.getItem(item);
             if (checkCart != null) {
                 checkCart.addAmount(amount);
@@ -129,7 +136,7 @@ public class SelectionController implements Controller {
 
     public void addAmount() {
         int amount = Integer.parseInt(amountText.getText());
-        Item item = inventory.getItem(mainView.getSelectionModel().getSelectedItem());
+        Item item = inventory.getItem(mainView.getSelectionModel().getSelectedItem(), "name");
         if (amount < item.getAmount()) {
             amount += 1;
             amountText.setText(Integer.toString(amount));

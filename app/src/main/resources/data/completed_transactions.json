@@ -1,0 +1,15 @@
+{
+  "transactions": [
+    {
+      "date": "30-10-2022 20:03",
+      "price": "4.5",
+      "change": "",
+      "items": [
+        {
+          "Pepsi": "3"
+        }
+      ],
+      "paymentType": "card"
+    }
+  ]
+}

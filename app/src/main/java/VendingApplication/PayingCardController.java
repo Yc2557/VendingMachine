@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import org.checkerframework.checker.units.qual.C;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -25,38 +26,54 @@ public class PayingCardController implements Controller {
     private TextField cardName;
 
     @FXML
-    private TextField cardNumber;
+    private PasswordField cardNumber;
 
     @FXML
-    private TextField totalText;
+    private TextField totalText = new TextField("");
+  
+    @FXML
+    private TextField CVV;
 
     @FXML
-    private Button backButtonCard;
-
-    @FXML
-    private Button backButtonPayments;
-
-    @FXML
-    private Button payButton;
+    private TextField expiryDate;
 
     @FXML
     private Text errorText;
 
     @FXML
-    private Button noButton;
+    private Text foundCardName = new Text();
 
     @FXML
-    private Button yesButton;
+    private Text namePrompt = new Text();
 
-    private final CardHandler handler = new CardHandler();
+    @FXML
+    private Text numberPrompt = new Text();
+
+    @FXML
+    private Text expiryPrompt = new Text();
+
+    @FXML
+    private Text CVVPrompt = new Text();
+
+    @FXML
+    private Button existingCardButton = new Button();
+
+    private CardHandler handler;
+
+    private TransactionHandler transactionHandler;
     private String nameText;
     private String numberText;
+
+    private String expiryDateText;
+
+    private String CVVText;
 
     private VendingMachine vendingMachine;
 
     public void payButtonAction(ActionEvent event) throws IOException {
 
-        if (cardName.getText() == null || cardNumber.getText() == null) {
+
+        if (cardName.getText().equals("") || cardNumber.getText().equals("") || CVV.getText().equals("") || expiryDate.getText().equals("")) {
             // Invalid inputs
             errorText.setText("Please enter valid card details.");
             return;
@@ -64,17 +81,24 @@ public class PayingCardController implements Controller {
 
         this.nameText = cardName.getText();
         this.numberText = cardNumber.getText();
+        this.expiryDateText = expiryDate.getText();
+        this.CVVText = CVV.getText();
 
-        handler.checkCreditCard(getCardName(), getCardNum());
+        if (!handler.checkCVV(getCVV()) || !handler.checkExpiry(getExpiryDate())) {
+            errorText.setText("Please enter valid card details.");
+            return;
+        }
+
+        handler.checkCreditCard(getCardName(), getCardNum(), getExpiryDate(), getCVV());
 
         if (handler.isValidCard()) {
             // paid successfully
+            createWriteTransaction();
+
             if (vendingMachine.isLogin) {
-                // savecarddetails needs the first field to be username
-                handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum());
+                handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(), getCVV(), getExpiryDate());
                 vendingMachine.addHistory();
                 vendingMachine.getCart().clearCart();
-                vendingMachine.logOut();
                 changeScene(event, "validCard");
             } else {
                 // not logged in, don't offer to save card
@@ -87,12 +111,27 @@ public class PayingCardController implements Controller {
         }
     }
 
+    public void suggestCard() {
+
+        String foundCardString = handler.findCard(vendingMachine.getAccount().getUsername());
+
+        if (!foundCardString.equals("")) {
+            this.foundCardName.setVisible(true);
+            this.foundCardName.setText("Saved Card Found: " + foundCardString);
+            this.namePrompt.setText("New Card Name");
+            this.numberPrompt.setText("New Card Number");
+            this.expiryPrompt.setText("New Expiry Date");
+            this.CVVPrompt.setText("New CVV");
+            this.existingCardButton.setDisable(false);
+            this.existingCardButton.setVisible(true);
+        }
+    }
+
     public void changeScene(ActionEvent event, String type) throws IOException {
 
         String sceneName = "gui/";
         switch (type) {
             case "validCard" -> sceneName += "SaveCard.fxml";
-            case "backCard" -> sceneName += "PayingCard.fxml";
             case "backPay" -> sceneName += "PaymentSelector.fxml";
             case "completed" -> sceneName += "Selection.fxml";
         }
@@ -100,9 +139,11 @@ public class PayingCardController implements Controller {
         vendingMachine.changeScene(event, sceneName);
     }
 
-    public void backCardButtonAction(ActionEvent event) throws IOException {
-        // Go back from SaveCard to PayingCard
-        changeScene(event, "backCard");
+    public void useExistingCardAction(ActionEvent event) throws IOException {
+        createWriteTransaction();
+        vendingMachine.getCart().clearCart();
+        vendingMachine.logOut();
+        changeScene(event, "completed");
     }
 
     public void backPaymentsButtonAction(ActionEvent event) throws IOException {
@@ -111,14 +152,14 @@ public class PayingCardController implements Controller {
     }
 
     public void yesButtonAction(ActionEvent event) throws IOException {
+        vendingMachine.logOut();
         changeScene(event, "completed");
-        // Transaction completed
-
     }
 
     public void noButtonAction(ActionEvent event) throws IOException {
         // Overwrites saved card details
-        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), null, null);
+        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), "", "", "", "");
+        vendingMachine.logOut();
         changeScene(event, "completed");
     }
 
@@ -130,8 +171,32 @@ public class PayingCardController implements Controller {
         return this.numberText;
     }
 
+    public String getCVV(){
+        return this.CVVText;
+    }
+
+    public String getExpiryDate() {
+        return this.expiryDateText;
+    }
+
+    public void createWriteTransaction() {
+        CompletedTransaction ct = new CompletedTransaction(vendingMachine.getAccount().getUsername(), vendingMachine.getCart(), "card", Double.toString(vendingMachine.getCart().totalCartPrice()), "");
+        transactionHandler.addCompletedTransaction(ct);
+    }
+
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
+        this.transactionHandler = new TransactionHandler();
+        this.handler = new CardHandler("src/main/resources/data/credit_cards.json");
         this.totalText.setText("$" + String.format("%.02f", this.vendingMachine.getCart().totalCartPrice()));
+
+        if (vendingMachine.isLogin) {
+            suggestCard();
+        } else {
+            this.foundCardName.setVisible(false);
+            this.existingCardButton.setDisable(true);
+            this.existingCardButton.setVisible(false);
+        }
+
     }
 }
