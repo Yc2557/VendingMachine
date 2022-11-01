@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import org.checkerframework.checker.units.qual.C;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -92,7 +93,7 @@ public class PayingCardController implements Controller {
 
         if (handler.isValidCard()) {
             // paid successfully
-            transactionHandler.writeTransaction("card", "");
+            createWriteTransaction();
 
             if (vendingMachine.isLogin) {
                 handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(), getCVV(), getExpiryDate());
@@ -114,9 +115,7 @@ public class PayingCardController implements Controller {
 
         String foundCardString = handler.findCard(vendingMachine.getAccount().getUsername());
 
-        if (foundCardString.equals("")) {
-            //no card found, buttons have already been init invisible
-        } else {
+        if (!foundCardString.equals("")) {
             this.foundCardName.setVisible(true);
             this.foundCardName.setText("Saved Card Found: " + foundCardString);
             this.namePrompt.setText("New Card Name");
@@ -141,7 +140,7 @@ public class PayingCardController implements Controller {
     }
 
     public void useExistingCardAction(ActionEvent event) throws IOException {
-        transactionHandler.writeTransaction("card", "");
+        createWriteTransaction();
         vendingMachine.getCart().clearCart();
         vendingMachine.logOut();
         changeScene(event, "completed");
@@ -180,9 +179,14 @@ public class PayingCardController implements Controller {
         return this.expiryDateText;
     }
 
+    public void createWriteTransaction() {
+        CompletedTransaction ct = new CompletedTransaction(vendingMachine.getCart(), "card", Double.toString(vendingMachine.getCart().totalCartPrice()), "");
+        transactionHandler.writeTransaction(ct);
+    }
+
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
-        this.transactionHandler = new TransactionHandler(this.vendingMachine);
+        this.transactionHandler = new TransactionHandler();
         this.handler = new CardHandler("src/main/resources/data/credit_cards.json");
         this.totalText.setText("$" + String.format("%.02f", this.vendingMachine.getCart().totalCartPrice()));
 
