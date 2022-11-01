@@ -20,8 +20,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserManagerTest {
     @BeforeAll
     public static void buildJson() throws IOException {
-        int i = 0;
-
         JSONObject database = new JSONObject();
         JSONArray users = new JSONArray();
 
@@ -31,6 +29,8 @@ class UserManagerTest {
         itemObj.put("purchaseHistory", jarr);
         itemObj.put("cardName", "Joe");
         itemObj.put("cardNumber", "10000");
+        itemObj.put("CVV", "");
+        itemObj.put("expiryDate", "");
         itemObj.put("password", "password");
         itemObj.put("userRole", "customer");
 
@@ -42,6 +42,8 @@ class UserManagerTest {
         itemObj2.put("purchaseHistory", jarr2);
         itemObj2.put("cardName", "Joe");
         itemObj2.put("cardNumber", "10000");
+        itemObj2.put("CVV", "");
+        itemObj2.put("expiryDate", "");
         itemObj2.put("password", "password");
         itemObj.put("userRole", "customer");
 
@@ -87,10 +89,10 @@ class UserManagerTest {
     @Test
     public void addCreditCardTest() {
         UserManager userManager = new UserManager("src/test/resources/userManagerTest.json");
-        assertTrue(userManager.addCreditCard("user", "Joe", "10000"));
-        assertFalse(userManager.addCreditCard(null, "Joe", "10000"));
-        assertFalse(userManager.addCreditCard("user", null, "10000"));
-        assertFalse(userManager.addCreditCard("user", "Joe", null));
+        assertTrue(userManager.addCreditCard("user", "Joe", "10000", "", ""));
+        assertFalse(userManager.addCreditCard(null, "Joe", "10000", "", ""));
+        assertFalse(userManager.addCreditCard("user", null, "10000", "", ""));
+        assertFalse(userManager.addCreditCard("user", "Joe", null, "", ""));
     }
 
     @Test
@@ -107,8 +109,15 @@ class UserManagerTest {
     public void getAllTest() {
         UserManager userManager = new UserManager("src/test/resources/userManagerTest.json");
         List<Account> accounts = userManager.getAllUsers();
-        assertEquals(3, accounts.size());
-        assertEquals("user", accounts.get(0).getUsername());
-        assertEquals("user2", accounts.get(1).getUsername());
+        assertEquals(2, accounts.size());
+    }
+
+    @Test
+    public void removeUserTest() {
+        UserManager userManager = new UserManager("src/test/resources/userManagerTest.json");
+        assertTrue(userManager.removeUser("user2"));
+        assertFalse(userManager.removeUser("user2"));
+        assertFalse(userManager.removeUser(null));
+        assertFalse(userManager.removeUser("  "));
     }
 }

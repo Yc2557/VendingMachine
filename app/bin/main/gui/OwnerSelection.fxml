@@ -15,14 +15,11 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <ListView fx:id="userList" layoutX="23.0" layoutY="85.0" onMouseClicked="#selectItem" prefHeight="271.0" prefWidth="200.0" />
+      <ListView fx:id="userList" layoutX="23.0" layoutY="85.0" onMouseClicked="#selectItem" prefHeight="244.0" prefWidth="200.0" />
       <Text layoutX="25.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Users" />
-      <Text layoutX="351.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current" underline="true" />
-      <Text layoutX="496.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Modify" underline="true" />
-      <Text layoutX="275.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role" />
-      <Text fx:id="roleText" layoutX="359.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role" />
-      <Button fx:id="modifyBtn" layoutX="506.0" layoutY="158.0" mnemonicParsing="false" onAction="#modifyProperties" text="Modify" />
-      <TextField fx:id="roleModifier" layoutX="450.0" layoutY="107.0" prefHeight="26.0" prefWidth="135.0" />
+      <Text layoutX="273.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" underline="true" />
+      <Text layoutX="274.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Role" underline="true" />
+      <TextField fx:id="passModifier" layoutX="361.0" layoutY="116.0" prefHeight="26.0" prefWidth="183.0" />
       <Button layoutX="497.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickLogOut" prefHeight="26.0" prefWidth="72.0" text="Logout" />
       <Button fx:id="cancelDownloadBtn" layoutX="468.0" layoutY="272.0" mnemonicParsing="false" onAction="#clickCancelDownload" text="Download" />
       <Text layoutX="266.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Report Downloads">
@@ -35,8 +32,13 @@
       <Button fx:id="roleDownloadBtn" layoutX="468.0" layoutY="324.0" mnemonicParsing="false" onAction="#clickRoleDownload" text="Download" />
       <Button fx:id="cashierBtn" layoutX="251.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickCashier" prefHeight="26.0" prefWidth="97.0" text="Cashier Mode" />
       <Button fx:id="sellerBtn" layoutX="359.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickSeller" prefHeight="26.0" prefWidth="97.0" text="Seller Mode" />
-      <Text fx:id="errorText" fill="RED" layoutX="455.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="errorText" fill="RED" layoutX="330.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Text fx:id="downloadText" fill="RED" layoutX="503.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Text fx:id="downloadText2" fill="RED" layoutX="503.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Button fx:id="addBtn" layoutX="470.0" layoutY="194.0" mnemonicParsing="false" onAction="#clickAdd" text="Add User" />
+      <Button fx:id="removeBtn" layoutX="137.0" layoutY="347.0" mnemonicParsing="false" onAction="#clickRemove" text="Remove User" />
+      <Text layoutX="275.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" underline="true" />
+      <TextField fx:id="usernameModifier" layoutX="361.0" layoutY="72.0" prefHeight="26.0" prefWidth="183.0" />
+      <TextField fx:id="roleModifier" layoutX="361.0" layoutY="156.0" prefHeight="26.0" prefWidth="183.0" />
    </children>
 </AnchorPane>
