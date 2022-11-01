@@ -34,10 +34,12 @@ public class LoginController implements Controller {
         if (checkLogin(username, password)) {
             String cardName = userManager.getCardName(username);
             String cardNumber = userManager.getCardNumber(username);
+            String expDate = userManager.getExpiryDate(username);
+            String cvv = userManager.getCVV(username);
             String role = userManager.getRole(username);
             List<String> hist = userManager.getHistory(username);
             // Send signal to main controller
-            vendingMachine.setAccount(new Account(username, password, cardNumber, cardName, hist, role));
+            vendingMachine.setAccount(new Account(username, password, cardNumber, cardName, expDate, cvv, hist, role));
             // Change to successful login page
             changeScene(event, role);
         } else {
@@ -61,7 +63,7 @@ public class LoginController implements Controller {
         String password = passwordText.getText();
 
         if (userManager.addUser(username, password, "customer")) {
-            vendingMachine.setAccount(new Account(username, password, null, null, null, "customer"));
+            vendingMachine.setAccount(new Account(username, password, "","","", "", null, "customer"));
             changeScene(event, "customer");
             System.out.println("Successful creation");
         } else {

@@ -82,6 +82,22 @@ public class UserManager {
         return null;
     }
 
+    public String getExpiryDate(String username) {
+        JSONObject user = findUser(username);
+        if (user != null) {
+            return (String) user.get("expiryDate");
+        }
+        return null;
+    }
+
+    public String getCVV(String username) {
+        JSONObject user = findUser(username);
+        if (user != null) {
+            return (String) user.get("CVV");
+        }
+        return null;
+    }
+
     public String getRole(String username) {
         JSONObject user = findUser(username);
         if (user != null) {
@@ -123,6 +139,8 @@ public class UserManager {
             newUser.put("password", password);
             newUser.put("cardName", "");
             newUser.put("cardNumber", "");
+            newUser.put("CVV", "");
+            newUser.put("expiryDate", "");
             newUser.put("purchaseHistory", new JSONArray());
             newUser.put("userRole", role);
             users.add(newUser);
@@ -141,7 +159,7 @@ public class UserManager {
         return true;
     }
 
-    public boolean addCreditCard(String username, String cardName, String cardNumber) {
+    public boolean addCreditCard(String username, String cardName, String cardNumber, String expiryDate, String CVV) {
         // Check that both username and password are not null
         if (username == null || cardName == null || cardNumber == null) {
             return false;
@@ -159,6 +177,8 @@ public class UserManager {
                 if (userUsername.equals(username)) {
                     userObject.put("cardName", cardName);
                     userObject.put("cardNumber", cardNumber);
+                    userObject.put("expiryDate", expiryDate);
+                    userObject.put("CVV", CVV);
                 }
             }
 
@@ -174,6 +194,28 @@ public class UserManager {
         }
 
         return true;
+    }
+
+    public String findCard(String username) {
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject usersObject = (JSONObject) parser.parse(new FileReader(filePath));
+            JSONArray usersArray = (JSONArray) usersObject.get("users");
+
+            for (int i = 0; i < usersArray.size(); i++) {
+                JSONObject userDetails = (JSONObject) usersArray.get(i);
+                if (userDetails.get("username").toString().equals(username)) {
+                    return userDetails.get("cardName").toString();
+                }
+            }
+            return null;
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            throw new RuntimeException(e);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean addHistory(String username, List<String> history) {
@@ -229,6 +271,8 @@ public class UserManager {
                 String password = (String) userObject.get("password");
                 String cardName = (String) userObject.get("cardName");
                 String cardNumber = (String) userObject.get("cardNumber");
+                String expiryDate = (String) userObject.get("expiryDate");
+                String cvv = (String) userObject.get("CVV");
                 String role = (String) userObject.get("userRole");
                 JSONArray purchaseHistory = (JSONArray) userObject.get("purchaseHistory");
                 List<String> history = new ArrayList<String>();
@@ -236,7 +280,7 @@ public class UserManager {
                     String purchase = (String) purchaseHistory.get(i);
                     history.add(purchase);
                 }
-                Account account = new Account(username, password, cardName, cardNumber, history, role);
+                Account account = new Account(username, password, cardName, cardNumber, expiryDate, cvv, history, role);
                 users.add(account);
             }
         } catch (FileNotFoundException e) {

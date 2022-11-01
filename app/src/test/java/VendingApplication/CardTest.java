@@ -56,7 +56,7 @@ public class CardTest {
 
     @Test
     public void invalidCardTest() {
-        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json", "src/test/resources/usersCardTest.json");
+        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json");
         String cardName = "@invalid";
         String cardNum = "9876123";
         handler.checkCreditCard(cardName, cardNum);
@@ -65,7 +65,7 @@ public class CardTest {
 
     @Test
     public void validCardTest() {
-        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json", "src/test/resources/usersCardTest.json");
+        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json");
         String name = "m";
         String num = "1";
         handler.checkCreditCard(name, num);
@@ -74,35 +74,35 @@ public class CardTest {
 
     @Test
     public void overrideValidTest() {
-        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json", "src/test/resources/usersCardTest.json");
+        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json");
         handler.validateCard();
         assertTrue(handler.isValidCard());
     }
 
     @Test
     public void overrideInvalidTest() {
-        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json", "src/test/resources/usersCardTest.json");
+        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json");
         handler.invalidateCard();
         assertFalse(handler.isValidCard());
     }
 
     @Test
     public void suggestNoneTest() {
-        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json", "src/test/resources/usersCardTest.json");
+        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json");
         String name = "user-0";
         assertNull(handler.findCard(name));
     }
 
     @Test
     public void suggestCardTest() {
-        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json", "src/test/resources/usersCardTest.json");
+        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json");
         String name = "user1";
         assertEquals("m", handler.findCard(name));
     }
 
     @Test
     public void saveCardTest() {
-        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json", "src/test/resources/usersCardTest.json");
+        CardHandler handler = new CardHandler("src/test/resources/credit_cardsTest.json");
         handler.saveCardDetails("user3", "newcard", "123");
         assertEquals("newcard", handler.findCard("user3"));
     }
