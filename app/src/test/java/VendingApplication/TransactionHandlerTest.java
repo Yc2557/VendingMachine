@@ -56,7 +56,7 @@ class TransactionhandlerTest {
     @Test
     public void getInformationTest() {
         TransactionHandler transactionHandler = new TransactionHandler("",
-                "src/test/resources/cancelledTransactionTest.json", "");
+                "src/test/resources/cancelledTransactionTest.json");
         List<CancelledTransaction> transactions = transactionHandler.getCancelledTransactions();
         assertEquals(2, transactions.size());
         assertEquals("31/10/2022", transactions.get(0).getDate());
