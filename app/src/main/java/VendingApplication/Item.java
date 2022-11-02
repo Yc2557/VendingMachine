@@ -17,6 +17,13 @@ public class Item {
         this.amount = amount;
     }
 
+    public Item(String name, double price, int amount) {
+        //Partial item details for CompletedTransactions
+        this.name = name;
+        this.price = price;
+        this.amount = amount;
+    }
+
     public String getItemid() {
         return itemid;
     }

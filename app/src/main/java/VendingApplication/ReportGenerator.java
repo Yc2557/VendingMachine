@@ -90,4 +90,30 @@ public class ReportGenerator {
             throw new RuntimeException(e);
         }
     }
+
+    public void exportCompletedTransactionReport(List<CompletedTransaction> transactions) {
+
+        String reportPath = reportsFilePath += "/completed_transaction_report.csv";
+
+        try {
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(reportPath));
+            CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
+                    .withHeader("Date", "Time", "User", "Reason"));
+
+            for (CompletedTransaction transaction : transactions) {
+                String cartString = "";
+
+                for (Item item: transaction.getCart().getCart()) {
+                    cartString += item.getName() +" x"+item.getAmount()+" @$"+item.getPrice()+" ea,";
+                }
+
+                csvPrinter.printRecord(transaction.getDate(), transaction.getTime(), transaction.getUsername(),
+                        transaction.getPrice(), transaction.getPaymentType(), transaction.getChange(), cartString);
+            }
+
+            csvPrinter.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
