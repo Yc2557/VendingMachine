@@ -1,0 +1,17 @@
+Name,ID,Category,Quantity,Price
+Mineral Water,1,drinks,7,1.5
+Sprite,2,drinks,7,1.5
+Coca Cola,3,drinks,7,1.5
+Pepsi,4,drinks,7,1.5
+Juice,5,drinks,7,1.5
+Mars,6,chocolate,7,1.5
+M&M,7,chocolate,7,1.5
+Bounty,8,chocolate,7,1.5
+Snickers,9,chocolate,7,1.5
+Smiths,10,chips,7,1.5
+Pringles,11,chips,7,1.5
+Kettle,12,chips,7,1.5
+Thins,13,chips,7,1.5
+Mentos,14,candies,7,1.5
+Sour Patch,15,candies,7,1.5
+Skittles,16,candies,7,1.5

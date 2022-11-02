@@ -25,12 +25,14 @@ public class Seller {
 
     private Inventory inventory;
 
+    private String inventoryFilePath = "src/main/resources/data/inventory.json";
+
     public Seller(Inventory inventory) {
         this.inventory = inventory;
     }
 
     public boolean modifyName(String currentName, String newName) {
-        Item item = inventory.getItem(currentName);
+        Item item = inventory.getItem(currentName, "name");
 
         if (inventory.exists(newName, "name")) {
             return false;
@@ -38,21 +40,12 @@ public class Seller {
         if (item != null) {
             item.setName(newName);
         }
-        inventory.writeJsonFile("src/main/resources/data/inventory.json");
+        inventory.writeJsonFile(inventoryFilePath);
         return true;
     }
 
-    public boolean modifyId(String currentName, String newCode) {
-        Item item = inventory.getItem(currentName);
-
-        if (inventory.exists(newCode, "id")) {
-            return false;
-        }
-        if (item != null) {
-            item.setItemid(newCode);
-        }
-        inventory.writeJsonFile("src/main/resources/data/inventory.json");
-        return true;
+    public void setInventoryFilePath(String inventoryFilePath) {
+        this.inventoryFilePath = inventoryFilePath;
     }
 
     public boolean modifyCategory(String currentName, String newCategory) {
@@ -61,11 +54,11 @@ public class Seller {
             return false;
         }
 
-        Item item = inventory.getItem(currentName);
+        Item item = inventory.getItem(currentName, "name");
         if (item != null) {
             item.setCategory(newCategory);
         }
-        inventory.writeJsonFile("src/main/resources/data/inventory.json");
+        inventory.writeJsonFile(inventoryFilePath);
         return true;
     }
 
@@ -74,11 +67,11 @@ public class Seller {
             return false;
         }
 
-        Item item = inventory.getItem(currentName);
+        Item item = inventory.getItem(currentName, "name");
         if (item != null) {
             item.setAmount(Integer.parseInt(newQuantity));
         }
-        inventory.writeJsonFile("src/main/resources/data/inventory.json");
+        inventory.writeJsonFile(inventoryFilePath);
         return true;
     }
 
@@ -87,11 +80,11 @@ public class Seller {
             return false;
         }
 
-        Item item = inventory.getItem(currentName);
+        Item item = inventory.getItem(currentName, "name");
         if (item != null) {
             item.setPrice(Double.parseDouble(newPrice));
         }
-        inventory.writeJsonFile("src/main/resources/data/inventory.json");
+        inventory.writeJsonFile(inventoryFilePath);
 
         return true;
     }

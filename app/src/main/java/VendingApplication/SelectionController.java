@@ -63,8 +63,7 @@ public class SelectionController implements Controller {
             logOutButton.setVisible(true);
             welcomeText.setText(String.format("Welcome %s!", vendingMachine.getAccount().getUsername()));
             StartText = "Latest Items Bought by You!";
-            System.out.println(vendingMachine.getAccount().getHistory());
-            lists.add(vendingMachine.getAccount().getHistory());
+            lists.add(vendingMachine.getHistoryAsName());
         } else {
             loginButton.setDisable(false);
             loginButton.setVisible(true);
@@ -109,13 +108,14 @@ public class SelectionController implements Controller {
         logOutButton.setDisable(true);
         logOutButton.setVisible(false);
         welcomeText.setText("");
+        initialize(vendingMachine);
     }
 
     public void buyButtonClicked() {
         int amount = Integer.parseInt(amountText.getText());
         if (Integer.parseInt(amountText.getText()) > 0) {
             Cart cart = vendingMachine.getCart();
-            Item item = inventory.getItem(selectedList.get(mainView.getSelectionModel().getSelectedIndex()));
+            Item item = inventory.getItem(selectedList.get(mainView.getSelectionModel().getSelectedIndex()), "name");
             Item checkCart = cart.getItem(item);
             if (checkCart != null) {
                 checkCart.addAmount(amount);
@@ -147,7 +147,7 @@ public class SelectionController implements Controller {
 
     public void addAmount() {
         int amount = Integer.parseInt(amountText.getText());
-        Item item = inventory.getItem(mainView.getSelectionModel().getSelectedItem());
+        Item item = inventory.getItem(mainView.getSelectionModel().getSelectedItem(), "name");
         if (amount < item.getAmount()) {
             amount += 1;
             amountText.setText(Integer.toString(amount));

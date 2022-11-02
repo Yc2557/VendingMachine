@@ -20,9 +20,6 @@ public class ModificationsController implements Controller{
     private Text categoryText;
 
     @FXML
-    private TextField codeModifier;
-
-    @FXML
     private Text codeText;
 
     @FXML
@@ -33,6 +30,12 @@ public class ModificationsController implements Controller{
 
     @FXML
     private TextField nameModifier;
+
+    @FXML
+    private Button downloadCurrentInventory;
+
+    @FXML
+    private Button downloadItemSummary;
 
     @FXML
     private Text nameText;
@@ -61,12 +64,6 @@ public class ModificationsController implements Controller{
                 System.out.println("Invalid Name!");
             }
             nameModifier.clear();
-        }
-        if (!codeModifier.getText().isEmpty()) {
-            if (!seller.modifyId(nameText.getText(), codeModifier.getText())) {
-                System.out.println("Invalid ID!");
-            }
-            codeModifier.clear();
         }
 
         if (!categoryModifier.getText().isEmpty()) {
@@ -124,7 +121,7 @@ public class ModificationsController implements Controller{
     }
 
     public void selectItem() {
-        item = inventory.getItem(itemList.getSelectionModel().getSelectedItem());
+        item = inventory.getItem(itemList.getSelectionModel().getSelectedItem(), "name");
         fillText(item);
     }
 
@@ -141,6 +138,18 @@ public class ModificationsController implements Controller{
     public void clickLogOut(ActionEvent event) throws IOException {
         vendingMachine.logOut();
         vendingMachine.changeScene(event, "gui/Selection.fxml");
+    }
+
+    public void downloadCurrentInventory() {
+        ReportGenerator rg = new ReportGenerator();
+        rg.exportCurrentInventoryReport(inventory);
+        System.out.println("Downloaded Current Inventory Report!");
+    }
+
+    public void downloadItemSummary() {
+        ReportGenerator rg = new ReportGenerator();
+        rg.exportItemSummaryReport(inventory);
+        System.out.println("Downloaded Item Summary Report!");
     }
 
 }

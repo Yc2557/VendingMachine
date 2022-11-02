@@ -1,0 +1,16 @@
+{
+    "transactions": [
+        {
+            "date": "31/10/2022",
+            "time": "1020",
+            "user": "anonymous",
+            "reason": "timeout"
+        },
+        {
+            "date": "31/10/2022",
+            "time": "1050",
+            "user": "anonymous",
+            "reason": "user cancelled"
+        }
+    ]
+}

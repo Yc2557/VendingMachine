@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+import org.checkerframework.checker.units.qual.C;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -29,15 +30,12 @@ public class PayingCardController implements Controller {
 
     @FXML
     private TextField totalText = new TextField("");
+  
+    @FXML
+    private TextField CVV;
 
     @FXML
-    private Button backButtonCard;
-
-    @FXML
-    private Button backButtonPayments;
-
-    @FXML
-    private Button payButton;
+    private TextField expiryDate;
 
     @FXML
     private Text errorText;
@@ -46,37 +44,59 @@ public class PayingCardController implements Controller {
     private Text foundCardName = new Text();
 
     @FXML
-    private Button noButton;
-
-    @FXML
-    private Button yesButton;
-
-    @FXML
     private Text namePrompt = new Text();
 
     @FXML
     private Text numberPrompt = new Text();
 
     @FXML
+    private Text expiryPrompt = new Text();
+
+    @FXML
+    private Text CVVPrompt = new Text();
+
+    @FXML
     private Button existingCardButton = new Button();
 
     private CardHandler handler;
+
+    private TransactionHandler transactionHandler;
     private String nameText;
     private String numberText;
+
+    private String expiryDateText;
+
+    private String CVVText;
 
     private VendingMachine vendingMachine;
 
     public void payButtonAction(ActionEvent event) throws IOException {
 
+
+        if (cardName.getText().equals("") || cardNumber.getText().equals("") || CVV.getText().equals("") || expiryDate.getText().equals("")) {
+            // Invalid inputs
+            errorText.setText("Please enter valid card details.");
+            return;
+        }
+
         this.nameText = cardName.getText();
         this.numberText = cardNumber.getText();
+        this.expiryDateText = expiryDate.getText();
+        this.CVVText = CVV.getText();
 
-        handler.checkCreditCard(getCardName(), getCardNum());
+        if (!handler.checkCVV(getCVV()) || !handler.checkExpiry(getExpiryDate())) {
+            errorText.setText("Please enter valid card details.");
+            return;
+        }
+
+        handler.checkCreditCard(getCardName(), getCardNum(), getExpiryDate(), getCVV());
 
         if (handler.isValidCard()) {
             // paid successfully
+            createWriteTransaction();
+
             if (vendingMachine.isLogin) {
-                handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum());
+                handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(), getCVV(), getExpiryDate());
                 vendingMachine.addHistory();
                 vendingMachine.getCart().clearCart();
                 changeScene(event, "validCard");
@@ -96,13 +116,13 @@ public class PayingCardController implements Controller {
 
         String foundCardString = handler.findCard(vendingMachine.getAccount().getUsername());
 
-        if (foundCardString.equals("") || foundCardString.equals(null)) {
-            //
-        } else {
+        if (!foundCardString.equals("")) {
             this.foundCardName.setVisible(true);
             this.foundCardName.setText("Saved Card Found: " + foundCardString);
             this.namePrompt.setText("New Card Name");
             this.numberPrompt.setText("New Card Number");
+            this.expiryPrompt.setText("New Expiry Date");
+            this.CVVPrompt.setText("New CVV");
             this.existingCardButton.setDisable(false);
             this.existingCardButton.setVisible(true);
         }
@@ -113,7 +133,6 @@ public class PayingCardController implements Controller {
         String sceneName = "gui/";
         switch (type) {
             case "validCard" -> sceneName += "SaveCard.fxml";
-            case "backCard" -> sceneName += "PayingCard.fxml";
             case "backPay" -> sceneName += "PaymentSelector.fxml";
             case "completed" -> sceneName += "Selection.fxml";
         }
@@ -122,7 +141,7 @@ public class PayingCardController implements Controller {
     }
 
     public void useExistingCardAction(ActionEvent event) throws IOException {
-        vendingMachine.addHistory();
+        createWriteTransaction();
         vendingMachine.getCart().clearCart();
         vendingMachine.logOut();
         changeScene(event, "completed");
@@ -140,7 +159,7 @@ public class PayingCardController implements Controller {
 
     public void noButtonAction(ActionEvent event) throws IOException {
         // Overwrites saved card details
-        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), "", "");
+        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), "", "", "", "");
         vendingMachine.logOut();
         changeScene(event, "completed");
     }
@@ -153,11 +172,25 @@ public class PayingCardController implements Controller {
         return this.numberText;
     }
 
+    public String getCVV(){
+        return this.CVVText;
+    }
+
+    public String getExpiryDate() {
+        return this.expiryDateText;
+    }
+
+    public void createWriteTransaction() {
+        String username = "";
+        if (vendingMachine.isLogin) {username = vendingMachine.getAccount().getUsername();}
+        CompletedTransaction ct = new CompletedTransaction(username, vendingMachine.getCart(), "card", Double.toString(vendingMachine.getCart().totalCartPrice()), "");
+        transactionHandler.addCompletedTransaction(ct);
+    }
+
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
-        String cardPath = "src/main/resources/data/credit_cards.json";
-        String userPath = "src/main/resources/data/user.json";
-        this.handler = new CardHandler(cardPath, userPath);
+        this.transactionHandler = new TransactionHandler();
+        this.handler = new CardHandler("src/main/resources/data/credit_cards.json");
         this.totalText.setText("$" + String.format("%.02f", this.vendingMachine.getCart().totalCartPrice()));
 
         if (vendingMachine.isLogin) {

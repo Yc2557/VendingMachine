@@ -1,22 +1,11 @@
 package VendingApplication;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
@@ -41,15 +30,16 @@ public class LoginController implements Controller {
         String username = loginText.getText().trim();
         String password = passwordText.getText();
 
-
         // Check if username and password are correct
         if (checkLogin(username, password)) {
             String cardName = userManager.getCardName(username);
             String cardNumber = userManager.getCardNumber(username);
+            String expDate = userManager.getExpiryDate(username);
+            String cvv = userManager.getCVV(username);
             String role = userManager.getRole(username);
             List<String> hist = userManager.getHistory(username);
             // Send signal to main controller
-            vendingMachine.setAccount(new Account(username, password, cardNumber, cardName, hist, role));
+            vendingMachine.setAccount(new Account(username, password, cardNumber, cardName, expDate, cvv, hist, role));
             // Change to successful login page
             changeScene(event, role);
         } else {
@@ -73,7 +63,7 @@ public class LoginController implements Controller {
         String password = passwordText.getText();
 
         if (userManager.addUser(username, password, "customer")) {
-            vendingMachine.setAccount(new Account(username, password, null, null, null, "customer"));
+            vendingMachine.setAccount(new Account(username, password, "","","", "", null, "customer"));
             changeScene(event, "customer");
             System.out.println("Successful creation");
         } else {
@@ -105,6 +95,11 @@ public class LoginController implements Controller {
             sceneName += "CashierSelection.fxml";
         } else if (type.equalsIgnoreCase("seller")) {
             sceneName += "Modifications.fxml";
+        } else if (type.equalsIgnoreCase("owner")) {
+            sceneName += "OwnerSelection.fxml";
+        } else {
+            invalidPathText.setText("Invalid path");
+            return;
         }
 
         // Loads next relevant scene

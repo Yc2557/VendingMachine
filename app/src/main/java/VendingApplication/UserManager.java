@@ -82,6 +82,22 @@ public class UserManager {
         return null;
     }
 
+    public String getExpiryDate(String username) {
+        JSONObject user = findUser(username);
+        if (user != null) {
+            return (String) user.get("expiryDate");
+        }
+        return null;
+    }
+
+    public String getCVV(String username) {
+        JSONObject user = findUser(username);
+        if (user != null) {
+            return (String) user.get("CVV");
+        }
+        return null;
+    }
+
     public String getRole(String username) {
         JSONObject user = findUser(username);
         if (user != null) {
@@ -123,6 +139,8 @@ public class UserManager {
             newUser.put("password", password);
             newUser.put("cardName", "");
             newUser.put("cardNumber", "");
+            newUser.put("CVV", "");
+            newUser.put("expiryDate", "");
             newUser.put("purchaseHistory", new JSONArray());
             newUser.put("userRole", role);
             users.add(newUser);
@@ -141,9 +159,47 @@ public class UserManager {
         return true;
     }
 
-    public boolean addCreditCard(String username, String cardName, String cardNumber) {
-        // Check that both username and password are not null
-        if (username == null || cardName == null || cardNumber == null) {
+    public boolean removeUser(String username) {
+        if (username == null) {
+            return false;
+        }
+
+        // Check if username not in database
+        if (!(findUser(username) != null)) {
+            return false;
+        }
+
+        try {
+            FileReader reader = new FileReader(filePath);
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+            JSONArray users = (JSONArray) jsonObject.get("users");
+
+            for (Object user : users) {
+                JSONObject userObject = (JSONObject) user;
+                String userUsername = (String) userObject.get("username");
+                if (userUsername.equals(username)) {
+                    users.remove(userObject);
+                    FileWriter file = new FileWriter(filePath);
+                    file.write(jsonObject.toJSONString());
+                    file.flush();
+                    file.close();
+                    return true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            throw new RuntimeException(e);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        return false;
+    }
+
+    public boolean addCreditCard(String username, String cardName, String cardNumber, String expiryDate, String CVV) {
+
+        if (username == null || cardName == null || cardNumber == null || expiryDate == null || CVV == null) {
             return false;
         }
 
@@ -159,6 +215,8 @@ public class UserManager {
                 if (userUsername.equals(username)) {
                     userObject.put("cardName", cardName);
                     userObject.put("cardNumber", cardNumber);
+                    userObject.put("expiryDate", expiryDate);
+                    userObject.put("CVV", CVV);
                 }
             }
 
@@ -174,6 +232,28 @@ public class UserManager {
         }
 
         return true;
+    }
+
+    public String findCard(String username) {
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject usersObject = (JSONObject) parser.parse(new FileReader(filePath));
+            JSONArray usersArray = (JSONArray) usersObject.get("users");
+
+            for (Object o : usersArray) {
+                JSONObject userDetails = (JSONObject) o;
+                if (userDetails.get("username").toString().equals(username)) {
+                    return userDetails.get("cardName").toString();
+                }
+            }
+            return null;
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            throw new RuntimeException(e);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean addHistory(String username, List<String> history) {
@@ -213,5 +293,41 @@ public class UserManager {
         }
 
         return true;
+    }
+
+    public List<Account> getAllUsers() {
+        List<Account> users = new ArrayList<Account>();
+        try {
+            FileReader reader = new FileReader(filePath);
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+            JSONArray usersArray = (JSONArray) jsonObject.get("users");
+
+            for (Object user : usersArray) {
+                JSONObject userObject = (JSONObject) user;
+                String username = (String) userObject.get("username");
+                String password = (String) userObject.get("password");
+                String cardName = (String) userObject.get("cardName");
+                String cardNumber = (String) userObject.get("cardNumber");
+                String expiryDate = (String) userObject.get("expiryDate");
+                String cvv = (String) userObject.get("CVV");
+                String role = (String) userObject.get("userRole");
+                JSONArray purchaseHistory = (JSONArray) userObject.get("purchaseHistory");
+                List<String> history = new ArrayList<String>();
+                for (int i = 0; i < purchaseHistory.size(); i++) {
+                    String purchase = (String) purchaseHistory.get(i);
+                    history.add(purchase);
+                }
+                Account account = new Account(username, password, cardName, cardNumber, expiryDate, cvv, history, role);
+                users.add(account);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            throw new RuntimeException(e);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        return users;
     }
 }

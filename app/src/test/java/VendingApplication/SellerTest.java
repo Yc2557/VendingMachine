@@ -77,6 +77,7 @@ public class SellerTest {
         Inventory inventory = new Inventory();
         inventory.readJsonFile("src/test/resources/sellerTest.json");
         Seller seller = new Seller(inventory);
+        seller.setInventoryFilePath("src/test/resources/sellerTest.json");
 
         // Changing a name
         assertFalse(inventory.exists("Pepsi", "name"));
@@ -88,30 +89,16 @@ public class SellerTest {
     }
 
     @Test
-    public void idModifyTest() {
-        Inventory inventory = new Inventory();
-        inventory.readJsonFile("src/test/resources/sellerTest.json");
-        Seller seller = new Seller(inventory);
-
-        // Changing an ID
-        assertFalse(inventory.exists("7", "id"));
-        seller.modifyId("M&M", "7");
-        assertTrue(inventory.exists("7", "id"));
-
-        // Preventing duplicates
-        assertFalse(seller.modifyId("M&M", "0"));
-    }
-
-    @Test
     public void categoryModifyTest() {
         Inventory inventory = new Inventory();
         inventory.readJsonFile("src/test/resources/sellerTest.json");
         Seller seller = new Seller(inventory);
+        seller.setInventoryFilePath("src/test/resources/sellerTest.json");
 
         // Changing the category
-        assertTrue(inventory.getItem("M&M").getCategory().equals("chocolate"));
+        assertTrue(inventory.getItem("M&M", "name").getCategory().equals("chocolate"));
         seller.modifyCategory("M&M", "drinks");
-        assertTrue(inventory.getItem("M&M").getCategory().equals("drinks"));
+        assertTrue(inventory.getItem("M&M", "name").getCategory().equals("drinks"));
 
         // Invalid category
         assertFalse(seller.modifyCategory("M&M", "paper"));
@@ -122,11 +109,12 @@ public class SellerTest {
         Inventory inventory = new Inventory();
         inventory.readJsonFile("src/test/resources/sellerTest.json");
         Seller seller = new Seller(inventory);
+        seller.setInventoryFilePath("src/test/resources/sellerTest.json");
 
         // Changing the quantity
-        assertTrue(inventory.getItem("Smiths").getAmount() == 7);
+        assertTrue(inventory.getItem("Smiths", "name").getAmount() == 7);
         seller.modifyQuantity("Smiths", "10");
-        assertTrue(inventory.getItem("Smiths").getAmount() == 10);
+        assertTrue(inventory.getItem("Smiths", "name").getAmount() == 10);
 
         // Invalid quantities
         assertFalse(seller.modifyQuantity("Smiths", "19"));
@@ -138,11 +126,12 @@ public class SellerTest {
         Inventory inventory = new Inventory();
         inventory.readJsonFile("src/test/resources/sellerTest.json");
         Seller seller = new Seller(inventory);
+        seller.setInventoryFilePath("src/test/resources/sellerTest.json");
 
         // Changing the price
-        assertTrue(inventory.getItem("Mineral Water").getPrice() == 1.5);
+        assertTrue(inventory.getItem("Mineral Water", "name").getPrice() == 1.5);
         seller.modifyPrice("Mineral Water", "2.0");
-        assertTrue(inventory.getItem("Mineral Water").getPrice() == 2.0);
+        assertTrue(inventory.getItem("Mineral Water", "name").getPrice() == 2.0);
 
         // Invalid price
         assertFalse(seller.modifyPrice("Mineral Water", "-1.0"));
