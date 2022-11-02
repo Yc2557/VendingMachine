@@ -1,16 +1,10 @@
 package VendingApplication;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,6 +38,7 @@ public class CartController implements Controller{
 
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
+        this.vendingMachine.stopTimer();
         updateCart();
     }
 
@@ -64,8 +59,8 @@ public class CartController implements Controller{
         totalText.setText(String.format("$%.02f", cart.totalCartPrice()));
     }
 
-    public void backAction(ActionEvent event) throws IOException {
-        vendingMachine.changeScene(event, "gui/Selection.fxml");
+    public void backAction() throws IOException {
+        vendingMachine.changeScene("gui/Selection.fxml");
     }
 
     public void cancelAction() {
@@ -84,16 +79,16 @@ public class CartController implements Controller{
         }
     }
 
-    public void purchaseAction(ActionEvent event) throws IOException {
+    public void purchaseAction() throws IOException {
         if (vendingMachine.getCart().getCartSize() == 0) {
             errorText.setText("Cart is empty");
             return;
         }
-        vendingMachine.changeScene(event, "gui/PaymentSelector.fxml");
+        vendingMachine.changeScene("gui/PaymentSelector.fxml");
     }
 
     public List<String> getNames(List<Item> items) {
-        List<String> names = new ArrayList<String>();
+        List<String> names = new ArrayList<>();
         for (Item i : items) {
             names.add(i.getName());
         }
@@ -101,7 +96,7 @@ public class CartController implements Controller{
     }
 
     public List<String> getPrices(List<Item> items) {
-        List<String> prices = new ArrayList<String>();
+        List<String> prices = new ArrayList<>();
         for (Item i : items) {
             prices.add(String.format("$%.02f", i.getPrice()));
         }
@@ -109,7 +104,7 @@ public class CartController implements Controller{
     }
 
     public List<String> getQuantities(List<Item> items) {
-        List<String> quantities = new ArrayList<String>();
+        List<String> quantities = new ArrayList<>();
         for (Item i : items) {
             quantities.add(Integer.toString(i.getAmount()));
         }

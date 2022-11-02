@@ -1,15 +1,12 @@
 package VendingApplication;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.util.List;
 
 public class ModificationsController implements Controller{
 
@@ -24,9 +21,6 @@ public class ModificationsController implements Controller{
 
     @FXML
     private ListView<String> itemList;
-
-    @FXML
-    private Button modifyBtn;
 
     @FXML
     private TextField nameModifier;
@@ -58,7 +52,7 @@ public class ModificationsController implements Controller{
     private Item item;
 
     @FXML
-    void modifyProperties(MouseEvent event) {
+    void modifyProperties() {
         if (!nameModifier.getText().isEmpty()) {
             if (!seller.modifyName(nameText.getText(), nameModifier.getText())) {
                 System.out.println("Invalid Name!");
@@ -135,9 +129,9 @@ public class ModificationsController implements Controller{
         }
     }
 
-    public void clickLogOut(ActionEvent event) throws IOException {
+    public void clickLogOut() throws IOException {
         vendingMachine.logOut();
-        vendingMachine.changeScene(event, "gui/Selection.fxml");
+        vendingMachine.changeScene("gui/Selection.fxml");
     }
 
     public void downloadCurrentInventory() {

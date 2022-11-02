@@ -1,9 +1,5 @@
 package VendingApplication;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-
 import java.io.IOException;
 
 public class CashierSelectionController implements Controller {
@@ -14,16 +10,16 @@ public class CashierSelectionController implements Controller {
         vendingMachine = vm;
     }
 
-    public void clickOnModifyChange(ActionEvent event) throws IOException {
-        vendingMachine.changeScene(event, "gui/ModifyChange.fxml");
+    public void clickOnModifyChange() throws IOException {
+        vendingMachine.changeScene("gui/ModifyChange.fxml");
     }
 
-    public void clickOnChangeReport(ActionEvent event) throws IOException {
-        vendingMachine.changeScene(event, "gui/ListChange.fxml");
+    public void clickOnChangeReport() throws IOException {
+        vendingMachine.changeScene("gui/ListChange.fxml");
     }
 
-    public void clickLogOut(ActionEvent event) throws IOException {
+    public void clickLogOut() throws IOException {
         vendingMachine.logOut();
-        vendingMachine.changeScene(event, "gui/Selection.fxml");
+        vendingMachine.changeScene("gui/Selection.fxml");
     }
 }

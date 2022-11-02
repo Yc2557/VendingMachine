@@ -86,7 +86,7 @@ public class OwnerController implements Controller {
     // }
 
     @FXML
-    void clickAdd(ActionEvent event) {
+    void clickAdd() {
         if (!usernameModifier.getText().isEmpty() && !passModifier.getText().isEmpty()
                 && !roleModifier.getText().isEmpty()) {
             if (roleModifier.getText().equals("seller") || roleModifier.getText().equals("cashier")
@@ -109,7 +109,7 @@ public class OwnerController implements Controller {
     }
 
     @FXML
-    void clickRemove(ActionEvent event) {
+    void clickRemove() {
         if (selectedAccount != null) {
             userManager.removeUser(selectedAccount.getUsername());
             accounts.remove(selectedAccount);
@@ -147,27 +147,27 @@ public class OwnerController implements Controller {
 
     public void clickLogOut(ActionEvent event) throws IOException {
         vendingMachine.logOut();
-        vendingMachine.changeScene(event, "gui/Selection.fxml");
+        vendingMachine.changeScene("gui/Selection.fxml");
     }
 
-    public void clickSeller(ActionEvent event) throws IOException {
+    public void clickSeller() throws IOException {
         // TODO: may need additional changes
-        vendingMachine.changeScene(event, "gui/Seller.fxml");
+        vendingMachine.changeScene("gui/Seller.fxml");
     }
 
-    public void clickCashier(ActionEvent event) throws IOException {
+    public void clickCashier() throws IOException {
         // TODO: may need additional changes
-        vendingMachine.changeScene(event, "gui/Cashier.fxml");
+        vendingMachine.changeScene("gui/Cashier.fxml");
     }
 
-    public void clickCancelDownload(ActionEvent event) throws IOException {
+    public void clickCancelDownload() throws IOException {
         // TO DO: Download list of cancelled transactions
         List<CancelledTransaction> cancelledTransactions = transactionHandler.getCancelledTransactions();
         reportGenerator.exportCancelledTransactionReport(cancelledTransactions);
         downloadText.setText("Downloaded!");
     }
 
-    public void clickRoleDownload(ActionEvent event) throws IOException {
+    public void clickRoleDownload() throws IOException {
         // TO DO: Download list of current roles
         reportGenerator.exportUserRoleReport(accounts);
         downloadText2.setText("Downloaded!");

@@ -18,6 +18,51 @@
         }
       ],
       "paymentType": "card"
+    },
+    {
+      "date": "02-11-2022",
+      "price": "1.5",
+      "change": "",
+      "time": "00:17",
+      "items": [
+        {
+          "Mineral Water": "1"
+        }
+      ],
+      "paymentType": "card"
+    },
+    {
+      "date": "02-11-2022",
+      "price": "1.5",
+      "change": "",
+      "time": "00:19",
+      "items": [
+        {
+          "Mentos": "1"
+        }
+      ],
+      "paymentType": "card"
+    },
+    {
+      "date": "02-11-2022",
+      "price": "6.0",
+      "change": "",
+      "time": "00:23",
+      "items": [
+        {
+          "Sour Patch": "1"
+        },
+        {
+          "Skittles": "1"
+        },
+        {
+          "Mars": "1"
+        },
+        {
+          "M&M": "1"
+        }
+      ],
+      "paymentType": "card"
     }
   ]
 }

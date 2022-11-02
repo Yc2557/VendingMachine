@@ -47,6 +47,6 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <ListView fx:id="latestView" layoutX="343.0" layoutY="85.0" onMouseClicked="#onClick" prefHeight="111.0" prefWidth="235.0" />
+      <ListView fx:id="latestView" layoutX="343.0" layoutY="85.0" onMouseClicked="#onClick" prefHeight="121.0" prefWidth="235.0" />
    </children>
 </AnchorPane>

@@ -1,16 +1,10 @@
 package VendingApplication;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,6 +57,7 @@ public class PayingCashController implements Controller {
     private TransactionHandler transactionHandler;
 
     public void clickedOnMoney(Button button, PaymentHandler handler) {
+        vendingMachine.resetIdleTime();
         double currentAmount = Double.parseDouble(amountAdded.getText());
 
         Map<String, Long> cashAdded = handler.getCashAdded();
@@ -131,11 +126,13 @@ public class PayingCashController implements Controller {
     }
 
     public void clickedOnClear(PaymentHandler handler) {
+        vendingMachine.resetIdleTime();
         amountAdded.setText("0.00");
         handler.getCashAdded().clear();
     }
 
-    public void clickedOnPay(PaymentHandler handler, ActionEvent event) throws IOException {
+    public void clickedOnPay(PaymentHandler handler) throws IOException {
+        vendingMachine.resetIdleTime();
         errorText.setText("");
 
         handler.processPayment(totalCost, Double.parseDouble(amountAdded.getText()));
@@ -158,21 +155,22 @@ public class PayingCashController implements Controller {
             double changeAmount = Double.parseDouble(amountAdded.getText()) - totalCost;
             String changeStr = String.format("%.02f", changeAmount);
             change.setText(changeStr);
-            //if not logged in, can't add history
-            vendingMachine.addHistory();
-            String username = "";
-            if (vendingMachine.isLogin) {username = vendingMachine.getAccount().getUsername();}
-            CompletedTransaction ct = new CompletedTransaction(username, vendingMachine.getCart(), "cash", total.getText(), Double.toString(changeAmount));
-            transactionHandler.addCompletedTransaction(ct);
+            if (vendingMachine.isLogin) {
+                vendingMachine.addHistory();
+                CompletedTransaction ct = new CompletedTransaction(vendingMachine.getAccount().getUsername(), vendingMachine.getCart(), "cash", total.getText(), Double.toString(changeAmount));
+                transactionHandler.addCompletedTransaction(ct);
+            }
+            vendingMachine.completeTransaction();
             vendingMachine.getCart().clearCart();
             vendingMachine.logOut();
-            vendingMachine.changeScene(event, "gui/Selection.fxml");
+            vendingMachine.changeScene("gui/Selection.fxml");
         }
 
     }
 
-    public void clickOnBack(ActionEvent event) throws IOException {
-        vendingMachine.changeScene(event, "gui/PaymentSelector.fxml");
+    public void clickOnBack() throws IOException {
+        vendingMachine.resetIdleTime();
+        vendingMachine.changeScene("gui/PaymentSelector.fxml");
     }
 
     public void initialize(VendingMachine vm) {
@@ -181,10 +179,10 @@ public class PayingCashController implements Controller {
         totalCost = vendingMachine.getCart().totalCartPrice();
         total.setText(String.format("%.02f", totalCost));
         PaymentHandler handler = new PaymentHandler();
-        transactionHandler = new TransactionHandler();
+        transactionHandler = vendingMachine.getTransactionHandler();
         payButton.setOnAction(event -> {
             try {
-                clickedOnPay(handler, event);
+                clickedOnPay(handler);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

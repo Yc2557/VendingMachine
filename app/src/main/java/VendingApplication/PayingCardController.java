@@ -1,23 +1,11 @@
 package VendingApplication;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import org.checkerframework.checker.units.qual.C;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 
 public class PayingCardController implements Controller {
@@ -70,8 +58,8 @@ public class PayingCardController implements Controller {
 
     private VendingMachine vendingMachine;
 
-    public void payButtonAction(ActionEvent event) throws IOException {
-
+    public void payButtonAction() throws IOException {
+        vendingMachine.resetIdleTime();
 
         if (cardName.getText().equals("") || cardNumber.getText().equals("") || CVV.getText().equals("") || expiryDate.getText().equals("")) {
             // Invalid inputs
@@ -94,16 +82,17 @@ public class PayingCardController implements Controller {
         if (handler.isValidCard()) {
             // paid successfully
             createWriteTransaction();
+            vendingMachine.completeTransaction();
 
             if (vendingMachine.isLogin) {
                 handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(), getCVV(), getExpiryDate());
                 vendingMachine.addHistory();
                 vendingMachine.getCart().clearCart();
-                changeScene(event, "validCard");
+                changeScene("validCard");
             } else {
                 // not logged in, don't offer to save card
                 vendingMachine.getCart().clearCart();
-                changeScene(event, "completed");
+                changeScene("completed");
             }
         } else {
             // card error
@@ -127,7 +116,7 @@ public class PayingCardController implements Controller {
         }
     }
 
-    public void changeScene(ActionEvent event, String type) throws IOException {
+    public void changeScene(String type) throws IOException {
 
         String sceneName = "gui/";
         switch (type) {
@@ -136,31 +125,39 @@ public class PayingCardController implements Controller {
             case "completed" -> sceneName += "Selection.fxml";
         }
 
-        vendingMachine.changeScene(event, sceneName);
+        vendingMachine.changeScene(sceneName);
     }
 
-    public void useExistingCardAction(ActionEvent event) throws IOException {
+    public void useExistingCardAction() throws IOException {
+        vendingMachine.resetIdleTime();
         createWriteTransaction();
         vendingMachine.getCart().clearCart();
         vendingMachine.logOut();
-        changeScene(event, "completed");
+        changeScene("completed");
     }
 
-    public void backPaymentsButtonAction(ActionEvent event) throws IOException {
+    public void backPaymentsButtonAction() throws IOException {
+        vendingMachine.resetIdleTime();
         // Go back from PayingCard to PaymentSelector
-        changeScene(event, "backPay");
+        changeScene("backPay");
     }
 
-    public void yesButtonAction(ActionEvent event) throws IOException {
+    public void yesButtonAction() throws IOException {
+        vendingMachine.resetIdleTime();
         vendingMachine.logOut();
-        changeScene(event, "completed");
+        changeScene("completed");
     }
 
-    public void noButtonAction(ActionEvent event) throws IOException {
+    public void noButtonAction() throws IOException {
+        vendingMachine.resetIdleTime();
         // Overwrites saved card details
         handler.saveCardDetails(vendingMachine.getAccount().getUsername(), "", "", "", "");
         vendingMachine.logOut();
-        changeScene(event, "completed");
+        changeScene("completed");
+    }
+
+    public void fieldOnAction() {
+        vendingMachine.resetIdleTime();
     }
 
     public String getCardName() {
@@ -188,7 +185,7 @@ public class PayingCardController implements Controller {
 
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
-        this.transactionHandler = new TransactionHandler();
+        this.transactionHandler = vendingMachine.getTransactionHandler();
         this.handler = new CardHandler("src/main/resources/data/credit_cards.json");
         this.totalText.setText("$" + String.format("%.02f", this.vendingMachine.getCart().totalCartPrice()));
 

@@ -1,23 +1,15 @@
 package VendingApplication;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.EventObject;
 import java.util.List;
 
 public class SelectionController implements Controller {
@@ -92,6 +84,8 @@ public class SelectionController implements Controller {
         listNames = Arrays.asList("Drinks", "Chips", "Chocolates", "Candies");
         categoryText.setText(listNames.get(selectedListIndex));
         fillList();
+
+        vendingMachine.stopTimer();
     }
 
     public void logOutButtonClicked() {
@@ -133,16 +127,19 @@ public class SelectionController implements Controller {
         }
     }
 
-    public void cartButtonClicked(ActionEvent event) throws IOException {
-        vendingMachine.changeScene(event, "gui/cart.fxml");
+    public void cartButtonClicked() throws IOException {
+        vendingMachine.changeScene("gui/cart.fxml");
     }
 
-    public void loginButtonClicked(ActionEvent event) throws IOException {
-        vendingMachine.changeScene(event, "gui/Login.fxml");
+    public void loginButtonClicked() throws IOException {
+        vendingMachine.changeScene("gui/Login.fxml");
     }
 
     public void addAmount() {
         int amount = Integer.parseInt(amountText.getText());
+        if (currentView == null) {
+            return;
+        }
         Item item = inventory.getItem(currentView.getSelectionModel().getSelectedItem(), "name");
         if (item == null) {
             return;
@@ -154,6 +151,9 @@ public class SelectionController implements Controller {
     }
 
     public void subtractAmount() {
+        if (currentView == null) {
+            return;
+        }
         int amount = Integer.parseInt(amountText.getText());
         if (amount > 0) {
             amount -= 1;
@@ -169,6 +169,7 @@ public class SelectionController implements Controller {
         }
         selectedList = lists.get(selectedListIndex);
         categoryText.setText(listNames.get(selectedListIndex));
+        amountText.setText(String.valueOf(0));
         fillList();
     }
 
@@ -180,6 +181,7 @@ public class SelectionController implements Controller {
         }
         selectedList = lists.get(selectedListIndex);
         categoryText.setText(listNames.get(selectedListIndex));
+        amountText.setText(String.valueOf(0));
         fillList();
     }
 
@@ -193,7 +195,7 @@ public class SelectionController implements Controller {
         latestView.setItems(FXCollections.observableArrayList(latestList));
     }
 
-    public void onClick(MouseEvent event) throws IOException {
+    public void onClick(MouseEvent event) {
         amountText.setText("0");
 
         Object source = event.getSource();

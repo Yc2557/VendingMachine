@@ -3,7 +3,6 @@ package VendingApplication;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -33,7 +32,7 @@ public class ModifyChangeController implements Controller {
 
         moneyList.setItems(FXCollections.observableArrayList(amounts));
 
-        moneyList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        moneyList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<>() {
 
             @Override
             public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
@@ -69,7 +68,7 @@ public class ModifyChangeController implements Controller {
         }
     }
 
-    public void clickOnBackButton(ActionEvent event) throws IOException {
-        vendingMachine.changeScene(event, "gui/CashierSelection.fxml");
+    public void clickOnBackButton() throws IOException {
+        vendingMachine.changeScene("gui/CashierSelection.fxml");
     }
 }
