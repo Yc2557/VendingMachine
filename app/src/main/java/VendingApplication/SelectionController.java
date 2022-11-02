@@ -1,31 +1,26 @@
 package VendingApplication;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.EventObject;
 import java.util.List;
 
 public class SelectionController implements Controller {
 
     @FXML
-    private Button buyButton;
+    private ListView<String> latestView;
 
     @FXML
     private ListView<String> mainView;
+
+    private ListView<String> currentView;
 
     @FXML
     private Button cartButton;
@@ -44,6 +39,8 @@ public class SelectionController implements Controller {
 
     private List<List<String>> lists;
 
+    private List<String> latestList;
+
     private Inventory inventory;
     private List<String> selectedList;
     private int selectedListIndex;
@@ -52,9 +49,9 @@ public class SelectionController implements Controller {
 
     public void initialize(VendingMachine vm) {
 
-        String StartText = "Latest Items Bought";
         vendingMachine = vm;
         lists = new ArrayList<>();
+        latestList = new ArrayList<>();
 
         if (vendingMachine.isLogin) {
             loginButton.setDisable(true);
@@ -62,14 +59,14 @@ public class SelectionController implements Controller {
             logOutButton.setDisable(false);
             logOutButton.setVisible(true);
             welcomeText.setText(String.format("Welcome %s!", vendingMachine.getAccount().getUsername()));
-            StartText = "Latest Items Bought by You!";
-            lists.add(vendingMachine.getHistoryAsName());
+            latestList = vendingMachine.getHistoryAsName();
         } else {
             loginButton.setDisable(false);
             loginButton.setVisible(true);
             logOutButton.setDisable(true);
             logOutButton.setVisible(false);
             welcomeText.setText("");
+            latestList = Arrays.asList("Pringles", "Thins");
 
             List<String> historyDisplayed = new ArrayList<>();
 
@@ -96,9 +93,11 @@ public class SelectionController implements Controller {
 
         selectedListIndex = 0;
         selectedList = lists.get(selectedListIndex);
-        listNames = Arrays.asList(StartText, "Drinks", "Chips", "Chocolates", "Candies");
+        listNames = Arrays.asList("Drinks", "Chips", "Chocolates", "Candies");
         categoryText.setText(listNames.get(selectedListIndex));
         fillList();
+
+        vendingMachine.stopTimer();
     }
 
     public void logOutButtonClicked() {
@@ -115,7 +114,10 @@ public class SelectionController implements Controller {
         int amount = Integer.parseInt(amountText.getText());
         if (Integer.parseInt(amountText.getText()) > 0) {
             Cart cart = vendingMachine.getCart();
-            Item item = inventory.getItem(selectedList.get(mainView.getSelectionModel().getSelectedIndex()), "name");
+            Item item = inventory.getItem(selectedList.get(currentView.getSelectionModel().getSelectedIndex()), "name");
+            if (item == null) {
+                return;
+            }
             Item checkCart = cart.getItem(item);
             if (checkCart != null) {
                 checkCart.addAmount(amount);
@@ -137,17 +139,23 @@ public class SelectionController implements Controller {
         }
     }
 
-    public void cartButtonClicked(ActionEvent event) throws IOException {
-        vendingMachine.changeScene(event, "gui/cart.fxml");
+    public void cartButtonClicked() throws IOException {
+        vendingMachine.changeScene("gui/cart.fxml");
     }
 
-    public void loginButtonClicked(ActionEvent event) throws IOException {
-        vendingMachine.changeScene(event, "gui/Login.fxml");
+    public void loginButtonClicked() throws IOException {
+        vendingMachine.changeScene("gui/Login.fxml");
     }
 
     public void addAmount() {
         int amount = Integer.parseInt(amountText.getText());
-        Item item = inventory.getItem(mainView.getSelectionModel().getSelectedItem(), "name");
+        if (currentView == null) {
+            return;
+        }
+        Item item = inventory.getItem(currentView.getSelectionModel().getSelectedItem(), "name");
+        if (item == null) {
+            return;
+        }
         if (amount < item.getAmount()) {
             amount += 1;
             amountText.setText(Integer.toString(amount));
@@ -155,6 +163,9 @@ public class SelectionController implements Controller {
     }
 
     public void subtractAmount() {
+        if (currentView == null) {
+            return;
+        }
         int amount = Integer.parseInt(amountText.getText());
         if (amount > 0) {
             amount -= 1;
@@ -170,6 +181,7 @@ public class SelectionController implements Controller {
         }
         selectedList = lists.get(selectedListIndex);
         categoryText.setText(listNames.get(selectedListIndex));
+        amountText.setText(String.valueOf(0));
         fillList();
     }
 
@@ -181,6 +193,7 @@ public class SelectionController implements Controller {
         }
         selectedList = lists.get(selectedListIndex);
         categoryText.setText(listNames.get(selectedListIndex));
+        amountText.setText(String.valueOf(0));
         fillList();
     }
 
@@ -189,10 +202,25 @@ public class SelectionController implements Controller {
         mainView.getItems().clear();
         mainView.setItems(FXCollections.observableArrayList(selectedList));
         mainView.getSelectionModel().select(0);
+
+        latestView.getItems().clear();
+        latestView.setItems(FXCollections.observableArrayList(latestList));
     }
 
-    public void onClick() {
-        System.out.println("clicked");
+    public void onClick(MouseEvent event) {
         amountText.setText("0");
+
+        Object source = event.getSource();
+        if (source instanceof ListView<?> listView) {
+            if (listView == mainView) {
+                System.out.println("mainView");
+                currentView = mainView;
+                latestView.getSelectionModel().clearSelection();
+            } else if (listView == latestView) {
+                System.out.println("latestView");
+                currentView = latestView;
+                mainView.getSelectionModel().clearSelection();
+            }
+        }
     }
 }

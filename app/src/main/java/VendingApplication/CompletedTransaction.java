@@ -33,4 +33,10 @@ public class CompletedTransaction extends Transaction {
     public Cart getCart() {
         return cart;
     }
+
+    public void setDateTime(String date, String time) {
+        this.date = date;
+        this.time = time;
+    }
+
 }

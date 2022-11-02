@@ -16,7 +16,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        VendingMachine vendingMachine = new VendingMachine();
+        VendingMachine vendingMachine = new VendingMachine(primaryStage);
 
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource("gui/Selection.fxml"));

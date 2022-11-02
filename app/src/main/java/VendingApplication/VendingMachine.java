@@ -1,27 +1,63 @@
 package VendingApplication;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class VendingMachine {
-    private Inventory inventory;
-    private Cart cart;
+    private final Inventory inventory;
+    private final Cart cart;
+    private final Stage stage;
+
     public boolean isLogin = false;
     private Account account = null;
-    private UserManager userManager;
-    private List<String> anonymousHistory = new ArrayList<>();
+    private int idleTime = 0;
+    private final int idleTimeLimit = 120;
+    private final Timeline timer;
+    private final TransactionHandler transactionHandler;
 
-    public VendingMachine() {
+    public VendingMachine(Stage stage) {
+        this.stage = stage;
         this.inventory = new Inventory();
         this.cart = new Cart();
+        this.transactionHandler = new TransactionHandler();
+
+        this.timer = new Timeline(
+                new KeyFrame(Duration.seconds(1), e -> {
+                    idleTime++;
+                    System.out.println(idleTime);
+                    if (idleTime >= idleTimeLimit) {
+                        System.out.println("Idle time limit reached");
+                        idleTime = 0;
+                        this.cart.clearCart();
+                        try {
+                            if (this.isLogin) {
+                                transactionHandler.addCancelledTransaction(new CancelledTransaction(
+                                        LocalDateTime.now().toLocalDate().toString(),
+                                        LocalDateTime.now().toLocalTime().toString(),
+                                        account.getUsername(),
+                                        "timeout"));
+                            }
+
+                            this.changeScene("gui/Selection.fxml");
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                })
+        );
+        this.timer.setCycleCount(Timeline.INDEFINITE);
 
         inventory.readJsonFile("src/main/resources/data/inventory.json");
     }
@@ -54,22 +90,18 @@ public class VendingMachine {
         this.account = null;
     }
 
-    public List<String> getAnonymousHistory() { return this.anonymousHistory; }
-
-    public void changeScene(ActionEvent event, String scene) throws IOException {
+    public void changeScene(String scene) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getClassLoader().getResource(scene));
         Parent root = loader.load();
 
         Scene mainPanelView = new Scene(root);
 
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         Controller controller = loader.getController();
         controller.initialize(this);
 
-        window.setScene(mainPanelView);
-        window.show();
+        this.stage.setScene(mainPanelView);
+        this.stage.show();
     }
 
     /**
@@ -104,11 +136,32 @@ public class VendingMachine {
         return nameList;
     }
 
-    public void addAnonymousHistory() {
-        List<Item> cartItems = this.cart.getCart();
+    public TransactionHandler getTransactionHandler() {
+        return transactionHandler;
+    }
 
-        for (Item cartItem : cartItems) {
-            anonymousHistory.add(cartItem.getName());
+    public void resetIdleTime() {
+        this.idleTime = 0;
+    }
+
+    public void startTimer() {
+        if (!this.isTimerRunning()) {
+            this.timer.play();
         }
+    }
+
+    public void stopTimer() {
+        if (this.isTimerRunning()) {
+            this.resetIdleTime();
+            this.timer.stop();
+        }
+    }
+
+    public boolean isTimerRunning() {
+        return this.timer.getStatus() == Timeline.Status.RUNNING;
+    }
+
+    public void completeTransaction() {
+        this.inventory.writeJsonFile("src/main/resources/data/inventory.json");
     }
 }

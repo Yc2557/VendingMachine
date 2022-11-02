@@ -1,12 +1,14 @@
 package VendingApplication;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 
 public class CashierSelectionController implements Controller {
+
+    @FXML
+    private Text downloadedReport;
 
     private VendingMachine vendingMachine;
 
@@ -14,16 +16,24 @@ public class CashierSelectionController implements Controller {
         vendingMachine = vm;
     }
 
-    public void clickOnModifyChange(ActionEvent event) throws IOException {
-        vendingMachine.changeScene(event, "gui/ModifyChange.fxml");
+    public void clickOnModifyChange() throws IOException {
+        vendingMachine.changeScene("gui/ModifyChange.fxml");
     }
 
-    public void clickOnChangeReport(ActionEvent event) throws IOException {
-        vendingMachine.changeScene(event, "gui/ListChange.fxml");
+    public void clickOnChangeReport() throws IOException {
+        vendingMachine.changeScene("gui/ListChange.fxml");
     }
 
-    public void clickLogOut(ActionEvent event) throws IOException {
+    public void clickLogOut() throws IOException {
         vendingMachine.logOut();
-        vendingMachine.changeScene(event, "gui/Selection.fxml");
+        vendingMachine.changeScene("gui/Selection.fxml");
     }
+
+    public void clickOnTransactionReport() throws IOException {
+        ReportGenerator reportGenerator = new ReportGenerator();
+        reportGenerator.exportCompletedTransactionReport(new TransactionHandler().getCompletedTransactions());
+        downloadedReport.setText("Downloaded!");
+        downloadedReport.setVisible(true);
+    }
+
 }

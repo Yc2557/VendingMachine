@@ -1,0 +1,6 @@
+User,Date,Time,Payment Type,Total,Change,Amountx Item@Price
+m,02-11-2022,16:25,cash,12.00,8.0,"5x Pringles @$1.5 ea, 3x Thins @$1.5 ea"
+m,02-11-2022,16:26,card,10.5,,"4x Sour Patch @$1.5 ea, 2x Pringles @$1.5 ea, 1x Thins @$1.5 ea"
+"",02-11-2022,16:40,card,4.5,,3x Kettle @$1.5 ea
+"",02-11-2022,16:40,card,4.5,,3x Coca Cola @$1.5 ea
+m,02-11-2022,16:48,card,9.0,,"3x Coca Cola @$1.5 ea, 3x Pepsi @$1.5 ea"

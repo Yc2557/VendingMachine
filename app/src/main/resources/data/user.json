@@ -1,1 +1,147 @@
-{"users":[{"expiryDate":"","password":"hou","purchaseHistory":["Mineral Water","Coca Cola","Kettle"],"CVV":"","cardName":"m","userRole":"customer","cardNumber":"1","username":"kevin"},{"expiryDate":"","password":"1","purchaseHistory":[],"CVV":"","cardName":"","userRole":"seller","cardNumber":"","username":"sell"},{"expiryDate":"","password":"1","purchaseHistory":[],"CVV":"","cardName":"","userRole":"cashier","cardNumber":"","username":"cash"},{"expiryDate":"","password":"admin","purchaseHistory":[],"CVV":"","cardName":"m","userRole":"owner","cardNumber":"1","username":"admin"},{"expiryDate":"","password":"1","CVV":"","purchaseHistory":[],"cardName":"","userRole":"customer","cardNumber":"","username":"m"}]}
+{
+  "users": [
+    {
+      "password": "",
+      "purchaseHistory": [
+        "Mineral Water",
+        "Coca Cola"
+      ],
+      "cardName": "",
+      "userRole": "customer",
+      "cardNumber": "",
+      "username": "anon"
+    },
+    {
+      "expiryDate": "111",
+      "password": "1",
+      "purchaseHistory": [
+        "16",
+        "6",
+        "7",
+        "11",
+        "13"
+      ],
+      "CVV": "1\/11",
+      "cardName": "m",
+      "userRole": "customer",
+      "cardNumber": "1",
+      "username": "m"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "m",
+      "userRole": "customer",
+      "cardNumber": "1",
+      "username": "p"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "m",
+      "userRole": "customer",
+      "cardNumber": "1",
+      "username": "jokes"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "m",
+      "userRole": "customer",
+      "cardNumber": "1",
+      "username": "mas"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "m",
+      "userRole": "customer",
+      "cardNumber": "1",
+      "username": "mos"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "seller",
+      "cardNumber": "",
+      "username": "look"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "cashier",
+      "cardNumber": "",
+      "username": "pol"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "customer",
+      "cardNumber": "",
+      "username": "jo"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "customer",
+      "cardNumber": "",
+      "username": "ko"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "m",
+      "userRole": "customer",
+      "cardNumber": "1",
+      "username": "k"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [
+        "Mineral Water"
+      ],
+      "cardName": "m",
+      "userRole": "customer",
+      "cardNumber": "1",
+      "username": "lo"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "customer",
+      "cardNumber": "",
+      "username": "lok1"
+    },
+    {
+      "password": "123",
+      "purchaseHistory": [],
+      "cardName": "m",
+      "userRole": "customer",
+      "cardNumber": "1",
+      "username": "a"
+    },
+    {
+      "password": "1",
+      "purchaseHistory": [],
+      "cardName": "m",
+      "userRole": "customer",
+      "cardNumber": "1",
+      "username": "y"
+    },
+    {
+      "expiryDate": "",
+      "password": "123",
+      "CVV": "",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "customer",
+      "cardNumber": "",
+      "username": "jame"
+    }
+  ]
+}

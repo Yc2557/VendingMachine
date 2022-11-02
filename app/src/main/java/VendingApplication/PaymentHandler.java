@@ -36,26 +36,23 @@ public class PaymentHandler {
 
             Map<String,Long> cashLeft = new HashMap<>();
             // Determine which coins/notes need to be used for the change and how many
-            for (int i = 0; i < amounts.length; i++) {
-                double amount = Double.parseDouble(amounts[i]);
+            for (String s : amounts) {
+                double amount = Double.parseDouble(s);
 
-                if (amount > change) {
-                    continue;
-                } else {
-                    double numNotes = Math.min(Math.floor(change / amount), (long) database.get(amounts[i]));
+                if (amount <= change) {
+                    double numNotes = Math.min(Math.floor(change / amount), (long) database.get(s));
                     change -= numNotes * amount;
-                    change = Math.round(change*100);
+                    change = Math.round(change * 100);
                     change /= 100;
-                    long numNotesLeft = (long) database.get(amounts[i]) - (long) numNotes;
+                    long numNotesLeft = (long) database.get(s) - (long) numNotes;
 
-                    cashLeft.put(amounts[i], numNotesLeft);
+                    cashLeft.put(s, numNotesLeft);
                 }
             }
 
             // If there is no available change
             if (change != 0) {
                 this.hasEnoughChange = false;
-                return;
             } else {
                 // Update database with new amounts for each coin/note
                 for (Map.Entry<String,Long> entry : cashLeft.entrySet()) {

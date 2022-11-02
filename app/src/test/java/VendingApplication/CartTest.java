@@ -64,7 +64,7 @@ public class CartTest {
     @Test
     public void otherConstructorTest() {
         Cart cart = new Cart();
-        Item mineralWater = new Item("Mineral Water", 3, 4);
+        Item mineralWater = new Item("Mineral Water", "","",3, 4);
         cart.addItem(mineralWater);
         assertEquals(12, cart.totalCartPrice());
     }

@@ -1,7 +1,6 @@
 package VendingApplication;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 
@@ -28,7 +27,7 @@ public class ListChangeController implements Controller {
         quantityList.setItems(FXCollections.observableArrayList(quantities));
     }
 
-    public void clickOnBackButton(ActionEvent event) throws IOException {
-        vendingMachine.changeScene(event, "gui/CashierSelection.fxml");
+    public void clickOnBackButton() throws IOException {
+        vendingMachine.changeScene("gui/CashierSelection.fxml");
     }
 }

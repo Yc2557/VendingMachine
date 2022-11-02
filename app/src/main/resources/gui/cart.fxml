@@ -60,5 +60,6 @@
          </font>
       </Button>
       <Button layoutX="516.0" layoutY="187.0" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
+      <Text fx:id="errorText" layoutX="233.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="182.4000122070313" />
    </children>
 </AnchorPane>
