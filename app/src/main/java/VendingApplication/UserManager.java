@@ -198,8 +198,8 @@ public class UserManager {
     }
 
     public boolean addCreditCard(String username, String cardName, String cardNumber, String expiryDate, String CVV) {
-        // Check that both username and password are not null
-        if (username == null || cardName == null || cardNumber == null) {
+
+        if (username == null || cardName == null || cardNumber == null || expiryDate == null || CVV == null) {
             return false;
         }
 
@@ -240,8 +240,8 @@ public class UserManager {
             JSONObject usersObject = (JSONObject) parser.parse(new FileReader(filePath));
             JSONArray usersArray = (JSONArray) usersObject.get("users");
 
-            for (int i = 0; i < usersArray.size(); i++) {
-                JSONObject userDetails = (JSONObject) usersArray.get(i);
+            for (Object o : usersArray) {
+                JSONObject userDetails = (JSONObject) o;
                 if (userDetails.get("username").toString().equals(username)) {
                     return userDetails.get("cardName").toString();
                 }

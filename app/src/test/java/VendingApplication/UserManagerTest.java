@@ -29,8 +29,8 @@ class UserManagerTest {
         itemObj.put("purchaseHistory", jarr);
         itemObj.put("cardName", "Joe");
         itemObj.put("cardNumber", "10000");
-        itemObj.put("CVV", "");
-        itemObj.put("expiryDate", "");
+        itemObj.put("expiryDate", "1/12");
+        itemObj.put("CVV", "100");
         itemObj.put("password", "password");
         itemObj.put("userRole", "customer");
 
@@ -42,8 +42,9 @@ class UserManagerTest {
         itemObj2.put("purchaseHistory", jarr2);
         itemObj2.put("cardName", "Joe");
         itemObj2.put("cardNumber", "10000");
-        itemObj2.put("CVV", "");
-        itemObj2.put("expiryDate", "");
+
+        itemObj2.put("expiryDate", "1/12");
+        itemObj2.put("CVV", "100");
         itemObj2.put("password", "password");
         itemObj.put("userRole", "customer");
 
@@ -72,6 +73,10 @@ class UserManagerTest {
         assertEquals(null, userManager.getUsername("notUser"));
         assertEquals("customer", userManager.getRole("user"));
         assertEquals(null, userManager.getRole("notUser"));
+        assertEquals("100", userManager.getCVV("user"));
+        assertEquals(null, userManager.getCVV("notUser"));
+        assertEquals("1/12", userManager.getExpiryDate("user"));
+        assertEquals(null, userManager.getExpiryDate("notUser"));
     }
 
     @Test
@@ -89,10 +94,12 @@ class UserManagerTest {
     @Test
     public void addCreditCardTest() {
         UserManager userManager = new UserManager("src/test/resources/userManagerTest.json");
-        assertTrue(userManager.addCreditCard("user", "Joe", "10000", "", ""));
-        assertFalse(userManager.addCreditCard(null, "Joe", "10000", "", ""));
-        assertFalse(userManager.addCreditCard("user", null, "10000", "", ""));
-        assertFalse(userManager.addCreditCard("user", "Joe", null, "", ""));
+        assertTrue(userManager.addCreditCard("user", "Joe", "10000", "1/12", "100"));
+        assertFalse(userManager.addCreditCard(null, "Joe", "10000","1/12", "100"));
+        assertFalse(userManager.addCreditCard("user", null, "10000","1/12", "100"));
+        assertFalse(userManager.addCreditCard("user", "Joe", null,"1/12", "100"));
+        assertFalse(userManager.addCreditCard("user", "Joe", "10000",null, "100"));
+        assertFalse(userManager.addCreditCard("user", "Joe", "10000","1/12", null));
     }
 
     @Test

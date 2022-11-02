@@ -5,10 +5,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class CardHandler {
 
@@ -22,7 +19,15 @@ public class CardHandler {
         this.userManager = new UserManager();
     }
 
+    public void setUserManager(String userManagerPath) {
+        this.userManager = new UserManager(userManagerPath);
+    }
+
     public void checkCreditCard(String cardName, String cardNumber, String expiryDate, String CVV) {
+
+        if (!checkCardNumber(cardNumber) || !checkCVV(CVV) || !checkExpiry(expiryDate)) {
+            return;
+        }
 
         try {
             JSONParser parser = new JSONParser();
@@ -40,7 +45,6 @@ public class CardHandler {
 
                 if (dbName.equals(cardName) && dbNumber.equals(cardNumber) && dbCVV.equals(CVV) && dbExpiryDate.equals(expiryDate)) {
                     validateCard();
-
                     return;
                 } else {
                     invalidateCard();
@@ -63,6 +67,10 @@ public class CardHandler {
         return userManager.findCard(username);
     }
 
+    public boolean checkCardNumber(String cardNumber) {
+        return isNumeric(cardNumber);
+    }
+
     public boolean checkCVV(String CVV) {
         return (CVV.length() == 3) && (isNumeric(CVV));
     }
@@ -70,7 +78,12 @@ public class CardHandler {
     public boolean checkExpiry(String expiryDate) {
         int eLen = expiryDate.length();
         String[] dates = expiryDate.split("/");
-        return ( (eLen == 4 || eLen == 5) && isNumeric(dates[0]) && isNumeric(dates[1]) && (Integer.parseInt(dates[0])<13));
+        if (isNumeric(dates[0]) && isNumeric(dates[1])) {
+            int m = Integer.parseInt(dates[0]);
+            int y = Integer.parseInt(dates[1]);
+            return (eLen==4 |eLen==5) && m>0 && m<13 && y>-1;
+        }
+        return false;
     }
 
     public void validateCard() {this.validCard = true;}
@@ -85,6 +98,39 @@ public class CardHandler {
             return true;
         } catch(NumberFormatException e){
             return false;
+        }
+    }
+
+    public boolean addNewValidCard(String cardName, String cardNumber, String expiryDate, String CVV) {
+
+        if (!checkCardNumber(cardNumber) || !checkCVV(CVV) || !checkExpiry(expiryDate)) {
+            return false;
+        }
+
+        try {
+            JSONParser parser = new JSONParser();
+            JSONArray cardsDB = (JSONArray) parser.parse(new FileReader(cardPath));
+
+            JSONObject newCard = new JSONObject();
+            newCard.put("name", cardName);
+            newCard.put("number", cardNumber);
+            newCard.put("expiryDate", expiryDate);
+            newCard.put("CVV", CVV);
+            cardsDB.add(newCard);
+
+            File file = new File(cardPath);
+            file.createNewFile();
+            FileWriter writer = new FileWriter(file);
+            writer.write(cardsDB.toJSONString());
+            writer.flush();
+            writer.close();
+            return true;
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            throw new RuntimeException(e);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
         }
     }
 
