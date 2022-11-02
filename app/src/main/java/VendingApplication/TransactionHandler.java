@@ -132,6 +132,8 @@ public class TransactionHandler {
                 JSONObject transactionObject = (JSONObject) transaction;
 
                 String user = (String) transactionObject.get("user");
+                String date = (String) transactionObject.get("date");
+                String time = (String) transactionObject.get("time");
                 String type = (String) transactionObject.get("paymentType");
                 String price = (String) transactionObject.get("total");
                 String change = (String) transactionObject.get("change");
@@ -145,11 +147,12 @@ public class TransactionHandler {
                     String itemName = item.get("item").toString();
                     int itemAmount = Integer.parseInt(item.get("quantity").toString());
                     double itemPrice = Double.parseDouble(item.get("price").toString());
-                    Item i = new Item(itemName, itemPrice, itemAmount);
+                    Item i = new Item("",itemName,"", itemPrice, itemAmount);
                     cart.addItem(i);
                 }
 
                 CompletedTransaction newTransaction = new CompletedTransaction(user, cart, type, price, change);
+                newTransaction.setDateTime(date, time);
                 transactions.add(newTransaction);
             }
         } catch (FileNotFoundException e) {
