@@ -91,7 +91,7 @@ public class TransactionHandler {
             newTransaction.put("date", transaction.getDate());
             newTransaction.put("time", transaction.getTime());
             newTransaction.put("paymentType", transaction.getPaymentType());
-            newTransaction.put("price", transaction.getPrice());
+            newTransaction.put("total", transaction.getPrice());
             newTransaction.put("change", transaction.getChange());
 
             JSONArray items = new JSONArray();
@@ -99,7 +99,7 @@ public class TransactionHandler {
                 JSONObject newItem = new JSONObject();
                 newItem.put("item", item.getName());
                 newItem.put("quantity", Integer.toString(item.getAmount()));
-                newItem.put("itemPrice", Double.toString(item.getPrice()));
+                newItem.put("price", Double.toString(item.getPrice()));
                 items.add(newItem);
             }
             newTransaction.put("items", items);
@@ -123,7 +123,7 @@ public class TransactionHandler {
         List<CompletedTransaction> transactions = new ArrayList<>();
 
         try {
-            FileReader reader = new FileReader(cancelledFilePath);
+            FileReader reader = new FileReader(normalFilePath);
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
             JSONArray transactionsArray = (JSONArray) jsonObject.get("transactions");
@@ -133,7 +133,7 @@ public class TransactionHandler {
 
                 String user = (String) transactionObject.get("user");
                 String type = (String) transactionObject.get("paymentType");
-                String price = (String) transactionObject.get("price");
+                String price = (String) transactionObject.get("total");
                 String change = (String) transactionObject.get("change");
 
                 Cart cart = new Cart();
@@ -142,8 +142,8 @@ public class TransactionHandler {
                 //unpacks transaction json to partial Item objects for the cart
                 for (Object itemObj: itemList) {
                     JSONObject item = (JSONObject) itemObj;
-                    String itemName = item.get("itemName").toString();
-                    int itemAmount = Integer.parseInt(item.get("amount").toString());
+                    String itemName = item.get("item").toString();
+                    int itemAmount = Integer.parseInt(item.get("quantity").toString());
                     double itemPrice = Double.parseDouble(item.get("price").toString());
                     Item i = new Item(itemName, itemPrice, itemAmount);
                     cart.addItem(i);

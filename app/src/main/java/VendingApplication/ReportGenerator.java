@@ -98,17 +98,17 @@ public class ReportGenerator {
         try {
             BufferedWriter writer = Files.newBufferedWriter(Paths.get(reportPath));
             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
-                    .withHeader("Date", "Time", "User", "Reason"));
+                    .withHeader("User", "Date","Time", "Payment Type", "Total", "Change", "Amountx Item@Price"));
 
             for (CompletedTransaction transaction : transactions) {
                 String cartString = "";
 
                 for (Item item: transaction.getCart().getCart()) {
-                    cartString += item.getName() +" x"+item.getAmount()+" @$"+item.getPrice()+" ea,";
+                    cartString += item.getAmount()+ "x " +item.getName() +" @$"+item.getPrice()+" ea, ";
                 }
-
-                csvPrinter.printRecord(transaction.getDate(), transaction.getTime(), transaction.getUsername(),
-                        transaction.getPrice(), transaction.getPaymentType(), transaction.getChange(), cartString);
+                cartString = cartString.substring(0, cartString.length()-2);
+                csvPrinter.printRecord(transaction.getUsername(), transaction.getDate(), transaction.getTime(),
+                        transaction.getPaymentType(),transaction.getPrice(),  transaction.getChange(), cartString);
             }
 
             csvPrinter.flush();
