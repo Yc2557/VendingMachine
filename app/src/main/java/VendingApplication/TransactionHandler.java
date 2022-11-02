@@ -87,6 +87,7 @@ public class TransactionHandler {
             JSONArray transactionArray = (JSONArray) transactionsObject.get("transactions");
 
             JSONObject newTransaction = new JSONObject();
+            newTransaction.put("user", transaction.getUsername());
             newTransaction.put("date", transaction.getDate());
             newTransaction.put("time", transaction.getTime());
             newTransaction.put("paymentType", transaction.getPaymentType());
