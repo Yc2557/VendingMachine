@@ -14,7 +14,7 @@ public class PayingCardController implements Controller {
     private TextField cardName;
 
     @FXML
-    private PasswordField cardNumber;
+    private PasswordField cardNumber = new PasswordField();
 
     @FXML
     private TextField totalText = new TextField("");
@@ -188,6 +188,7 @@ public class PayingCardController implements Controller {
         this.transactionHandler = vendingMachine.getTransactionHandler();
         this.handler = new CardHandler("src/main/resources/data/credit_cards.json");
         this.totalText.setText("$" + String.format("%.02f", this.vendingMachine.getCart().totalCartPrice()));
+        this.cardNumber.setSkin(new PasswordFieldSkin(cardNumber));
 
         if (vendingMachine.isLogin) {
             suggestCard();
