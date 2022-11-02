@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VendingApplication.CashierSelectionController">
+   <children>
+      <Button fx:id="modifyChangeButton" layoutX="235.0" layoutY="70.0" mnemonicParsing="false" onAction="#clickOnModifyChange" prefHeight="50.0" prefWidth="130.0" text="Modify Change" />
+      <Button layoutX="235.0" layoutY="223.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="130.0" text="Transaction Report" />
+      <Button fx:id="listChangeButton" layoutX="235.0" layoutY="144.0" mnemonicParsing="false" onAction="#clickOnChangeReport" prefHeight="50.0" prefWidth="130.0" text="Change Report" />
+      <Button layoutX="510.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickLogOut" prefHeight="35.0" prefWidth="76.0" text="Logout" />
+      <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logged in as a Cashier" />
+   </children>
+</AnchorPane>

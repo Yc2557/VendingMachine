@@ -159,9 +159,47 @@ public class UserManager {
         return true;
     }
 
+    public boolean removeUser(String username) {
+        if (username == null) {
+            return false;
+        }
+
+        // Check if username not in database
+        if (!(findUser(username) != null)) {
+            return false;
+        }
+
+        try {
+            FileReader reader = new FileReader(filePath);
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(reader);
+            JSONArray users = (JSONArray) jsonObject.get("users");
+
+            for (Object user : users) {
+                JSONObject userObject = (JSONObject) user;
+                String userUsername = (String) userObject.get("username");
+                if (userUsername.equals(username)) {
+                    users.remove(userObject);
+                    FileWriter file = new FileWriter(filePath);
+                    file.write(jsonObject.toJSONString());
+                    file.flush();
+                    file.close();
+                    return true;
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            throw new RuntimeException(e);
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        return false;
+    }
+
     public boolean addCreditCard(String username, String cardName, String cardNumber, String expiryDate, String CVV) {
-        // Check that both username and password are not null
-        if (username == null || cardName == null || cardNumber == null) {
+
+        if (username == null || cardName == null || cardNumber == null || expiryDate == null || CVV == null) {
             return false;
         }
 
@@ -202,8 +240,8 @@ public class UserManager {
             JSONObject usersObject = (JSONObject) parser.parse(new FileReader(filePath));
             JSONArray usersArray = (JSONArray) usersObject.get("users");
 
-            for (int i = 0; i < usersArray.size(); i++) {
-                JSONObject userDetails = (JSONObject) usersArray.get(i);
+            for (Object o : usersArray) {
+                JSONObject userDetails = (JSONObject) o;
                 if (userDetails.get("username").toString().equals(username)) {
                     return userDetails.get("cardName").toString();
                 }

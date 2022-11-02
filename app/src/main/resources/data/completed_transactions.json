@@ -1,12 +1,20 @@
 {
   "transactions": [
     {
-      "date": "30-10-2022 20:03",
-      "price": "4.5",
+      "date": "02-11-2022",
+      "price": "7.5",
       "change": "",
+      "time": "13:45",
       "items": [
         {
-          "Pepsi": "3"
+          "item": "Pringles",
+          "quantity": "1",
+          "itemPrice": "1.5"
+        },
+        {
+          "item": "Thins",
+          "quantity": "4",
+          "itemPrice": "1.5"
         }
       ],
       "paymentType": "card"

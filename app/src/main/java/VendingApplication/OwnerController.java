@@ -32,6 +32,12 @@ public class OwnerController implements Controller {
     private Button roleDownloadBtn;
 
     @FXML
+    private Button removeBtn;
+
+    @FXML
+    private Button addBtn;
+
+    @FXML
     private Button sellerBtn;
 
     @FXML
@@ -39,6 +45,12 @@ public class OwnerController implements Controller {
 
     @FXML
     private TextField roleModifier;
+
+    @FXML
+    private TextField passModifier;
+
+    @FXML
+    private TextField usernameModifier;
 
     @FXML
     private Text roleText;
@@ -55,28 +67,62 @@ public class OwnerController implements Controller {
     private VendingMachine vendingMachine;
     private TransactionHandler transactionHandler;
     private ReportGenerator reportGenerator;
+    private UserManager userManager;
     private List<Account> accounts;
     private Account selectedAccount;
+    private Account newAccount;
+
+    // @FXML
+    // void modifyProperties(ActionEvent event) {
+    // if (!roleModifier.getText().isEmpty()) {
+    // if (!modifyRole(roleText.getText(), roleModifier.getText())) {
+    // errorText.setText("Role is invalid!");
+    // }
+    // roleModifier.clear();
+    // }
+
+    // setList();
+    // fillText(selectedAccount);
+    // }
 
     @FXML
-    void modifyProperties(ActionEvent event) {
-        if (!roleModifier.getText().isEmpty()) {
-            if (!modifyRole(roleText.getText(), roleModifier.getText())) {
+    void clickAdd(ActionEvent event) {
+        if (!usernameModifier.getText().isEmpty() && !passModifier.getText().isEmpty()
+                && !roleModifier.getText().isEmpty()) {
+            if (roleModifier.getText().equals("seller") || roleModifier.getText().equals("cashier")
+                    || roleModifier.getText().equals("customer") || roleModifier.getText().equals("owner")) {
+                if (!userManager.addUser(usernameModifier.getText(), passModifier.getText(), roleModifier.getText())) {
+                    errorText.setText("User already exists!");
+                    return;
+                }
+                this.accounts = userManager.getAllUsers();
+                setList();
+                usernameModifier.clear();
+                passModifier.clear();
+                roleModifier.clear();
+            } else {
                 errorText.setText("Role is invalid!");
             }
-            roleModifier.clear();
+        } else {
+            errorText.setText("Please fill all fields!");
         }
+    }
 
-        setList();
-        fillText(selectedAccount);
+    @FXML
+    void clickRemove(ActionEvent event) {
+        if (selectedAccount != null) {
+            userManager.removeUser(selectedAccount.getUsername());
+            accounts.remove(selectedAccount);
+            setList();
+        }
     }
 
     public void initialize(VendingMachine vendingMachine) {
         this.vendingMachine = vendingMachine;
         this.transactionHandler = new TransactionHandler();
         this.reportGenerator = new ReportGenerator();
-        UserManager manager = new UserManager();
-        this.accounts = manager.getAllUsers();
+        this.userManager = new UserManager();
+        this.accounts = userManager.getAllUsers();
         setList();
 
     }
@@ -95,14 +141,7 @@ public class OwnerController implements Controller {
         for (Account acc : accounts) {
             if (acc.getUsername().equals(userList.getSelectionModel().getSelectedItem())) {
                 selectedAccount = acc;
-                fillText(acc);
             }
-        }
-    }
-
-    public void fillText(Account account) {
-        if (account != null) {
-            roleText.setText(selectedAccount.getRole());
         }
     }
 
@@ -134,15 +173,16 @@ public class OwnerController implements Controller {
         downloadText2.setText("Downloaded!");
     }
 
-    private boolean modifyRole(String currentRole, String inputText) {
-        if (!currentRole.equals(inputText)) {
-            if (inputText.equals("cashier") || inputText.equals("seller") || inputText.equals("customer")
-                    || inputText.equals("owner")) {
-                selectedAccount.setRole(inputText);
-                return true;
-            }
-        }
-        return false;
-    }
+    // private boolean modifyRole(String currentRole, String inputText) {
+    // if (!currentRole.equals(inputText)) {
+    // if (inputText.equals("cashier") || inputText.equals("seller") ||
+    // inputText.equals("customer")
+    // || inputText.equals("owner")) {
+    // selectedAccount.setRole(inputText);
+    // return true;
+    // }
+    // }
+    // return false;
+    // }
 
 }
