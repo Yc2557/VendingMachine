@@ -57,6 +57,8 @@ public class PayingCardController implements Controller {
 
     private String CVVText;
 
+    private boolean suggestedCard = false;
+
     private VendingMachine vendingMachine;
 
     public void payButtonAction() throws IOException {
@@ -87,8 +89,6 @@ public class PayingCardController implements Controller {
             vendingMachine.completeTransaction();
 
             if (vendingMachine.isLogin) {
-                handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(),
-                        getCVV(), getExpiryDate());
                 vendingMachine.addHistory();
                 vendingMachine.getCart().clearCart();
                 changeScene("validCard");
@@ -117,6 +117,7 @@ public class PayingCardController implements Controller {
             this.CVVPrompt.setText("New CVV");
             this.existingCardButton.setDisable(false);
             this.existingCardButton.setVisible(true);
+            this.suggestedCard = true;
         }
     }
 
@@ -163,6 +164,8 @@ public class PayingCardController implements Controller {
 
     public void yesButtonAction() throws IOException {
         vendingMachine.resetIdleTime();
+        handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(),
+                getCVV(), getExpiryDate());
         vendingMachine.logOut();
         changeScene("completed");
     }
@@ -170,7 +173,9 @@ public class PayingCardController implements Controller {
     public void noButtonAction() throws IOException {
         vendingMachine.resetIdleTime();
         // Overwrites saved card details
-        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), "", "", "", "");
+        if (!suggestedCard) {
+            handler.saveCardDetails(vendingMachine.getAccount().getUsername(), "", "", "", "");
+        }
         vendingMachine.logOut();
         changeScene("completed");
     }
