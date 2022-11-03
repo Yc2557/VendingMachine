@@ -10,6 +10,9 @@ public class CashierSelectionController implements Controller {
     @FXML
     private Text downloadedReport;
 
+    @FXML
+    private Text downloadedChangeReport;
+
     private VendingMachine vendingMachine;
 
     public void initialize(VendingMachine vm) {
@@ -21,7 +24,10 @@ public class CashierSelectionController implements Controller {
     }
 
     public void clickOnChangeReport() throws IOException {
-        vendingMachine.changeScene("gui/ListChange.fxml");
+        ReportGenerator reportGenerator = new ReportGenerator();
+        reportGenerator.exportChangeQuantityReport();
+        downloadedChangeReport.setText("Downloaded!");
+        downloadedChangeReport.setVisible(true);
     }
 
     public void clickLogOut() throws IOException {

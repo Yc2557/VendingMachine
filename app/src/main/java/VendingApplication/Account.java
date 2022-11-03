@@ -44,9 +44,7 @@ public class Account {
     }
 
     public List<String> getHistory() {
-        UserManager manager = new UserManager();
-        return manager.getHistory(this.username);
-//        return history;
+        return history;
     }
 
     // Remove first element and add new if size is 5

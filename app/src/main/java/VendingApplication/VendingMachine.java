@@ -77,7 +77,9 @@ public class VendingMachine {
     }
 
     public void setAccount(Account account) {
-        this.isLogin = true;
+        if (!account.getUsername().equals("anon")) {
+            this.isLogin = true;
+        }
         this.account = account;
     }
 

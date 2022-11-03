@@ -116,4 +116,28 @@ public class ReportGenerator {
             throw new RuntimeException(e);
         }
     }
+
+    public void exportChangeQuantityReport() {
+        String reportPath = reportsFilePath += "/change_quantity_report.csv";
+
+        String[] amounts = {"5c", "10c", "20c", "50c", "$1", "$2", "$5", "$10", "$20", "$50", "$100"};
+        String[] JSONAmounts = {"0.05", "0.10", "0.20", "0.50", "1", "2", "5", "10", "20", "50", "100"};
+
+        Cashier cashier = new Cashier();
+        try {
+            BufferedWriter writer = Files.newBufferedWriter(Paths.get(reportPath));
+            CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT
+                    .withHeader("Coin/Note", "Quantity"));
+
+            String[] quantities = cashier.getQuantities(JSONAmounts);
+            for (int i = 0; i < amounts.length; i++) {
+                csvPrinter.printRecord(amounts[i], quantities[i]);
+            }
+
+            csvPrinter.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }

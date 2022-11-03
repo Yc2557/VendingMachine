@@ -10,7 +10,8 @@
       <Button fx:id="transactionReportButton" layoutX="235.0" layoutY="223.0" mnemonicParsing="false" onAction="#clickOnTransactionReport" prefHeight="50.0" prefWidth="130.0" text="Transaction Report" />
       <Button fx:id="listChangeButton" layoutX="235.0" layoutY="144.0" mnemonicParsing="false" onAction="#clickOnChangeReport" prefHeight="50.0" prefWidth="130.0" text="Change Report" />
       <Button layoutX="510.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickLogOut" prefHeight="35.0" prefWidth="76.0" text="Logout" />
-      <Text fx:id="downloadedReport" layoutX="379.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" visible="false" text=""/>
+      <Text fx:id="downloadedReport" layoutX="379.0" layoutY="255.0" strokeType="OUTSIDE" strokeWidth="0.0" text="" visible="false" />
       <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logged in as a Cashier" />
+      <Text fx:id="downloadedChangeReport" layoutX="379.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>
