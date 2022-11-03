@@ -82,7 +82,7 @@ public class SellerTest {
         // Changing a name
         assertFalse(inventory.exists("Pepsi", "name"));
         seller.modifyName("Sprite", "Pepsi");
-        assertTrue(inventory.exists("Pepsi", "name"));
+        assertTrue(inventory.exists("Johnson", "name")); // Pepsi
 
         // Preventing duplicates
         assertFalse(seller.modifyName("M&M", "M&M"));
