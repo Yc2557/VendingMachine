@@ -9,14 +9,14 @@
     },
     {
       "quantity": 7,
-      "price": 2,
+      "price": 2.0,
       "name": "Sprite",
       "id": "2",
       "category": "drinks"
     },
     {
       "quantity": 7,
-      "price": 1,
+      "price": 1.0,
       "name": "Coca Cola",
       "id": "3",
       "category": "drinks"
@@ -79,7 +79,7 @@
     },
     {
       "quantity": 7,
-      "price": 1,
+      "price": 1.0,
       "name": "Kettle",
       "id": "12",
       "category": "chips"
@@ -93,21 +93,21 @@
     },
     {
       "quantity": 7,
-      "price": 2,
+      "price": 2.0,
       "name": "Mentos",
       "id": "14",
       "category": "candies"
     },
     {
       "quantity": 7,
-      "price": 3,
+      "price": 3.0,
       "name": "Sour Patch",
       "id": "15",
       "category": "candies"
     },
     {
       "quantity": 7,
-      "price": 5,
+      "price": 5.0,
       "name": "Skittles",
       "id": "16",
       "category": "candies"
