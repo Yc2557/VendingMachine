@@ -1,1 +1,3 @@
-{"transactions":[{"date":"2022-10-31","reason":"timeout","time":"17:24:53.321833","user":"anonymous"},{"date":"2022-10-31","reason":"user cancelled","time":"19:24:53.000015","user":"anonymous"},{"date":"2022-11-03","reason":"cash cancel","time":"21:24:53.575539","user":"anonymous"},{"date":"2022-11-03","reason":"cash cancel","time":"21:26:13.821114600","user":"anonymous"}]}
+{
+  "transactions": []
+}

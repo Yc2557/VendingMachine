@@ -1,3 +1,7 @@
 Date,Time,User,Reason
-31/10/2022,1020,anonymous,timeout
-31/10/2022,1050,anonymous,user cancelled
+2022-10-31,17:24:53.321833,anonymous,timeout
+2022-10-31,19:24:53.000015,anonymous,user cancelled
+2022-11-03,21:24:53.575539,anonymous,cash cancel
+2022-11-03,21:26:13.821114600,anonymous,cash cancel
+2022-11-03,21:37:31.943948,anonymous,cash cancel
+2022-11-03,21:38:10.037636800,anonymous,card cancel

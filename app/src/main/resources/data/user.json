@@ -1,1 +1,58 @@
-{"users":[{"password":"","purchaseHistory":["Mineral Water","Coca Cola","3"],"cardName":"","userRole":"customer","cardNumber":"","username":"anon"},{"expiryDate":"111","password":"1","purchaseHistory":["6","7","11","13","2"],"CVV":"1\/11","cardName":"m","userRole":"customer","cardNumber":"1","username":"m"},{"expiryDate":"","password":"123","CVV":"","purchaseHistory":[],"cardName":"","userRole":"customer","cardNumber":"","username":"jame"},{"expiryDate":"","password":"admin","CVV":"","purchaseHistory":[],"cardName":"","userRole":"owner","cardNumber":"","username":"admin"},{"expiryDate":"","password":"seller","CVV":"","purchaseHistory":[],"cardName":"","userRole":"seller","cardNumber":"","username":"seller"},{"expiryDate":"","password":"123","CVV":"","purchaseHistory":[],"cardName":"","userRole":"customer","cardNumber":"","username":"kolol"}]}
+{
+  "users": [
+    {
+      "password": "",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "customer",
+      "cardNumber": "",
+      "username": "anon"
+    },
+    {
+      "expiryDate": "",
+      "password": "1",
+      "purchaseHistory": [
+        "6",
+        "7",
+        "11",
+        "13",
+        "2"
+      ],
+      "CVV": "",
+      "cardName": "",
+      "userRole": "customer",
+      "cardNumber": "",
+      "username": "m"
+    },
+    {
+      "expiryDate": "",
+      "password": "admin",
+      "CVV": "",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "owner",
+      "cardNumber": "",
+      "username": "admin"
+    },
+    {
+      "expiryDate": "",
+      "password": "seller",
+      "CVV": "",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "seller",
+      "cardNumber": "",
+      "username": "seller"
+    },
+    {
+      "expiryDate": "",
+      "password": "cashier",
+      "CVV": "",
+      "purchaseHistory": [],
+      "cardName": "",
+      "userRole": "cashier",
+      "cardNumber": "",
+      "username": "cashier"
+    }
+  ]
+}
