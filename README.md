@@ -31,8 +31,48 @@ gradle build jacocoTestReport
 
 ### Regular User
 
+The GUI supports the following functionality:
+- User can login or create an account through the "Login" button
+- User can scroll through item list based on category and select product
+and amount to add to cart
+- User can checkout and pay by cash or card
+
 ### Seller
+
+The GUI supports the following functionality:
+- Seller can select any item from the list and modify name, category,
+quantity and price (i.e. changing TextField then press "Modify")
+- Seller can download item summary and current inventory report
 
 ### Cashier
 
+The GUI supports the following functionality:
+- Cashier can change the amount of each coin/note in the vending machine
+- Cashier can download current available change report and a summary transaction
+report
+
 ### Owner
+
+The GUI supports the following functionality:
+- Owner can add/remove Seller, Cashier or other Owner uses
+- Owner can enter Cashier or Seller modes
+- Owner can download cancelled transaction reports as well as a list of
+the current roles/users
+
+## Notes
+
+### Reports
+- All reports generated are uploaded to the src/reports folder.
+
+### JSON Data 
+- All user data is saved and stored in the src/resources/data folder, in a JSON format.
+- cancelled_transactions.json: All cancelled transactions
+- cash.json: Current stores of change
+- completed_transactions.json: All successful transactions
+- credit_cards.json: All accepted credit card information.
+- inventory.json: All products and relevant product information
+- user.json: All user info including password and more.
+
+### Cancelled Transaction
+- A transaction is 'cancelled' either by idling for longer than 2 minutes, or clicking the 'cancel' button in either the card or cash payment screens.
+- These are added to the cancelledTransactions.json

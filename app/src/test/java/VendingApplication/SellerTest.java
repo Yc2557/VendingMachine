@@ -79,7 +79,7 @@ public class SellerTest {
         Seller seller = new Seller(inventory);
         seller.setInventoryFilePath("src/test/resources/sellerTest.json");
 
-        // Changing a name
+        // Changing a nameass
         assertFalse(inventory.exists("Pepsi", "name"));
         seller.modifyName("Sprite", "Pepsi");
         assertTrue(inventory.exists("Pepsi", "name"));
