@@ -58,3 +58,21 @@ The GUI supports the following functionality:
 - Owner can enter Cashier or Seller modes
 - Owner can download cancelled transaction reports as well as a list of
 the current roles/users
+
+## Notes
+
+### Reports
+- All reports generated are uploaded to the src/reports folder.
+
+### JSON Data 
+- All user data is saved and stored in the src/resources/data folder, in a JSON format.
+- cancelled_transactions.json: All cancelled transactions
+- cash.json: Current stores of change
+- completed_transactions.json: All successful transactions
+- credit_cards.json: All accepted credit card information.
+- inventory.json: All products and relevant product information
+- user.json: All user info including password and more.
+
+### Cancelled Transaction
+- A transaction is 'cancelled' either by idling for longer than 2 minutes, or clicking the 'cancel' button in either the card or cash payment screens.
+- These are added to the cancelledTransactions.json
