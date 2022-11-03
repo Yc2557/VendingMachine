@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.text.Text;
+import java.time.LocalDateTime;
 
 import java.io.IOException;
 
@@ -18,7 +19,7 @@ public class PayingCardController implements Controller {
 
     @FXML
     private TextField totalText = new TextField("");
-  
+
     @FXML
     private TextField CVV;
 
@@ -61,7 +62,8 @@ public class PayingCardController implements Controller {
     public void payButtonAction() throws IOException {
         vendingMachine.resetIdleTime();
 
-        if (cardName.getText().equals("") || cardNumber.getText().equals("") || CVV.getText().equals("") || expiryDate.getText().equals("")) {
+        if (cardName.getText().equals("") || cardNumber.getText().equals("") || CVV.getText().equals("")
+                || expiryDate.getText().equals("")) {
             // Invalid inputs
             errorText.setText("Please enter valid card details.");
             return;
@@ -85,7 +87,8 @@ public class PayingCardController implements Controller {
             vendingMachine.completeTransaction();
 
             if (vendingMachine.isLogin) {
-                handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(), getCVV(), getExpiryDate());
+                handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(),
+                        getCVV(), getExpiryDate());
                 vendingMachine.addHistory();
                 vendingMachine.getCart().clearCart();
                 changeScene("validCard");
@@ -139,8 +142,23 @@ public class PayingCardController implements Controller {
 
     public void backPaymentsButtonAction() throws IOException {
         vendingMachine.resetIdleTime();
-        // Go back from PayingCard to PaymentSelector
-        changeScene("backPay");
+        // Add cancelled transaction to history
+        if (vendingMachine.isLogin) {
+            transactionHandler.addCancelledTransaction(new CancelledTransaction(
+                    LocalDateTime.now().toLocalDate().toString(),
+                    LocalDateTime.now().toLocalTime().toString(),
+                    vendingMachine.getAccount().getUsername(),
+                    "timeout"));
+        } else {
+            transactionHandler.addCancelledTransaction(new CancelledTransaction(
+                    LocalDateTime.now().toLocalDate().toString(),
+                    LocalDateTime.now().toLocalTime().toString(),
+                    "anonymous",
+                    "card cancel"));
+        }
+        vendingMachine.resetIdleTime();
+        vendingMachine.getCart().clearCart();
+        changeScene("completed");
     }
 
     public void yesButtonAction() throws IOException {
@@ -169,7 +187,7 @@ public class PayingCardController implements Controller {
         return this.numberText;
     }
 
-    public String getCVV(){
+    public String getCVV() {
         return this.CVVText;
     }
 
@@ -179,8 +197,11 @@ public class PayingCardController implements Controller {
 
     public void createWriteTransaction() {
         String username = "";
-        if (vendingMachine.isLogin) {username = vendingMachine.getAccount().getUsername();}
-        CompletedTransaction ct = new CompletedTransaction(username, vendingMachine.getCart(), "card", Double.toString(vendingMachine.getCart().totalCartPrice()), "");
+        if (vendingMachine.isLogin) {
+            username = vendingMachine.getAccount().getUsername();
+        }
+        CompletedTransaction ct = new CompletedTransaction(username, vendingMachine.getCart(), "card",
+                Double.toString(vendingMachine.getCart().totalCartPrice()), "");
         transactionHandler.addCompletedTransaction(ct);
     }
 

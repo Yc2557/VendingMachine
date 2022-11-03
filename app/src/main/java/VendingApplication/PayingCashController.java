@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import java.time.LocalDateTime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -157,7 +158,8 @@ public class PayingCashController implements Controller {
             change.setText(changeStr);
 
             vendingMachine.addHistory();
-            CompletedTransaction ct = new CompletedTransaction(vendingMachine.getAccount().getUsername(), vendingMachine.getCart(), "cash", total.getText(), Double.toString(changeAmount));
+            CompletedTransaction ct = new CompletedTransaction(vendingMachine.getAccount().getUsername(),
+                    vendingMachine.getCart(), "cash", total.getText(), Double.toString(changeAmount));
             transactionHandler.addCompletedTransaction(ct);
 
             vendingMachine.completeTransaction();
@@ -170,7 +172,23 @@ public class PayingCashController implements Controller {
 
     public void clickOnBack() throws IOException {
         vendingMachine.resetIdleTime();
-        vendingMachine.changeScene("gui/PaymentSelector.fxml");
+        // Add cancelled transaction to history
+        if (vendingMachine.isLogin) {
+            transactionHandler.addCancelledTransaction(new CancelledTransaction(
+                    LocalDateTime.now().toLocalDate().toString(),
+                    LocalDateTime.now().toLocalTime().toString(),
+                    vendingMachine.getAccount().getUsername(),
+                    "timeout"));
+        } else {
+            transactionHandler.addCancelledTransaction(new CancelledTransaction(
+                    LocalDateTime.now().toLocalDate().toString(),
+                    LocalDateTime.now().toLocalTime().toString(),
+                    "anonymous",
+                    "cash cancel"));
+        }
+        vendingMachine.resetIdleTime();
+        vendingMachine.getCart().clearCart();
+        vendingMachine.changeScene("gui/Selection.fxml");
     }
 
     public void initialize(VendingMachine vm) {

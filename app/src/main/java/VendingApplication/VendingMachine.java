@@ -48,6 +48,12 @@ public class VendingMachine {
                                         LocalDateTime.now().toLocalTime().toString(),
                                         account.getUsername(),
                                         "timeout"));
+                            } else {
+                                transactionHandler.addCancelledTransaction(new CancelledTransaction(
+                                        LocalDateTime.now().toLocalDate().toString(),
+                                        LocalDateTime.now().toLocalTime().toString(),
+                                        "anonymous",
+                                        "timeout"));
                             }
 
                             this.changeScene("gui/Selection.fxml");
@@ -55,8 +61,7 @@ public class VendingMachine {
                             throw new RuntimeException(ex);
                         }
                     }
-                })
-        );
+                }));
         this.timer.setCycleCount(Timeline.INDEFINITE);
 
         inventory.readJsonFile("src/main/resources/data/inventory.json");

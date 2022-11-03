@@ -8,13 +8,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VendingApplication.PayingCardController">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="VendingApplication.PayingCardController">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
             <Button fx:id="PayButton" layoutX="185.0" layoutY="317.0" mnemonicParsing="false" onAction="#payButtonAction" prefWidth="63.0" text="Pay" />
-            <TextField fx:id="cardName" layoutX="96.0" layoutY="121.0" promptText="Card Name" />
-            <PasswordField fx:id="cardNumber" layoutX="96.0" layoutY="179.0" promptText="Card Number" />
+            <TextField fx:id="cardName" layoutX="96.0" layoutY="121.0" onKeyTyped="#fieldOnAction" onMouseClicked="#fieldOnAction" promptText="Card Name" />
+            <PasswordField fx:id="cardNumber" layoutX="96.0" layoutY="179.0" onKeyTyped="#fieldOnAction" onMouseClicked="#fieldOnAction" promptText="Card Number" />
           <Text fx:id="errorText" fill="RED" layoutX="312.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="249.0666564941405">
                <font>
                   <Font size="14.0" />
@@ -55,13 +55,13 @@
                   <Font size="14.0" />
                </font>
             </Text>
-            <TextField fx:id="expiryDate" layoutX="96.0" layoutY="231.0" promptText="Expiry Date (MM/YY)" />
+            <TextField fx:id="expiryDate" layoutX="96.0" layoutY="231.0" onKeyTyped="#fieldOnAction" onMouseClicked="#fieldOnAction" promptText="Expiry Date (MM/YY)" />
             <Text fx:id="expiryPrompt" layoutX="95.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expiry Date">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
-            <TextField fx:id="CVV" layoutX="96.0" layoutY="280.0" promptText="CVV" />
+            <TextField fx:id="CVV" layoutX="96.0" layoutY="280.0" onKeyTyped="#fieldOnAction" onMouseClicked="#fieldOnAction" promptText="CVV" />
             <Text fx:id="CVVPrompt" layoutX="96.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CVV">
                <font>
                   <Font size="18.0" />

@@ -8,7 +8,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class ModificationsController implements Controller{
+public class ModificationsController implements Controller {
 
     @FXML
     private TextField categoryModifier;
@@ -30,6 +30,12 @@ public class ModificationsController implements Controller{
 
     @FXML
     private Button downloadItemSummary;
+
+    @FXML
+    private Button ownerBtn;
+
+    @FXML
+    private Button logoutBtn;
 
     @FXML
     private Text nameText;
@@ -87,6 +93,11 @@ public class ModificationsController implements Controller{
         this.inventory = vendingMachine.getInventory();
         this.seller = new Seller(this.inventory);
         setList();
+        if (vendingMachine.getAccount() != null && vendingMachine.getAccount().getRole().equals("owner")) {
+            ownerBtn.setVisible(true);
+        } else {
+            ownerBtn.setVisible(false);
+        }
 
     }
 
@@ -129,7 +140,11 @@ public class ModificationsController implements Controller{
         }
     }
 
-    public void clickLogOut() throws IOException {
+    public void clickOwner() throws IOException {
+        vendingMachine.changeScene("gui/OwnerSelection.fxml");
+    }
+
+    public void clickLogout() throws IOException {
         vendingMachine.logOut();
         vendingMachine.changeScene("gui/Selection.fxml");
     }

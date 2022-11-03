@@ -152,12 +152,12 @@ public class OwnerController implements Controller {
 
     public void clickSeller() throws IOException {
         // TODO: may need additional changes
-        vendingMachine.changeScene("gui/Seller.fxml");
+        vendingMachine.changeScene("gui/Modifications.fxml");
     }
 
     public void clickCashier() throws IOException {
         // TODO: may need additional changes
-        vendingMachine.changeScene("gui/Cashier.fxml");
+        vendingMachine.changeScene("gui/CashierSelection.fxml");
     }
 
     public void clickCancelDownload() throws IOException {
