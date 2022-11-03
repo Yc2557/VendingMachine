@@ -129,7 +129,7 @@ public class SellerTest {
         seller.setInventoryFilePath("src/test/resources/sellerTest.json");
 
         // Changing the price
-        assertTrue(inventory.getItem("Mineral Water", "name").getPrice() == 1.5);
+        assertTrue(inventory.getItem("Mineral Water", "category").getPrice() == 1.5);
         seller.modifyPrice("Mineral Water", "2.0");
         assertTrue(inventory.getItem("Mineral Water", "name").getPrice() == 2.0);
 
