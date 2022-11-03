@@ -34,7 +34,7 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Button fx:id="backButtonPayments" layoutX="93.0" layoutY="317.0" mnemonicParsing="false" onAction="#backPaymentsButtonAction" prefWidth="63.0" text="Back" />
+            <Button fx:id="backButtonPayments" layoutX="93.0" layoutY="317.0" mnemonicParsing="false" onAction="#backPaymentsButtonAction" prefWidth="63.0" text="Cancel" />
             <Text layoutX="362.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total">
                <font>
                   <Font size="24.0" />

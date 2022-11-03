@@ -1,7 +1,7 @@
 Mineral Water; 1; 5
-Sprite; 2; 6
-Coca Cola; 3; 3
-Pepsi; 4; 7
+Sprite; 2; 7
+Coca Cola; 3; 0
+Pepsi; 4; 6
 Juice; 5; 7
 Mars; 6; 7
 M&M; 7; 7

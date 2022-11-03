@@ -1,8 +1,8 @@
 Name,ID,Category,Quantity,Price
 Mineral Water,1,drinks,5,1.5
-Sprite,2,drinks,6,1.5
-Coca Cola,3,drinks,3,1.5
-Pepsi,4,drinks,7,1.5
+Sprite,2,drinks,7,1.5
+Coca Cola,3,drinks,0,1.5
+Pepsi,4,drinks,6,1.5
 Juice,5,drinks,7,1.5
 Mars,6,chocolate,7,1.5
 M&M,7,chocolate,7,1.5

@@ -23,7 +23,7 @@ public class VendingMachine {
     public boolean isLogin = false;
     private Account account = null;
     private int idleTime = 0;
-    private final int idleTimeLimit = 120;
+    private final int idleTimeLimit = 10;
     private final Timeline timer;
     private final TransactionHandler transactionHandler;
 
@@ -48,6 +48,7 @@ public class VendingMachine {
                                         LocalDateTime.now().toLocalTime().toString(),
                                         account.getUsername(),
                                         "timeout"));
+                                this.logOut();
                             } else {
                                 transactionHandler.addCancelledTransaction(new CancelledTransaction(
                                         LocalDateTime.now().toLocalDate().toString(),

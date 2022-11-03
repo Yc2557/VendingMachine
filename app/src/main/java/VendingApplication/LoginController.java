@@ -6,6 +6,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoginController implements Controller {
@@ -67,7 +68,8 @@ public class LoginController implements Controller {
         String password = passwordText.getText();
 
         if (userManager.addUser(username, password, "customer")) {
-            vendingMachine.setAccount(new Account(username, password, "","","", "", null, "customer"));
+            vendingMachine.setAccount(new Account(username, password, "","","", "", new ArrayList<>()
+                    , "customer"));
             changeScene("customer");
             System.out.println("Successful creation");
         } else {
