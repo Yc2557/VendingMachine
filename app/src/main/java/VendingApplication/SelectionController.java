@@ -66,11 +66,15 @@ public class SelectionController implements Controller {
             logOutButton.setDisable(true);
             logOutButton.setVisible(false);
             welcomeText.setText("");
-            latestList = Arrays.asList("Pringles", "Thins");
+
+            UserManager manager = new UserManager();
+            vendingMachine.setAccount(new Account("anon", "", "", "", "", "",
+                    manager.getHistory("anon"), "customer"));
+
+            latestList = vendingMachine.getHistoryAsName();
         }
 
         inventory = vendingMachine.getInventory();
-
 
         lists.add(inventory.getDrinks());
         lists.add(inventory.getChips());

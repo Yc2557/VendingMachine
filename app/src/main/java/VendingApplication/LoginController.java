@@ -29,6 +29,11 @@ public class LoginController implements Controller {
         String username = loginText.getText().trim();
         String password = passwordText.getText();
 
+        if (username.equals("anon")) {
+            invalidMessage.setText("Username or password is invalid.");
+            return;
+        }
+
         // Check if username and password are correct
         if (checkLogin(username, password)) {
             String cardName = userManager.getCardName(username);
