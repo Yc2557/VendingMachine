@@ -13,7 +13,7 @@ public class LoginController implements Controller {
     private TextField loginText;
 
     @FXML
-    private PasswordField passwordText;
+    private PasswordField passwordText = new PasswordField();
 
     @FXML
     private Text invalidMessage;
@@ -111,5 +111,6 @@ public class LoginController implements Controller {
 
     public void initialize(VendingMachine vm) {
         vendingMachine = vm;
+        passwordText.setSkin(new PasswordFieldSkin(passwordText));
     }
 }
