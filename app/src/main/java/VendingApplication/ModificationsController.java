@@ -17,9 +17,6 @@ public class ModificationsController implements Controller {
     private Text categoryText;
 
     @FXML
-    private Text codeText;
-
-    @FXML
     private ListView<String> itemList;
 
     @FXML
@@ -133,7 +130,6 @@ public class ModificationsController implements Controller {
     public void fillText(Item item) {
         if (item != null) {
             nameText.setText(item.getName());
-            codeText.setText(item.getItemid());
             priceText.setText(Double.toString(item.getPrice()));
             quantityText.setText(Integer.toString(item.getAmount()));
             categoryText.setText(item.getCategory());
