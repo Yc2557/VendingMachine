@@ -199,6 +199,8 @@ public class UserManager {
 
     public boolean addCreditCard(String username, String cardName, String cardNumber, String expiryDate, String CVV) {
 
+        System.out.println("Called addCard " + username);
+
         if (username == null || cardName == null || cardNumber == null || expiryDate == null || CVV == null) {
             return false;
         }
@@ -217,6 +219,7 @@ public class UserManager {
                     userObject.put("cardNumber", cardNumber);
                     userObject.put("expiryDate", expiryDate);
                     userObject.put("CVV", CVV);
+                    System.out.println("UM saved: " + cardName);
                 }
             }
 

@@ -60,6 +60,7 @@ public class CardHandler {
     }
 
     public void saveCardDetails(String username, String cardName, String cardNumber, String expiryDate, String CVV) {
+        System.out.println("called save in card handler: " + username);
         this.userManager.addCreditCard(username, cardName, cardNumber, expiryDate, CVV);
     }
 

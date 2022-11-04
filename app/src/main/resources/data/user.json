@@ -9,19 +9,19 @@
       "username": "anon"
     },
     {
-      "expiryDate": "",
+      "expiryDate": "111",
       "password": "1",
       "purchaseHistory": [
-        "6",
-        "7",
-        "11",
         "13",
-        "2"
+        "2",
+        "3",
+        "5",
+        "4"
       ],
-      "CVV": "",
-      "cardName": "",
+      "CVV": "1\/11",
+      "cardName": "Charles",
       "userRole": "customer",
-      "cardNumber": "",
+      "cardNumber": "40691",
       "username": "m"
     },
     {

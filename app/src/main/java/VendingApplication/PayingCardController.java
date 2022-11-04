@@ -85,6 +85,8 @@ public class PayingCardController implements Controller {
 
         if (handler.isValidCard()) {
             // paid successfully
+            handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(),
+                    getCVV(), getExpiryDate());
             createWriteTransaction();
             vendingMachine.completeTransaction();
 
@@ -150,7 +152,8 @@ public class PayingCardController implements Controller {
                     LocalDateTime.now().toLocalTime().toString(),
                     vendingMachine.getAccount().getUsername(),
                     "timeout"));
-        } else {
+        } else {handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(),
+                getCVV(), getExpiryDate());
             transactionHandler.addCancelledTransaction(new CancelledTransaction(
                     LocalDateTime.now().toLocalDate().toString(),
                     LocalDateTime.now().toLocalTime().toString(),
@@ -164,8 +167,6 @@ public class PayingCardController implements Controller {
 
     public void yesButtonAction() throws IOException {
         vendingMachine.resetIdleTime();
-        handler.saveCardDetails(this.vendingMachine.getAccount().getUsername(), getCardName(), getCardNum(),
-                getCVV(), getExpiryDate());
         vendingMachine.logOut();
         changeScene("completed");
     }
@@ -173,9 +174,7 @@ public class PayingCardController implements Controller {
     public void noButtonAction() throws IOException {
         vendingMachine.resetIdleTime();
         // Overwrites saved card details
-        if (!suggestedCard) {
-            handler.saveCardDetails(vendingMachine.getAccount().getUsername(), "", "", "", "");
-        }
+        handler.saveCardDetails(vendingMachine.getAccount().getUsername(), "", "", "", "");
         vendingMachine.logOut();
         changeScene("completed");
     }
